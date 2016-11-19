@@ -1,0 +1,40 @@
+<nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="">Nazwa projektu</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class=""><a href="">Lista</a></li>
+            </ul>
+            <div class="nav navbar-nav navbar-right">
+                 <ul class="nav navbar-nav">
+              <li><a *ngFor="let user of users">{{user.firstName}} {{user.lastName}}</a></li>
+              <li class="active"><a  [routerLink]="['/login']" >Wyloguj</a></li>
+            </ul>
+            </div>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+    <div class="padding-top">
+        <div *ngFor="let client of clients">
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Imię: </strong>{{client.firstName}}</li>
+                <li class="list-group-item"><strong>Nazwisko: </strong>{{client.lastName}} </li>
+                <li class="list-group-item"><strong>Ulica: </strong>{{client.street}} {{client.streetNumber}} </li>
+                <li class="list-group-item"><strong>Numer mieszkania: </strong>{{client.homeNumber}}</li>
+
+                <li class="list-group-item"><strong>Miasto: </strong> {{client.postCode}} {{client.city}}</li>
+
+                <li class="list-group-item"><strong>Pesel: </strong>{{client.pesel}}</li>
+                
+            </ul>
+        </div>
+ 
+</div>
