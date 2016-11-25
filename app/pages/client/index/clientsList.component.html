@@ -1,0 +1,53 @@
+﻿<navbar></navbar>
+
+<div class="padding-top container ">
+    <div class="col-sm-9">
+        <a class=" right btn btn-info" [routerLink]="['/addclient']">
+            <i class="fa fa-plus" aria-hidden="true"></i> Dodaj
+        </a>
+
+        <div>
+            <!--<div class="row">-->
+            <!--<div *ngFor="let filter of availableFilters" class="col-md-2">-->
+            <!--<input type="checkbox" [(ngModel)]="filter.state"> {{ filter.label }}-->
+            <!--</div>-->
+            <!--</div>-->
+            <input type="text" [(ngModel)]="filterValue">
+            <!--{{ availableFilters | json }}-->
+            <!--{{ filteredFields | json }}-->
+        </div>
+
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Ulica</th>
+                <th>Numer</th>
+                <th>Mieszkanie</th>
+                <th>Miasto</th>
+                <th>Kod pocztowy</th>
+                <th>Pesel</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let client of clients | filter : filteredFields : filterValue; let i = index">
+                <th scope="row">{{i + 1}}</th>
+                <td>{{client.firstName}}</td>
+                <td>{{client.lastName}}</td>
+                <td>{{client.street}}</td>
+                <td class="centered">{{client.streetNumber}}</td>
+                <td class="centered">{{client.homeNumber}}</td>
+                <td>{{client.postCode}}</td>
+                <td>{{client.city}}</td>
+                <td>{{client.pesel}}</td>
+                <td class="centered"><i class="fa fa-trash" aria-hidden="true" (click)="removeClient(i)"></i></td>
+                <td class="centered"><i class="fa fa-eye" aria-hidden="true" [routerLink]="['/showclient/' + i]"></i>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
