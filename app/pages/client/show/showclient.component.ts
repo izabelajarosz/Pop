@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {ClientService} from "../../../_services/client.service";
 import {ActivatedRoute} from "@angular/router";
 import {Client} from "../../../_models/client";
+import {Policy} from "../../../_models/policy";
 
 @Component({
     moduleId: module.id,
@@ -11,6 +12,7 @@ import {Client} from "../../../_models/client";
 
 export class ShowClientComponent implements OnInit {
     client: Client = new Client;
+    policies: Policy[] = [];
     id: number;
     private sub: any;
 
@@ -25,6 +27,10 @@ export class ShowClientComponent implements OnInit {
                 client => {
                     this.client = client;
                 });
+
+            this.clientService.getPolicies(this.id).subscribe(policies => {
+                this.policies = policies;
+            });
         });
     }
 

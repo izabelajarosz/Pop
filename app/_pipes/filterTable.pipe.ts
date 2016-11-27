@@ -15,18 +15,27 @@ export class FilterTablePipe implements PipeTransform {
                 return it[fields].toUpperCase().indexOf(value.toUpperCase()) > -1;
             }
 
-            let exists = false;
+            return this.filterObject(fields, it, value);
+        });
+    }
 
-            if (typeof fields === 'object') {
-                for (let field of fields) {
-                    if (it[field].toUpperCase().indexOf(value.toUpperCase()) > -1) {
-                        exists = true;
-                        break;
-                    }
+    private filterObject(fields: any, it, value: string) {
+        let exists = false;
+
+        if (typeof fields === 'object') {
+            for (let field of fields) {
+                var item = it[field];
+
+                if (typeof item === 'number') {
+                    item = item.toString();
+                }
+
+                if (typeof item === 'string' && item.toUpperCase().indexOf(value.toUpperCase()) > -1) {
+                    exists = true;
+                    break;
                 }
             }
-
-            return exists;
-        });
+        }
+        return exists;
     }
 }
