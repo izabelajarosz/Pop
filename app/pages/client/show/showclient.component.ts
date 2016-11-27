@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
-import {Client} from "../../../_models/client";
 import {ClientService} from "../../../_services/client.service";
 import {ActivatedRoute} from "@angular/router";
+import {Client} from "../../../_models/client";
 
 @Component({
     moduleId: module.id,
@@ -10,7 +10,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 
 export class ShowClientComponent implements OnInit {
-    clients: Client[] = [];
+    client: Client = new Client;
     id: number;
     private sub: any;
 
@@ -23,7 +23,7 @@ export class ShowClientComponent implements OnInit {
 
             this.clientService.showClient(this.id).subscribe(
                 client => {
-                    this.clients = [client];
+                    this.client = client;
                 });
         });
     }
