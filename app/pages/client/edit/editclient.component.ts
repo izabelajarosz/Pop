@@ -44,7 +44,7 @@ export class EditClientComponent implements OnInit {
         this.clientService.editClient(this.client)
             .subscribe(result => {
                 if (result === true) {
-                    this.router.navigate(['/']);
+                    this.router.navigate(['/clients']);
                 } else {
                     this.error = 'Wystąpił nieoczekiwany błąd.';
                     this.loading = false;

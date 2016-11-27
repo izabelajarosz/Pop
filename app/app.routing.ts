@@ -12,9 +12,9 @@ const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'clients', component: ClientsListComponent, canActivate: [AuthGuard] },
-    { path: 'addclient', component: AddClientComponent, canActivate: [AuthGuard]},
-    { path: 'showclient/:id', component: ShowClientComponent, canActivate: [AuthGuard]},
-    { path: 'editclient/:id', component: EditClientComponent, canActivate: [AuthGuard]},
+    { path: 'clients/create', component: AddClientComponent, canActivate: [AuthGuard]},
+    { path: 'clients/:id', component: ShowClientComponent, canActivate: [AuthGuard]},
+    { path: 'clients/:id/edit', component: EditClientComponent, canActivate: [AuthGuard]},
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
 ];

@@ -105,7 +105,8 @@ export let fakeBackendProvider = {
                 cookieService.putObject('clientsListCache', clientsList);
 
             setTimeout(() => {
-                if (connection.request.url.endsWith('/api/authenticate') && connection.request.method === RequestMethod.Post) {
+                // Login
+                if (connection.request.url.endsWith('/api/login') && connection.request.method === RequestMethod.Post) {
                     let params = JSON.parse(connection.request.getBody());
                     if (params.username === testUser.username && params.password === testUser.password) {
                         connection.mockRespond(new Response(
@@ -118,7 +119,7 @@ export let fakeBackendProvider = {
                     }
                 }
 
-                if (connection.request.url.endsWith('/api/users') && connection.request.method === RequestMethod.Get) {
+                if (connection.request.url.match('/api/users') && connection.request.method === RequestMethod.Get) {
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(
                             new ResponseOptions({status: 200, body: [testUser]})
@@ -130,7 +131,8 @@ export let fakeBackendProvider = {
                     }
                 }
 
-                if (connection.request.url.endsWith('/api/clientsList') && connection.request.method === RequestMethod.Get) {
+                // Get clients list
+                if (connection.request.url.endsWith('/api/clients') && connection.request.method === RequestMethod.Get) {
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(
                             new ResponseOptions({status: 200, body: JSON.parse(cookieService.get('clientsListCache'))})
@@ -142,7 +144,8 @@ export let fakeBackendProvider = {
                     }
                 }
 
-                if (connection.request.url.endsWith('/api/removeClient') && connection.request.method === RequestMethod.Get) {
+                // Delete client
+                if (connection.request.url.endsWith('/api/clients') && connection.request.method === RequestMethod.Delete) {
                     let params = JSON.parse(connection.request.getBody());
                     let cachedList = JSON.parse(cookieService.get('clientsListCache'));
                     cachedList.splice(params.index, 1);
@@ -158,10 +161,12 @@ export let fakeBackendProvider = {
                     }
                 }
 
-                if (connection.request.url.endsWith('/api/addClient') && connection.request.method === RequestMethod.Get) {
+                // Create Client
+                if (connection.request.url.endsWith('/api/clients') && connection.request.method === RequestMethod.Post) {
                     let params = JSON.parse(connection.request.getBody());
                     let cachedList = JSON.parse(cookieService.get('clientsListCache'));
-                    let client = params.client;
+                    let client = params.body.client;
+
                     cachedList.push({
                         id: cachedList.length,
                         firstName: client.name,
@@ -185,7 +190,8 @@ export let fakeBackendProvider = {
                     }
                 }
 
-                if (connection.request.url.endsWith('/api/showClient') && connection.request.method === RequestMethod.Get) {
+                // Show Client
+                if (connection.request.url.match(/^\/api\/clients\/[0-9]+$/) && connection.request.method === RequestMethod.Get) {
                     let params = JSON.parse(connection.request.getBody());
                     let cachedList = JSON.parse(cookieService.get('clientsListCache'));
                     var currentClient = cachedList[params.index];
@@ -199,12 +205,12 @@ export let fakeBackendProvider = {
                         ));
                     }
                 }
-                if (connection.request.url.endsWith('/api/editClient') && connection.request.method === RequestMethod.Get) {
+
+                // Update client
+                if (connection.request.url.match(/^\/api\/clients\/[0-9]+$/) && connection.request.method === RequestMethod.Patch) {
                     let params = JSON.parse(connection.request.getBody());
                     let cachedList = JSON.parse(cookieService.get('clientsListCache'));
-                    let client = params.client;
-                    console.log('client: ', client);
-                    console.log('params: ', params);
+                    let client = params.body.client;
 
                     let i;
                     for (i=0; i < cachedList.length; i++) {

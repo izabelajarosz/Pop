@@ -1,7 +1,7 @@
 <navbar></navbar>
 <div class="padding-top">
     <div *ngFor="let client of clients">
-        <a [routerLink]="['/editclient/' + client.id]"><i class="fa fa-pencil" aria-hidden="true"></i> Edytuj</a>
+        <a [routerLink]="['/clients/' + id + '/edit']"><i class="fa fa-pencil" aria-hidden="true"></i> Edytuj</a>
         <ul class="list-group">
             <li class="list-group-item"><strong>Imię: </strong>{{client.firstName}}</li>
             <li class="list-group-item"><strong>Nazwisko: </strong>{{client.lastName}}</li>
