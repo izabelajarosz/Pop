@@ -21,7 +21,7 @@ export let fakeBackendProvider = {
                     // homeNumber: '',
                     // city: 'Lublin',
                     // postCode: '20-018',
-                    // pesel: '94111423160',
+                    pesel: '94111423160',
                     birthDate: '1994-02-14',
                     policyNumber: 1
                 },
@@ -34,7 +34,7 @@ export let fakeBackendProvider = {
                     // homeNumber: '4',
                     // city: 'Warszawa',
                     // postCode: '03-136',
-                    // pesel: '66111933943'
+                    pesel: '66111933943',
                     birthDate: '1983-01-19',
                     policyNumber: 1
                     
@@ -61,7 +61,7 @@ export let fakeBackendProvider = {
                     // homeNumber: '3',
                     // city: 'Szczecin',
                     // postCode: '70-806',
-                    // pesel: '66052391084',
+                    pesel: '66052391084',
                     birthDate: '1978-02-16',
                     policyNumber: 1
                 },
@@ -74,7 +74,7 @@ export let fakeBackendProvider = {
                     // homeNumber: '13',
                     // city: 'Łódź',
                     // postCode: '92-018',
-                    // pesel: '42081489824',
+                    pesel: '42081489824',
                     birthDate: '1945-11-01',
                     policyNumber: 1
                 },
@@ -87,7 +87,7 @@ export let fakeBackendProvider = {
                     // homeNumber: '153',
                     // city: 'Gdynia',
                     // postCode: '81-359',
-                    // pesel: '93111210552',
+                    pesel: '93111210552',
                     birthDate: '1969-12-23',
                     policyNumber: 1
                 },
@@ -100,7 +100,7 @@ export let fakeBackendProvider = {
                     // homeNumber: '15',
                     // city: 'Będzin',
                     // postCode: '42-506',
-                    // pesel: '71061271674',
+                    pesel: '71061271674',
                     birthDate:'1956-06-01',
                     policyNumber: 1
                 },
@@ -113,7 +113,7 @@ export let fakeBackendProvider = {
                     // homeNumber: '23',
                     // city: 'Warszawa',
                     // postCode: '03-136',
-                    // pesel: '97022541060',
+                    pesel: '97022541060',
                     birthDate:'1999-08-29',
                     policyNumber: 1
                 },
@@ -126,7 +126,7 @@ export let fakeBackendProvider = {
                     // homeNumber: '23',
                     // city: 'Warszawa',
                     // postCode: '03-136',
-                    // pesel: '97022541060',
+                    pesel: '20010104499',
                     birthDate:'1920-01-01',
                     policyNumber: 1
 
@@ -140,7 +140,7 @@ export let fakeBackendProvider = {
                     // homeNumber: '23',
                     // city: 'Warszawa',
                     // postCode: '03-136',
-                    // pesel: '97022541060',
+                    pesel: '20010204521',
                     birthDate:'1920-01-02',
                     policyNumber: 2
                 },
@@ -271,7 +271,7 @@ export let fakeBackendProvider = {
                         // homeNumber: client.homeNumber,
                         // city: client.city,
                         // postCode: client.postCode,
-                        // pesel: client.pesel,
+                        pesel: client.pesel,
                         birthDate: client.birthDate,
                         policyNumber: client.policyNumber
                     });
@@ -325,7 +325,7 @@ export let fakeBackendProvider = {
                         // homeNumber: client.homeNumber,
                         // city: client.city,
                         // postCode: client.postCode,
-                        // pesel: client.pesel
+                        pesel: client.pesel,
                         birthDate: client.birthDate,
                         policyNumber: client.policyNumber
                     };
