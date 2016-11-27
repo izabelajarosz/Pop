@@ -16,90 +16,135 @@ export let fakeBackendProvider = {
                     id: 0,
                     firstName: 'Jan',
                     lastName: 'Nowak',
-                    street: 'Rowerowa',
-                    streetNumber: '120',
-                    homeNumber: '',
-                    city: 'Lublin',
-                    postCode: '20-018',
-                    pesel: '94111423160'
+                    // street: 'Rowerowa',
+                    // streetNumber: '120',
+                    // homeNumber: '',
+                    // city: 'Lublin',
+                    // postCode: '20-018',
+                    // pesel: '94111423160',
+                    birthDate: '1994-02-14',
+                    policyNumber: 1
                 },
                 {
                     id: 1,
                     firstName: 'Barbara',
                     lastName: 'Kozłowska',
-                    street: 'Dyliżansowa',
-                    streetNumber: '133',
-                    homeNumber: '4',
-                    city: 'Warszawa',
-                    postCode: '03-136',
-                    pesel: '66111933943'
+                    // street: 'Dyliżansowa',
+                    // streetNumber: '133',
+                    // homeNumber: '4',
+                    // city: 'Warszawa',
+                    // postCode: '03-136',
+                    // pesel: '66111933943'
+                    birthDate: '1983-01-19',
+                    policyNumber: 1
+                    
                 },
                 {
                     id: 2,
                     firstName: 'Lucjan',
                     lastName: 'Adamski',
-                    street: 'Darwina Karola',
-                    streetNumber: '12',
-                    homeNumber: '',
-                    city: 'Jaworzno',
-                    postCode: '43-603',
-                    pesel: '66122741513'
+                    // street: 'Darwina Karola',
+                    // streetNumber: '12',
+                    // homeNumber: '',
+                    // city: 'Jaworzno',
+                    // postCode: '43-603',
+                    // pesel: '66122741513'
+                    birthDate: '1939-11-14',
+                    policyNumber: 1
                 },
                 {
                     id: 3,
                     firstName: 'Marcelina',
                     lastName: 'Kwiatkowska',
-                    street: 'Gryfińska',
-                    streetNumber: '24',
-                    homeNumber: '3',
-                    city: 'Szczecin',
-                    postCode: '70-806',
-                    pesel: '66052391084'
+                    // street: 'Gryfińska',
+                    // streetNumber: '24',
+                    // homeNumber: '3',
+                    // city: 'Szczecin',
+                    // postCode: '70-806',
+                    // pesel: '66052391084',
+                    birthDate: '1978-02-16',
+                    policyNumber: 1
                 },
                 {
                     id: 4,
                     firstName: 'Wacława',
                     lastName: 'Król',
-                    street: 'Wodospadowa',
-                    streetNumber: '46',
-                    homeNumber: '13',
-                    city: 'Łódź',
-                    postCode: '92-018',
-                    pesel: '42081489824'
+                    // street: 'Wodospadowa',
+                    // streetNumber: '46',
+                    // homeNumber: '13',
+                    // city: 'Łódź',
+                    // postCode: '92-018',
+                    // pesel: '42081489824',
+                    birthDate: '1945-11-01',
+                    policyNumber: 1
                 },
                 {
                     id: 5,
                     firstName: 'Ryszard',
                     lastName: 'Grabowski',
-                    street: 'Zygmunta Augusta',
-                    streetNumber: '140',
-                    homeNumber: '153',
-                    city: 'Gdynia',
-                    postCode: '81-359',
-                    pesel: '93111210552'
+                    // street: 'Zygmunta Augusta',
+                    // streetNumber: '140',
+                    // homeNumber: '153',
+                    // city: 'Gdynia',
+                    // postCode: '81-359',
+                    // pesel: '93111210552',
+                    birthDate: '1969-12-23',
+                    policyNumber: 1
                 },
                 {
                     id: 6,
                     firstName: 'Teofil',
                     lastName: 'Wysocki',
-                    street: 'Willowa',
-                    streetNumber: '79',
-                    homeNumber: '15',
-                    city: 'Będzin',
-                    postCode: '42-506',
-                    pesel: '71061271674'
+                    // street: 'Willowa',
+                    // streetNumber: '79',
+                    // homeNumber: '15',
+                    // city: 'Będzin',
+                    // postCode: '42-506',
+                    // pesel: '71061271674',
+                    birthDate:'1956-06-01',
+                    policyNumber: 1
                 },
                 {
                     id: 7,
                     firstName: 'Ewa',
                     lastName: 'Wysocka',
-                    street: 'Podchorążych',
-                    streetNumber: '17',
-                    homeNumber: '23',
-                    city: 'Warszawa',
-                    postCode: '03-136',
-                    pesel: '97022541060'
+                    // street: 'Podchorążych',
+                    // streetNumber: '17',
+                    // homeNumber: '23',
+                    // city: 'Warszawa',
+                    // postCode: '03-136',
+                    // pesel: '97022541060',
+                    birthDate:'1999-08-29',
+                    policyNumber: 1
                 },
+                {
+                    id: 8,
+                    firstName: 'Ryszard',
+                    lastName: 'Kowalski',
+                    // street: 'Podchorążych',
+                    // streetNumber: '17',
+                    // homeNumber: '23',
+                    // city: 'Warszawa',
+                    // postCode: '03-136',
+                    // pesel: '97022541060',
+                    birthDate:'1920-01-01',
+                    policyNumber: 1
+
+                },
+                                {
+                    id: 7,
+                    firstName: 'Jan',
+                    lastName: 'Kowalski',
+                    // street: 'Podchorążych',
+                    // streetNumber: '17',
+                    // homeNumber: '23',
+                    // city: 'Warszawa',
+                    // postCode: '03-136',
+                    // pesel: '97022541060',
+                    birthDate:'1920-01-02',
+                    policyNumber: 2
+                },
+
             ];
 
             let policiesList = [
@@ -221,12 +266,14 @@ export let fakeBackendProvider = {
                         id: cachedList.length,
                         firstName: client.name,
                         lastName: client.lastname,
-                        street: client.street,
-                        streetNumber: client.streetNumber,
-                        homeNumber: client.homeNumber,
-                        city: client.city,
-                        postCode: client.postCode,
-                        pesel: client.pesel
+                        // street: client.street,
+                        // streetNumber: client.streetNumber,
+                        // homeNumber: client.homeNumber,
+                        // city: client.city,
+                        // postCode: client.postCode,
+                        // pesel: client.pesel,
+                        birthDate: client.birthDate,
+                        policyNumber: client.policyNumber
                     });
                     cookieService.putObject('clientsListCache', cachedList);
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
@@ -273,12 +320,14 @@ export let fakeBackendProvider = {
                         id: cachedList[i].id,
                         firstName: client.firstName,
                         lastName: client.lastName,
-                        street: client.street,
-                        streetNumber: client.streetNumber,
-                        homeNumber: client.homeNumber,
-                        city: client.city,
-                        postCode: client.postCode,
-                        pesel: client.pesel
+                        // street: client.street,
+                        // streetNumber: client.streetNumber,
+                        // homeNumber: client.homeNumber,
+                        // city: client.city,
+                        // postCode: client.postCode,
+                        // pesel: client.pesel
+                        birthDate: client.birthDate,
+                        policyNumber: client.policyNumber
                     };
                     cookieService.putObject('clientsListCache', cachedList);
                     var currentClient = cachedList[params.index];

@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !street.valid }">
+        <!--<div class="form-group" [ngClass]="{ 'has-error':f.submitted && !street.valid }">
             <label class="control-label col-sm-2" for="street">Ulica</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="street" name="street" placeholder="Ulica"
@@ -80,7 +80,17 @@
                        (ngModelChange)="client.pesel.valid = true"/>
                 <div *ngIf="f.submitted && !pesel.valid" class="help-block">Pole Pesel jest wymagane</div>
             </div>
+        </div>-->
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !birthDate.valid }">
+            <label class="control-label col-sm-2" for="birthDate">Data urodzenia:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="birthDate" placeholder="rrrr-mm-dd" name="birthDate"
+                       [(ngModel)]="client.birthDate" #birthDate="ngModel" required
+                       (ngModelChange)="client.birthDate.valid = true"/>
+                <div *ngIf="f.submitted && !birthDate.valid" class="help-block">Pole Data urodzenia jest wymagane</div>
+            </div>
         </div>
+
 
         <div class="form-group">
             <button [disabled]="loading" class="btn btn-default btn-lg right">

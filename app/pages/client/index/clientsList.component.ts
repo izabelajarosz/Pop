@@ -20,9 +20,11 @@ export class ClientsListComponent implements OnInit {
         {name: 'firstName', label: 'Imię', state: true},
         {name: 'lastName', label: 'Nazwisko', state: true},
         {name: 'street', label: 'Ulica', state: true},
-        {name: 'pesel', label: "Pesel", state: true}
+        // {name: 'pesel', label: "Pesel", state: true}
     ];
-    filteredFields = ['firstName', 'lastName', 'street', 'pesel'];
+    // filteredFields = ['firstName', 'lastName', 'street', 'pesel'];
+    filteredFields = ['firstName', 'lastName', 'street'];
+    
 
     constructor(private userService: UserService, private clientService: ClientService) { }
 

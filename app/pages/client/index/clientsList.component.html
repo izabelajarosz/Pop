@@ -23,12 +23,13 @@
                 <th>#</th>
                 <th>Imię</th>
                 <th>Nazwisko</th>
-                <th>Ulica</th>
+                <!--<th>Ulica</th>
                 <th>Numer</th>
                 <th>Mieszkanie</th>
                 <th>Miasto</th>
                 <th>Kod pocztowy</th>
-                <th>Pesel</th>
+                <th>Pesel</th>-->
+                <th>Data urodzin</th>
                 <th>Liczba polis</th>
                 <th></th>
             </tr>
@@ -38,15 +39,15 @@
                 <th scope="row">{{i + 1}}</th>
                 <td>{{client.firstName}}</td>
                 <td>{{client.lastName}}</td>
-                <td>{{client.street}}</td>
+                <!--<td>{{client.street}}</td>
                 <td class="centered">{{client.streetNumber}}</td>
                 <td class="centered">{{client.homeNumber}}</td>
                 <td>{{client.postCode}}</td>
                 <td>{{client.city}}</td>
-                <td>{{client.pesel}}</td>
-                <!--<td class="centered"><i class="fa fa-trash" aria-hidden="true" (click)="removeClient(i)"></i></td>-->
-                <td class="centered"><i class="fa fa-eye" aria-hidden="true" [routerLink]="['/clients/' + i]"></i>
+                <td>{{client.pesel}}</td>-->
+                <td>{{client.birthDate}}</td>
                 <td class="centered">{{client.policyNumber}}</td>
+                <td class="centered"><i class="fa fa-eye" aria-hidden="true" [routerLink]="['/clients/' + i]"></i>
                 </td>
             </tr>
             </tbody>
