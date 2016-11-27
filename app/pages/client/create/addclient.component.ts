@@ -1,20 +1,17 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { User } from '../_models/user';
-import { Client } from '../_models/client';
-import { UserService } from '../_services/user.service';
-import { ClientService } from '../_services/client.service';
+import { Client } from '../../../_models/client';
+import { ClientService } from '../../../_services/client.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
     moduleId: module.id,
     templateUrl: 'addclient.component.html',
-    providers: [UserService, ClientService]
+    providers: [ClientService]
 })
 
 export class AddClientComponent implements OnInit {
-    users: User[] = [];
     clients: Client[] = [];
     model: any = {};
     loading = false;
@@ -22,8 +19,7 @@ export class AddClientComponent implements OnInit {
 
     constructor( 
     private router: Router,
-    private userService: UserService, 
-    private clientService: ClientService, 
+    private clientService: ClientService,
     private formBuilder: FormBuilder
     ) { }
 
@@ -32,8 +28,6 @@ export class AddClientComponent implements OnInit {
 
     addClient(){
         this.loading = true;
-        console.log(this.model);
-        console.log("submitted");
         this.clientService.addClient(this.model)
         .subscribe(result => {
                 if (result === true) {

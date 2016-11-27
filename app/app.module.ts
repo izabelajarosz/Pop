@@ -14,12 +14,16 @@ import { routing } from './app.routing';
 
 import { AuthGuard } from './_guards/index';
 import { AuthenticationService, UserService } from './_services/index';
-import { LoginComponent } from './login/index';
-import { HomeComponent } from './home/home.component';
-import {AddClientComponent} from './addClient/addclient.component';
-import {ShowClientComponent} from './showClient/showclient.component'
+import { LoginComponent } from './pages/auth/login/index';
+import { HomeComponent } from './pages/home/home.component';
+import { AddClientComponent } from './pages/client/create/addclient.component';
+import { ShowClientComponent } from './pages/client/show/showclient.component';
+import { EditClientComponent } from './pages/client/edit/editclient.component';
+import { ClientsListComponent } from './pages/client/index/clientsList.component';
+import { NavbarComponent } from './partials/general/navbar.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {OrderBy} from "./_directives/orderBy";
+import { FilterTablePipe } from  './_pipes/filterTable.pipe';
 
 @NgModule({
     imports: [
@@ -35,7 +39,11 @@ import {OrderBy} from "./_directives/orderBy";
         HomeComponent,
         AddClientComponent,
         ShowClientComponent,
-        OrderBy
+        EditClientComponent,
+        ClientsListComponent,
+        NavbarComponent,
+        OrderBy,
+        FilterTablePipe
     ],
     providers: [
         AuthGuard,
