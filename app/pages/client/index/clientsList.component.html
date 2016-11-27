@@ -29,6 +29,7 @@
                 <th>Miasto</th>
                 <th>Kod pocztowy</th>
                 <th>Pesel</th>
+                <th>Liczba polis</th>
                 <th></th>
             </tr>
             </thead>
@@ -43,8 +44,9 @@
                 <td>{{client.postCode}}</td>
                 <td>{{client.city}}</td>
                 <td>{{client.pesel}}</td>
-                <td class="centered"><i class="fa fa-trash" aria-hidden="true" (click)="removeClient(i)"></i></td>
+                <!--<td class="centered"><i class="fa fa-trash" aria-hidden="true" (click)="removeClient(i)"></i></td>-->
                 <td class="centered"><i class="fa fa-eye" aria-hidden="true" [routerLink]="['/clients/' + i]"></i>
+                <td class="centered">{{client.policyNumber}}</td>
                 </td>
             </tr>
             </tbody>
