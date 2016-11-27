@@ -1,0 +1,38 @@
+<div>
+    <div>
+        <input type="text" [(ngModel)]="filterValue">
+    </div>
+
+    <div>
+        <table class="table table-sm table-striped">
+            <thead>
+            <tr>
+                <th>#ID</th>
+                <th>Nazwa</th>
+                <th>ID klienta</th>
+                <th>Czas</th>
+                <th>Wartość</th>
+                <th>Data podpisania</th>
+                <th>Data rozpoczęcia</th>
+                <th>Data zakończenia</th>
+                <th colspan="2"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let policy of policies | filter : filteredFields : filterValue">
+                <th scope="row">{{ policy.id }}</th>
+                <td>{{policy.name}}</td>
+                <td>{{policy.userId}}</td>
+                <td>{{policy.time}}</td>
+                <td>{{policy.value}}</td>
+                <td>{{policy.signDate}}</td>
+                <td>{{policy.beginningDate}}</td>
+                <td>{{policy.endingDate}}</td>
+                <td class="centered"><i class="fa fa-trash" aria-hidden="true" (click)="removeClient(policy.id)"></i></td>
+                <td class="centered"><i class="fa fa-eye" aria-hidden="true" [routerLink]="['/policies/' + policy.id]"></i>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

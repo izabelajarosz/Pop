@@ -6,11 +6,12 @@
         <li class="list-group-item"><strong>Nazwisko: </strong>{{client.lastName}}</li>
         <li class="list-group-item"><strong>Ulica: </strong>{{client.street}} {{client.streetNumber}}</li>
         <li class="list-group-item"><strong>Numer mieszkania: </strong>{{client.homeNumber}}</li>
-
         <li class="list-group-item"><strong>Miasto: </strong> {{client.postCode}} {{client.city}}</li>
-
         <li class="list-group-item"><strong>Pesel: </strong>{{client.pesel}}</li>
-
     </ul>
 
+
+    <h3>Polisy</h3>
+
+    <policies [policies]="policies"></policies>
 </div>

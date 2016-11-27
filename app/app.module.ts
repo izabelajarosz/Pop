@@ -14,16 +14,22 @@ import { routing } from './app.routing';
 
 import { AuthGuard } from './_guards/index';
 import { AuthenticationService, UserService } from './_services/index';
+
 import { LoginComponent } from './pages/auth/login/index';
 import { HomeComponent } from './pages/home/home.component';
+
 import { AddClientComponent } from './pages/client/create/addclient.component';
 import { ShowClientComponent } from './pages/client/show/showclient.component';
 import { EditClientComponent } from './pages/client/edit/editclient.component';
 import { ClientsListComponent } from './pages/client/index/clientsList.component';
+
+import { PoliciesListComponent } from './pages/policy/index/policiesList.component';
+
 import { NavbarComponent } from './partials/general/navbar.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {OrderBy} from "./_directives/orderBy";
 import { FilterTablePipe } from  './_pipes/filterTable.pipe';
+import {PoliciesTableComponent} from "./partials/policy/policiesTable.component";
 
 @NgModule({
     imports: [
@@ -41,7 +47,11 @@ import { FilterTablePipe } from  './_pipes/filterTable.pipe';
         ShowClientComponent,
         EditClientComponent,
         ClientsListComponent,
+
         NavbarComponent,
+        PoliciesTableComponent,
+
+        PoliciesListComponent,
         OrderBy,
         FilterTablePipe
     ],

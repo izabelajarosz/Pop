@@ -101,8 +101,58 @@ export let fakeBackendProvider = {
                     pesel: '97022541060'
                 },
             ];
-            if (cookieService.get('clientsListCache') == null)
+
+            let policiesList = [
+                {
+                    id: 1,
+                    userId: 1,
+                    name: 'Testowa polisa 1',
+                    time: 'Whatever it is..',
+                    value: 20000,
+                    signDate: '2016.01.30 16:10',
+                    beginningDate: '2016.02.01 00:00',
+                    endingDate: '2017.02.01 23:59'
+                },
+                {
+                    id: 2,
+                    userId: 2,
+                    name: 'Polisa na psa',
+                    time: 'Whatever it is..',
+                    value: 15000,
+                    signDate: '2015.01.30 16:10',
+                    beginningDate: '2015.02.01 00:00',
+                    endingDate: '2019.02.01 23:59'
+                },
+                {
+                    id: 3,
+                    userId: 1,
+                    name: 'Polisa na dom',
+                    time: 'Whatever it is..',
+                    value: 52000,
+                    signDate: '2014.03.30 16:10',
+                    beginningDate: '2014.04.01 00:00',
+                    endingDate: '2027.07.01 23:59'
+                },
+                {
+                    id: 4,
+                    userId: 3,
+                    name: 'Polisa na życie',
+                    time: 'Whatever it is..',
+                    value: 39999,
+                    signDate: '2016.09.30 16:10',
+                    beginningDate: '2016.10.01 00:00',
+                    endingDate: '2047.12.01 23:59'
+                }
+            ];
+
+            if (cookieService.get('clientsListCache') == null) {
                 cookieService.putObject('clientsListCache', clientsList);
+            }
+
+            // cookieService.putObject('policiesListCache', policiesList);
+            if (cookieService.get('policiesListCache') == null) {
+                cookieService.putObject('policiesListCache', policiesList);
+            }
 
             setTimeout(() => {
                 // Login
@@ -235,6 +285,36 @@ export let fakeBackendProvider = {
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(
                             new ResponseOptions({status: 200, body: currentClient})
+                        ));
+                    } else {
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 401})
+                        ));
+                    }
+                }
+
+                // Get Client's policies
+                if (connection.request.url.match(/^\/api\/clients\/[0-9]+\/policies$/) && connection.request.method === RequestMethod.Get) {
+                    let params = JSON.parse(connection.request.getBody());
+                    let cachedList = JSON.parse(cookieService.get('policiesListCache'));
+                    var clientsPolicies = cachedList.filter(item => item.userId === params.id);
+
+                    if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 200, body: clientsPolicies})
+                        ));
+                    } else {
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 401})
+                        ));
+                    }
+                }
+
+                // Get policies list
+                if (connection.request.url.endsWith('/api/policies') && connection.request.method === RequestMethod.Get) {
+                    if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 200, body: JSON.parse(cookieService.get('policiesListCache'))})
                         ));
                     } else {
                         connection.mockRespond(new Response(
