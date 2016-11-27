@@ -24,8 +24,7 @@ export class ShowClientComponent implements OnInit {
             this.clientService.showClient(this.id).subscribe(
                 client => {
                     this.clients = [client];
-                    console.log(this.clients);
-                })
+                });
         });
     }
 

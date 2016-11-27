@@ -31,7 +31,7 @@ export class AddClientComponent implements OnInit {
         this.clientService.addClient(this.model)
         .subscribe(result => {
                 if (result === true) {
-                    this.router.navigate(['/']);
+                    this.router.navigate(['/clients']);
                 } else {
                     this.error = 'Wystąpił nieoczekiwany błąd.';
                     this.loading = false;

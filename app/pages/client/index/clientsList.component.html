@@ -2,7 +2,7 @@
 
 <div class="padding-top container ">
     <div class="col-sm-9">
-        <a class=" right btn btn-info" [routerLink]="['/addclient']">
+        <a class=" right btn btn-info" [routerLink]="['/clients/create']">
             <i class="fa fa-plus" aria-hidden="true"></i> Dodaj
         </a>
 
@@ -44,7 +44,7 @@
                 <td>{{client.city}}</td>
                 <td>{{client.pesel}}</td>
                 <td class="centered"><i class="fa fa-trash" aria-hidden="true" (click)="removeClient(i)"></i></td>
-                <td class="centered"><i class="fa fa-eye" aria-hidden="true" [routerLink]="['/showclient/' + i]"></i>
+                <td class="centered"><i class="fa fa-eye" aria-hidden="true" [routerLink]="['/clients/' + i]"></i>
                 </td>
             </tr>
             </tbody>

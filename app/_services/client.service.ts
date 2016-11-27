@@ -17,50 +17,43 @@ export class ClientService {
         let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.get('/api/clientsList', options)
+        return this.http.get('/api/clients', options)
             .map((response: Response) => response.json());
     }
 
      removeClient(index, clientsList): Observable<Client[]> {
         let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
-        let options = new RequestOptions({ headers: headers, body:  JSON.stringify({ index: index}) });
+        let options = new RequestOptions({ headers: headers, body:  { index: index} });
 
-        return this.http.get('/api/removeClient', options)
+        return this.http.delete('/api/clients', options)
              .map((response: Response) => response.json());
     }
 
      addClient(Client): Observable<boolean> {
          let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
-         let options = new RequestOptions({ headers: headers, body:  JSON.stringify({ client: Client}) });
-         return this.http.get('/api/addClient', options)
+         let options = new RequestOptions({ headers: headers, body:  { client: Client} });
+         return this.http.post('/api/clients', options)
             .map((response: Response) => {
-                if (response.status) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return !!response.status;
             });
     }
 
      editClient(Client): Observable<boolean> {
+         let id = Client.id;
          let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
-         let options = new RequestOptions({ headers: headers, body:  JSON.stringify({ client: Client}) });
+         let options = new RequestOptions({ headers: headers, body:  { client: Client} });
 
-         return this.http.get('/api/editClient', options)
+         return this.http.patch('/api/clients/' + id, options)
             .map((response: Response) => {
-                if (response.status) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return !!response.status;
             });
     }
 
     showClient(index):Observable<Client>{
         let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
-        let options = new RequestOptions({ headers: headers, body:  JSON.stringify({ index: index}) });
+        let options = new RequestOptions({ headers: headers, body:  { index: index} });
 
-        return this.http.get('/api/showClient', options)
+        return this.http.get('/api/clients/' + index, options)
              .map((response: Response) => response.json());
     }
 }
