@@ -4,7 +4,7 @@
 
     <div *ngIf="active">
         <a [routerLink]="['/clients/' + id + '/edit']"><i class="fa fa-pencil" aria-hidden="true"></i> Edytuj</a>
-        <a (click)="removeClient()"><i class="fa fa-trash" aria-hidden="true"></i> Usuń</a>
+        <a (click)="showModal()"><i class="fa fa-trash" aria-hidden="true"></i> Usuń</a>
 
         <ul class="list-group">
             <li class="list-group-item"><strong>Imię: </strong>{{client.firstName}}</li>

@@ -22,12 +22,12 @@ export class ClientService {
             .map((response: Response) => response.json());
     }
 
-     removeClient(index): Observable<Client[]> {
+     removeClient(id): Observable<boolean> {
         let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
-        let options = new RequestOptions({ headers: headers, body:  { index: index} });
+        let options = new RequestOptions({ headers: headers, body:  { id: id} });
 
         return this.http.delete('/api/clients', options)
-             .map((response: Response) => response.json());
+             .map((response: Response) => response.json().exists);
     }
 
      addClient(Client): Observable<boolean> {

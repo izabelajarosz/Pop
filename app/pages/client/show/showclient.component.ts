@@ -1,10 +1,10 @@
-import {Component, OnInit,  ViewContainerRef, ViewEncapsulation} from "@angular/core";
+import {Component, OnInit, ViewContainerRef} from "@angular/core";
 import {Client} from "../../../_models/client";
 import {ClientService} from "../../../_services/client.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Policy} from "../../../_models/policy";
-import { Overlay } from 'angular2-modal';
-import { Modal } from 'angular2-modal/plugins/bootstrap';
+import {Overlay} from "angular2-modal";
+import {Modal} from "angular2-modal/plugins/bootstrap";
 
 @Component({
     moduleId: module.id,
@@ -21,15 +21,14 @@ export class ShowClientComponent implements OnInit {
     error = '';
     active = true;
 
-    constructor(
-        private router: Router,
-        private route: ActivatedRoute,
-        private clientService: ClientService,
-        overlay: Overlay,
-        vcRef: ViewContainerRef,
-        public modal: Modal) {
+    constructor(private router: Router,
+                private route: ActivatedRoute,
+                private clientService: ClientService,
+                overlay: Overlay,
+                vcRef: ViewContainerRef,
+                public modal: Modal) {
         overlay.defaultViewContainer = vcRef;
- }
+    }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
@@ -46,32 +45,33 @@ export class ShowClientComponent implements OnInit {
         });
     }
 
-showModal(){
-let dialog = this.modal.confirm()
-    .title('')
-    .body('Czy chcesz usunąć klienta: ' + this.client.firstName + ' ' + this.client.lastName + ' ?')
-    .cancelBtn('Anuluj')
-    .okBtn('Usuń')
-    .isBlocking(true)
-    .open()
-    .then(dialog =>
-        {
-            dialog.result.then((returnData) => {
-                this.removeClient();
-            }, () => {
-                // on dismiss/cancel
+    showModal() {
+        let dialog = this.modal.confirm()
+            .title('')
+            .body('Czy chcesz usunąć klienta: ' + this.client.firstName + ' ' + this.client.lastName + ' ?')
+            .cancelBtn('Anuluj')
+            .okBtn('Usuń')
+            .isBlocking(true)
+            .open()
+            .then(dialog => {
+                dialog.result.then((returnData) => {
+                    this.removeClient();
+                }, () => {
+                    // on dismiss/cancel
+                });
             });
-        });
-}
-    removeClient(){
-    console.log('a');
+    }
+
+    removeClient() {
         this.clientService.removeClient(this.id)
             .subscribe(result => {
-                if(result === true){
+                if (result === true) {
                     this.success = 'Klient został usunięty';
                     this.active = false;
                     setTimeout(
-                        () => {this.router.navigate(['/clients'])},
+                        () => {
+                            this.router.navigate(['/clients'])
+                        },
                         500
                     );
                 }

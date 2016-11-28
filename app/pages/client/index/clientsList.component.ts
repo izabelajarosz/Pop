@@ -39,13 +39,6 @@ export class ClientsListComponent implements OnInit {
             });
     }
 
-    removeClient(index){
-        this.clientService.removeClient(index)
-            .subscribe(clients => {
-                this.clients = clients;
-            });
-    }
-
     changeFilteredFields() {
         let fields = this.availableFilters.filter(item => item.state);
 

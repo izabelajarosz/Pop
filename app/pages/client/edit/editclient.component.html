@@ -1,7 +1,7 @@
 ﻿<navbar></navbar>
 
 <div class="padding-top">
-     <div *ngIf="success" class="alert alert-success">{{success}}</div>
+    <div *ngIf="success" class="alert alert-success">{{success}}</div>
 
     <form name="form" class="form-horizontal" (ngSubmit)="f.form.valid && editClient()" #f="ngForm" novalidate>
 
@@ -12,8 +12,12 @@
                        placeholder="Imię" pattern="[a-zA-Z łąćężźóń]*"
                        [(ngModel)]="client.firstName" #firstName="ngModel" required
                        (ngModelChange)="client.firstName.valid = true"/>
-                <div *ngIf="f.submitted && !firstName.valid && f.form.controls['firstName'].hasError('required')" class="help-block">Pole Imię jest wymagane </div>
-                <div *ngIf="f.submitted && !firstName.valid && !f.form.controls['firstName'].hasError('required')" class="help-block">Należy wprowadzić prawidłowe dane </div>
+                <div *ngIf="f.submitted && !firstName.valid && f.form.controls['firstName'].hasError('required')"
+                     class="help-block">Pole Imię jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !firstName.valid && !f.form.controls['firstName'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
             </div>
         </div>
 
@@ -21,11 +25,16 @@
             <label class="control-label col-sm-2" for="lastName">Nazwisko</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Nazwisko"
-                       [(ngModel)]="client.lastName" #lastName="ngModel" required pattern="[a-zA-Z łąćężźóń]*" minlength="3"
+                       [(ngModel)]="client.lastName" #lastName="ngModel" required pattern="[a-zA-Z łąćężźóń]*"
+                       minlength="3"
                        (ngModelChange)="client.lastName.valid = true"/>
-                <div *ngIf="f.submitted && !lastName.valid && f.form.controls['lastName'].hasError('required')" class="help-block">Pole Nazwisko jest wymagane</div>
-                <div *ngIf="f.submitted && !lastName.valid && !f.form.controls['lastName'].hasError('required')" class="help-block">Należy wprowadzić prawidłowe dane </div>
-            
+                <div *ngIf="f.submitted && !lastName.valid && f.form.controls['lastName'].hasError('required')"
+                     class="help-block">Pole Nazwisko jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !lastName.valid && !f.form.controls['lastName'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+
             </div>
         </div>
         <!--<div class="form-group" [ngClass]="{ 'has-error':f.submitted && !street.valid }">
@@ -79,35 +88,34 @@
             <label class="control-label col-sm-2" for="pesel">Pesel:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="pesel" placeholder="Pesel" name="pesel"
-                       [(ngModel)]="client.pesel" #pesel="ngModel" required  pattern="[0-9]*" minlength="11"
+                       [(ngModel)]="client.pesel" #pesel="ngModel" required pattern="[0-9]*" minlength="11"
                        (ngModelChange)="client.pesel.valid = true; peselLengthValidation()"/>
-                 <div *ngIf="f.submitted && !pesel.valid && f.form.controls['pesel'].hasError('required')" class="help-block">Pole Pesel jest wymagane</div>
-                <div *ngIf="f.submitted && !f.form.controls['pesel'].hasError('required') && !f.form.controls['pesel'].hasError('pattern') && (f.form.controls['pesel'].hasError('minlength') || !peselLengthValid)" class="help-block">Pole Pesel powinno składać się dokładnie z 11 cyfr</div>
-                <div *ngIf="f.submitted && !pesel.valid && !f.form.controls['pesel'].hasError('required') && f.form.controls['pesel'].hasError('pattern')" class="help-block">Należy wprowadzić prawidłowy numer pesel</div>
-                
+                <div *ngIf="f.submitted && !pesel.valid && f.form.controls['pesel'].hasError('required')"
+                     class="help-block">Pole Pesel jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !f.form.controls['pesel'].hasError('required') && !f.form.controls['pesel'].hasError('pattern') && (f.form.controls['pesel'].hasError('minlength') || !peselLengthValid)"
+                     class="help-block">Pole Pesel powinno składać się dokładnie z 11 cyfr
+                </div>
+                <div *ngIf="f.submitted && !pesel.valid && !f.form.controls['pesel'].hasError('required') && f.form.controls['pesel'].hasError('pattern')"
+                     class="help-block">Należy wprowadzić prawidłowy numer pesel
+                </div>
+
             </div>
         </div>
         <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !birthDate.valid }">
             <label class="control-label col-sm-2" for="birthDate">Data urodzenia:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="birthDate" placeholder="rrrr-mm-dd" name="birthDate"
-                       [(ngModel)]="client.birthDate" #birthDate="ngModel" required  minlength="10" maxlength="10"
+                       [(ngModel)]="client.birthDate" #birthDate="ngModel" required minlength="10" maxlength="10"
                        (ngModelChange)="client.birthDate.valid = true" convertDate/>
-                <div *ngIf="f.submitted && !birthDate.valid && f.form.controls['birthDate'].hasError('required')" class="help-block">Pole Data Urodzenia jest wymagane </div>
-                <div *ngIf="f.submitted && !birthDate.valid && !f.form.controls['birthDate'].hasError('required') && (f.form.controls['birthDate'].hasError('minlength') || f.form.controls['birthDate'].hasError('maxlength')) " class="help-block">Należy wprowadzić datę w formacie rrrr-MM-dd </div>
+                <div *ngIf="f.submitted && !birthDate.valid && f.form.controls['birthDate'].hasError('required')"
+                     class="help-block">Pole Data Urodzenia jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !birthDate.valid && !f.form.controls['birthDate'].hasError('required') && (f.form.controls['birthDate'].hasError('minlength') || f.form.controls['birthDate'].hasError('maxlength')) "
+                     class="help-block">Należy wprowadzić datę w formacie rrrr-MM-dd
+                </div>
             </div>
         </div>
-        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !birthDate.valid }">
-            <label class="control-label col-sm-2" for="birthDate">Data urodzenia:</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="birthDate" placeholder="rrrr-mm-dd" name="birthDate"
-                       [(ngModel)]="client.birthDate" #birthDate="ngModel" required
-                       (ngModelChange)="client.birthDate.valid = true"/>
-                <div *ngIf="f.submitted && !birthDate.valid" class="help-block">Pole Data urodzenia jest wymagane</div>
-            </div>
-        </div>
-
-
 
         <div class="form-group">
             <button [disabled]="loading" class="btn btn-default btn-lg right">
