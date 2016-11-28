@@ -8,7 +8,7 @@
             <label class="control-label col-sm-2" for="firstName">Imię</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" ng-minlength="3" id="firstName" name="firstName"
-                       placeholder="Imię" pattern="[a-zA-Z łąćężźó]*"
+                       placeholder="Imię" pattern="[a-zA-Z łąćężźóń]*"
                        [(ngModel)]="client.firstName" #firstName="ngModel" required
                        (ngModelChange)="client.firstName.valid = true"/>
                 <div *ngIf="f.submitted && !firstName.valid && f.form.controls['firstName'].hasError('required')" class="help-block">Pole Imię jest wymagane </div>
@@ -20,9 +20,11 @@
             <label class="control-label col-sm-2" for="lastName">Nazwisko</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Nazwisko"
-                       [(ngModel)]="client.lastName" #lastName="ngModel" required pattern="[a-zA-Z łąćężźó]*" minlength="3"
+                       [(ngModel)]="client.lastName" #lastName="ngModel" required pattern="[a-zA-Z łąćężźóń]*" minlength="3"
                        (ngModelChange)="client.lastName.valid = true"/>
                 <div *ngIf="f.submitted && !lastName.valid && f.form.controls['lastName'].hasError('required')" class="help-block">Pole Nazwisko jest wymagane</div>
+                <div *ngIf="f.submitted && !lastName.valid && !f.form.controls['lastName'].hasError('required')" class="help-block">Należy wprowadzić prawidłowe dane </div>
+            
             </div>
         </div>
         <!--<div class="form-group" [ngClass]="{ 'has-error':f.submitted && !street.valid }">
@@ -72,14 +74,14 @@
             </div>
         </div>-->
 
-        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !pesel.valid }">
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && (!pesel.valid || !peselLengthValid) }">
             <label class="control-label col-sm-2" for="pesel">Pesel:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="pesel" placeholder="Pesel" name="pesel"
-                       [(ngModel)]="client.pesel" #pesel="ngModel" required  pattern="[0-9]*" minlength="11" maxlength="11"
-                       (ngModelChange)="client.pesel.valid = true"/>
+                       [(ngModel)]="client.pesel" #pesel="ngModel" required  pattern="[0-9]*" minlength="11"
+                       (ngModelChange)="client.pesel.valid = true; peselLengthValidation()"/>
                  <div *ngIf="f.submitted && !pesel.valid && f.form.controls['pesel'].hasError('required')" class="help-block">Pole Pesel jest wymagane</div>
-                <div *ngIf="f.submitted && !pesel.valid && !f.form.controls['pesel'].hasError('required') && !f.form.controls['pesel'].hasError('pattern') && (f.form.controls['pesel'].hasError('minlength') || f.form.controls['pesel'].hasError('maxlength'))" class="help-block">Pole Pesel powinno składać się dokładnie z 11 cyfr</div>
+                <div *ngIf="f.submitted && !f.form.controls['pesel'].hasError('required') && !f.form.controls['pesel'].hasError('pattern') && (f.form.controls['pesel'].hasError('minlength') || !peselLengthValid)" class="help-block">Pole Pesel powinno składać się dokładnie z 11 cyfr</div>
                 <div *ngIf="f.submitted && !pesel.valid && !f.form.controls['pesel'].hasError('required') && f.form.controls['pesel'].hasError('pattern')" class="help-block">Należy wprowadzić prawidłowy numer pesel</div>
                 
             </div>

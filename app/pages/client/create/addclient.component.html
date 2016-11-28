@@ -1,13 +1,15 @@
 ﻿<navbar></navbar>
 
 <div class="padding-top">
+     <div *ngIf="success" class="alert alert-success">{{success}}</div>
+    
 
-    <form name="form" class="form-horizontal" (ngSubmit)="f.form.valid && addClient()" #f="ngForm" novalidate>
+    <form *ngIf="active" name="form" class="form-horizontal" (ngSubmit)="f.form.valid && addClient()" #f="ngForm" novalidate>
         <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !name.valid }">
             <label class="control-label col-sm-2" for="name">Imię</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" minlength="3" id="name" name="name" placeholder="Imię"
-                       [(ngModel)]="model.name" #name="ngModel" required pattern="[a-zA-Z łąćężźó]*" (ngModelChange)="model.name.valid = true"/>
+                       [(ngModel)]="model.name" #name="ngModel" required pattern="[a-zA-Z łąćężźóń]*" (ngModelChange)="model.name.valid = true"/>
                 <div *ngIf="f.submitted && !name.valid && f.form.controls['name'].hasError('required')" class="help-block">Pole Imię jest wymagane </div>
                 <div *ngIf="f.submitted && !name.valid && !f.form.controls['name'].hasError('required')" class="help-block">Należy wprowadzić prawidłowe dane </div>
             </div>
@@ -16,7 +18,7 @@
             <label class="control-label col-sm-2" for="lastname">Nazwisko</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Nazwisko"
-                       [(ngModel)]="model.lastname" #lastname="ngModel" required pattern="[a-zA-Z łąćężźó]*" minlength="3"
+                       [(ngModel)]="model.lastname" #lastname="ngModel" required pattern="[a-zA-Z łąćężźóń]*" minlength="3"
                        (ngModelChange)="model.lastname.valid = true"/>
                 <div *ngIf="f.submitted && !lastname.valid && f.form.controls['lastname'].hasError('required')" class="help-block">Pole Nazwisko jest wymagane</div>
                 <div *ngIf="f.submitted && !lastname.valid && !f.form.controls['lastname'].hasError('required')" class="help-block">Należy wprowadzić prawidłowe dane</div>
@@ -103,7 +105,7 @@
                     <div class="rect4"></div>
                     <div class="rect5"></div>
                 </div>
-                <span *ngIf="!loading">Zapisz</span>
+                <span *ngIf="!loading">Akceptuj</span>
             </button>
 
 

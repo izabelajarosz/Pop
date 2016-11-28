@@ -204,8 +204,25 @@ export let fakeBackendProvider = {
             }
 
             setTimeout(() => {
-                // Login
-                if (connection.request.url.endsWith('/api/login') && connection.request.method === RequestMethod.Post) {
+
+                if (connection.request.url.endsWith('/api/clientExists') && connection.request.method === RequestMethod.Get) {
+                    let params = JSON.parse(connection.request.getBody());
+                    let pesel = params.pesel;
+                    let cachedList = JSON.parse(cookieService.get('clientsListCache'));
+                    let exists = false;
+                    for(var i = 0; i < cachedList.length; i++){
+                        if (cachedList[i].pesel == pesel){
+                            exists = true;
+                            break;
+                        }
+
+                    }
+                    connection.mockRespond(new Response(
+                            new ResponseOptions({status: 200, body: {exists: exists}})
+                        ));
+                }
+
+                if (connection.request.url.endsWith('/api/authenticate') && connection.request.method === RequestMethod.Post) {
                     let params = JSON.parse(connection.request.getBody());
 
                     let userValid = testUsers.filter(user => {

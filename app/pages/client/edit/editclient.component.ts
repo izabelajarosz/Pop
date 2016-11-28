@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 @Component({
     moduleId: module.id,
     templateUrl: 'editclient.component.html',
-    providers: [ClientService]
+    providers: [ClientService],
 })
 
 export class EditClientComponent implements OnInit {
@@ -16,6 +16,7 @@ export class EditClientComponent implements OnInit {
     error = '';
     id: number;
     private sub: any;
+    peselLengthValid = true;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -39,18 +40,28 @@ export class EditClientComponent implements OnInit {
     }
 
     editClient() {
-        this.loading = true;
+         if(this.client.pesel.substring(0,6) != this.client.birthDate.replace(/\D/g,'').substring(2,8)){
+            this.error = "Pole Pesel nie zgadza się z podaną datą urodzenia. Użytkownik nie został zapisany.";
+        }
+        else if(this.peselLengthValid){
+            this.loading = true;
 
-        this.clientService.editClient(this.client)
-            .subscribe(result => {
-                if (result === true) {
-                    this.router.navigate(['/clients']);
-                } else {
-                    this.error = 'Wystąpił nieoczekiwany błąd.';
-                    this.loading = false;
-                }
-            });
+            this.clientService.editClient(this.client)
+                .subscribe(result => {
+                    if (result === true) {
+                        this.router.navigate(['/']);
+                    } else {
+                        this.error = 'Wystąpił nieoczekiwany błąd.';
+                        this.loading = false;
+                    }
+                });
+        }
 
     }
+
+    peselLengthValidation(){
+        this.peselLengthValid =  this.client.pesel.length <= 11;
+    }
+    
 
 }

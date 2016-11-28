@@ -38,7 +38,18 @@ export class ClientService {
                 return !!response.status;
             });
     }
-
+    clientExists(pesel): Observable<boolean>{
+        let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
+         let options = new RequestOptions({ headers: headers, body:  JSON.stringify({ pesel: pesel}) });
+         return this.http.get('/api/clientExists', options)
+            .map((response: Response) => {
+                if (response.status && !response.json().exists) {
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+    }
      editClient(Client): Observable<boolean> {
          let id = Client.id;
          let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
