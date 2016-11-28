@@ -19,7 +19,7 @@ export class ClientsListComponent implements OnInit {
     availableFilters = [
         {name: 'firstName', label: 'Imię', state: true},
         {name: 'lastName', label: 'Nazwisko', state: true},
-        {name: 'street', label: 'Ulica', state: true},
+        // {name: 'street', label: 'Ulica', state: true},
         {name: 'pesel', label: "Pesel", state: true}
     ];
      filteredFields = ['firstName', 'lastName', 'pesel'];
@@ -34,13 +34,6 @@ export class ClientsListComponent implements OnInit {
             });
 
         this.clientService.getClients()
-            .subscribe(clients => {
-                this.clients = clients;
-            });
-    }
-
-    removeClient(index){
-        this.clientService.removeClient(index)
             .subscribe(clients => {
                 this.clients = clients;
             });

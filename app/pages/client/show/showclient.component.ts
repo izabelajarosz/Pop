@@ -1,10 +1,11 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, ViewContainerRef} from "@angular/core";
+import {Client} from "../../../_models/client";
 import {ClientService} from "../../../_services/client.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Client} from "../../../_models/client";
 import {Policy} from "../../../_models/policy";
+import {Overlay} from "angular2-modal";
+import {Modal} from "angular2-modal/plugins/bootstrap";
 
-import { Modal } from 'angular2-modal/plugins/bootstrap';
 @Component({
     moduleId: module.id,
     templateUrl: 'showclient.component.html',
@@ -16,11 +17,17 @@ export class ShowClientComponent implements OnInit {
     policies: Policy[] = [];
     id: number;
     private sub: any;
+    success = '';
+    error = '';
+    active = true;
 
-    constructor(
-        private router: Router,
-        private route: ActivatedRoute,
-        private clientService: ClientService) {
+    constructor(private router: Router,
+                private route: ActivatedRoute,
+                private clientService: ClientService,
+                overlay: Overlay,
+                vcRef: ViewContainerRef,
+                public modal: Modal) {
+        overlay.defaultViewContainer = vcRef;
     }
 
     ngOnInit() {
@@ -38,10 +45,40 @@ export class ShowClientComponent implements OnInit {
         });
     }
 
-    removeClient() {
-        this.clientService.removeClient(this.id)
-            .subscribe(clients => {
-                this.router.navigate(['/clients']);
+    showModal() {
+        let dialog = this.modal.confirm()
+            .title('')
+            .body('Czy chcesz usunąć klienta: ' + this.client.firstName + ' ' + this.client.lastName + ' ?')
+            .cancelBtn('Anuluj')
+            .okBtn('Usuń')
+            .isBlocking(true)
+            .open()
+            .then(dialog => {
+                dialog.result.then((returnData) => {
+                    this.removeClient();
+                }, () => {
+                    // on dismiss/cancel
+                });
             });
     }
+
+    removeClient() {
+        this.clientService.removeClient(this.id)
+            .subscribe(result => {
+                if (result === true) {
+                    this.success = 'Klient został usunięty';
+                    this.active = false;
+                    setTimeout(
+                        () => {
+                            this.router.navigate(['/clients'])
+                        },
+                        500
+                    );
+                }
+                else {
+                    this.error = 'Wystąpił nieoczekiwany błąd.';
+                }
+            });
+    }
+
 }

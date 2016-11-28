@@ -194,6 +194,7 @@ export let fakeBackendProvider = {
                 }
             ];
 
+            // cookieService.putObject('clientsListCache', clientsList);
             if (cookieService.get('clientsListCache') == null) {
                 cookieService.putObject('clientsListCache', clientsList);
             }
@@ -204,8 +205,25 @@ export let fakeBackendProvider = {
             }
 
             setTimeout(() => {
-                // Login
-                if (connection.request.url.endsWith('/api/login') && connection.request.method === RequestMethod.Post) {
+
+                if (connection.request.url.endsWith('/api/clientExists') && connection.request.method === RequestMethod.Get) {
+                    let params = JSON.parse(connection.request.getBody());
+                    let pesel = params.pesel;
+                    let cachedList = JSON.parse(cookieService.get('clientsListCache'));
+                    let exists = false;
+                    for(var i = 0; i < cachedList.length; i++){
+                        if (cachedList[i].pesel == pesel){
+                            exists = true;
+                            break;
+                        }
+
+                    }
+                    connection.mockRespond(new Response(
+                            new ResponseOptions({status: 200, body: {exists: exists}})
+                        ));
+                }
+
+                if (connection.request.url.endsWith('/api/authenticate') && connection.request.method === RequestMethod.Post) {
                     let params = JSON.parse(connection.request.getBody());
 
                     let userValid = testUsers.filter(user => {
@@ -259,12 +277,14 @@ export let fakeBackendProvider = {
                 if (connection.request.url.endsWith('/api/clients') && connection.request.method === RequestMethod.Delete) {
                     let params = JSON.parse(connection.request.getBody());
                     let cachedList = JSON.parse(cookieService.get('clientsListCache'));
-                    cachedList.splice(params.index, 1);
+                    let index = getClientIndex(params.id)
+                    if(index != null)
+                        cachedList.splice(index, 1);
                     cookieService.putObject('clientsListCache', cachedList);
 
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: cachedList})
+                            new ResponseOptions({status: 200, body: {exists: true}})
                         ));
                     } else {
                         connection.mockRespond(new Response(

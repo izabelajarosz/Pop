@@ -8,6 +8,8 @@ import { fakeBackendProvider } from './_helpers/index';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions } from '@angular/http';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { ModalModule } from 'angular2-modal';
+import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 
 import { AppComponent }  from './app.component';
 import { routing } from './app.routing';
@@ -27,7 +29,7 @@ import { PoliciesListComponent } from './pages/policy/index/policiesList.compone
 
 import { NavbarComponent } from './partials/general/navbar.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import {OrderBy} from "./_directives/orderBy";
+import { ConvertDateDirective } from "./_directives/convertDate.directive";
 import { FilterTablePipe } from  './_pipes/filterTable.pipe';
 import {PoliciesTableComponent} from "./partials/policy/policiesTable.component";
 import {ShowPolicyComponent} from "./pages/policy/show/showPolicy.component";
@@ -38,7 +40,9 @@ import {ShowPolicyComponent} from "./pages/policy/show/showPolicy.component";
         FormsModule,
         HttpModule,
         routing,
-        ReactiveFormsModule
+        ReactiveFormsModule, 
+        ModalModule.forRoot(),
+        BootstrapModalModule
     ],
     declarations: [
         AppComponent,
@@ -53,9 +57,9 @@ import {ShowPolicyComponent} from "./pages/policy/show/showPolicy.component";
         ShowPolicyComponent,
 
         NavbarComponent,
-        PoliciesTableComponent,
-        OrderBy,
-        FilterTablePipe
+        FilterTablePipe,
+        ConvertDateDirective,
+        PoliciesTableComponent
     ],
     providers: [
         AuthGuard,
@@ -64,7 +68,7 @@ import {ShowPolicyComponent} from "./pages/policy/show/showPolicy.component";
         CookieService,
         fakeBackendProvider,
         MockBackend,
-        BaseRequestOptions,
+        BaseRequestOptions
     ],
     bootstrap: [AppComponent]
 })

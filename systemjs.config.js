@@ -25,7 +25,8 @@
             // other libraries
             'rxjs': 'npm:rxjs',
             'angular2-in-memory-web-api': 'npm:angular2-in-memory-web-api',
-            'angular2-cookie':            'npm:angular2-cookie'
+            'angular2-cookie':            'npm:angular2-cookie',
+            'angular2-modal': 'npm:angular2-modal'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -43,7 +44,10 @@
             'angular2-cookie':{
                  main: 'core.js',  
                  defaultExtension: 'js' 
-            }
+            },
+            'angular2-modal':              { defaultExtension: 'js', main: 'bundles/angular2-modal.umd' },
+            'angular2-modal/plugins/bootstrap':  { defaultExtension: 'js', main: '../../bundles/angular2-modal.bootstrap.umd' }
         }
     });
+
 })(this);
