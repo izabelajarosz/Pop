@@ -1,9 +1,10 @@
 import {Component, OnInit} from "@angular/core";
 import {ClientService} from "../../../_services/client.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Client} from "../../../_models/client";
 import {Policy} from "../../../_models/policy";
 
+import { Modal } from 'angular2-modal/plugins/bootstrap';
 @Component({
     moduleId: module.id,
     templateUrl: 'showclient.component.html',
@@ -16,7 +17,10 @@ export class ShowClientComponent implements OnInit {
     id: number;
     private sub: any;
 
-    constructor(private route: ActivatedRoute, private clientService: ClientService) {
+    constructor(
+        private router: Router,
+        private route: ActivatedRoute,
+        private clientService: ClientService) {
     }
 
     ngOnInit() {
@@ -34,4 +38,10 @@ export class ShowClientComponent implements OnInit {
         });
     }
 
+    removeClient() {
+        this.clientService.removeClient(this.id)
+            .subscribe(clients => {
+                this.router.navigate(['/clients']);
+            });
+    }
 }

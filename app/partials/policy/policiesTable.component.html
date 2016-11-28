@@ -15,7 +15,7 @@
                 <th>Data podpisania</th>
                 <th>Data rozpoczęcia</th>
                 <th>Data zakończenia</th>
-                <th colspan="2"></th>
+                <th colspan="1"></th>
             </tr>
             </thead>
             <tbody>
@@ -28,8 +28,9 @@
                 <td>{{policy.signDate}}</td>
                 <td>{{policy.beginningDate}}</td>
                 <td>{{policy.endingDate}}</td>
-                <td class="centered"><i class="fa fa-trash" aria-hidden="true" (click)="removeClient(policy.id)"></i></td>
-                <td class="centered"><i class="fa fa-eye" aria-hidden="true" [routerLink]="['/policies/' + policy.id]"></i>
+                <!--<td class="centered"><i class="fa fa-trash" aria-hidden="true" (click)="removeClient(policy.id)"></i></td>-->
+                <td class="centered">
+                    <i class="fa fa-eye" aria-hidden="true" [routerLink]="['/policies/' + policy.id]"></i>
                 </td>
             </tr>
             </tbody>
