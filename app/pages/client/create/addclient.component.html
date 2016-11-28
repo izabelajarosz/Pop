@@ -2,7 +2,7 @@
 
 <div class="padding-top">
      <div *ngIf="success" class="alert alert-success">{{success}}</div>
-    
+     
 
     <form *ngIf="active" name="form" class="form-horizontal" (ngSubmit)="f.form.valid && addClient()" #f="ngForm" novalidate>
         <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !name.valid }">

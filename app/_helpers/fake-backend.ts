@@ -276,12 +276,20 @@ export let fakeBackendProvider = {
                 if (connection.request.url.endsWith('/api/clients') && connection.request.method === RequestMethod.Delete) {
                     let params = JSON.parse(connection.request.getBody());
                     let cachedList = JSON.parse(cookieService.get('clientsListCache'));
-                    cachedList.splice(params.index, 1);
+                    let index = null;
+                    for(var i = 0; i < cachedList.length; i++){
+                        if (cachedList[i].id == params.id){
+                            index = i;
+                            break;
+                        }
+                    }
+                    if(index != null)
+                        cachedList.splice(index, 1);
                     cookieService.putObject('clientsListCache', cachedList);
 
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: cachedList})
+                            new ResponseOptions({status: 200})
                         ));
                     } else {
                         connection.mockRespond(new Response(
