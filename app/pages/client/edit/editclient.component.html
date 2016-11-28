@@ -1,6 +1,7 @@
 ﻿<navbar></navbar>
 
 <div class="padding-top">
+     <div *ngIf="success" class="alert alert-success">{{success}}</div>
 
     <form name="form" class="form-horizontal" (ngSubmit)="f.form.valid && editClient()" #f="ngForm" novalidate>
 

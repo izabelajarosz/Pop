@@ -32,6 +32,8 @@ export class AddClientComponent implements OnInit {
         this.loading = false;
         this.active = false;
     }
+
+
     addClient(){
         if(this.model.pesel.substring(0,6) != this.model.birthDate.replace(/\D/g,'').substring(2,8)){
             this.error = "Pole Pesel nie zgadza się z podaną datą urodzenia. Użytkownik nie został zapisany.";

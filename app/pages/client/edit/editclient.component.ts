@@ -17,6 +17,7 @@ export class EditClientComponent implements OnInit {
     id: number;
     private sub: any;
     peselLengthValid = true;
+    success= '';
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -32,6 +33,10 @@ export class EditClientComponent implements OnInit {
         });
     }
 
+ resetForm(){
+        this.loading = false;
+        this.error = '';
+    }
     fetchClient(): void {
         this.clientService.showClient(this.id).subscribe(
             client => {
@@ -49,7 +54,9 @@ export class EditClientComponent implements OnInit {
             this.clientService.editClient(this.client)
                 .subscribe(result => {
                     if (result === true) {
-                        this.router.navigate(['/']);
+                        this.resetForm();
+                        this.success = 'Użytkownik został zapisany.';
+                        //this.router.navigate(['/']);
                     } else {
                         this.error = 'Wystąpił nieoczekiwany błąd.';
                         this.loading = false;
