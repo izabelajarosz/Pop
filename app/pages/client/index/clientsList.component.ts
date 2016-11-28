@@ -22,7 +22,7 @@ export class ClientsListComponent implements OnInit {
         {name: 'street', label: 'Ulica', state: true},
         {name: 'pesel', label: "Pesel", state: true}
     ];
-     filteredFields = ['firstName', 'lastName', 'street', 'pesel'];
+     filteredFields = ['firstName', 'lastName', 'pesel'];
     
 
     constructor(private userService: UserService, private clientService: ClientService) { }
@@ -40,7 +40,7 @@ export class ClientsListComponent implements OnInit {
     }
 
     removeClient(index){
-        this.clientService.removeClient(index, this.clients)
+        this.clientService.removeClient(index)
             .subscribe(clients => {
                 this.clients = clients;
             });

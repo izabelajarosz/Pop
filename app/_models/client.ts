@@ -7,7 +7,7 @@ export class Client {
     // homeNumber: string;
     // city: string;
     // postCode: string;
-     pesel: string;
-       birthDate: string;
-       policyNumber: number;
+    pesel: string;
+    birthDate: string;
+    policiesCount: number;
 }

@@ -8,6 +8,7 @@ import { ShowClientComponent } from './pages/client/show/showclient.component';
 import { EditClientComponent } from './pages/client/edit/editclient.component';
 
 import { PoliciesListComponent } from './pages/policy/index/policiesList.component';
+import { ShowPolicyComponent } from './pages/policy/show/showPolicy.component';
 
 import { AuthGuard } from './_guards/index';
 
@@ -21,6 +22,7 @@ const appRoutes: Routes = [
     { path: 'clients/:id/edit', component: EditClientComponent, canActivate: [AuthGuard]},
     // Policies
     { path: 'policies', component: PoliciesListComponent, canActivate: [AuthGuard] },
+    { path: 'policies/:id', component: ShowPolicyComponent, canActivate: [AuthGuard] },
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
 ];

@@ -9,7 +9,11 @@ export let fakeBackendProvider = {
         let cookieService = cookie;
         backend.connections.subscribe((connection: MockConnection) => {
             let sessionKey = '8348sdkj983jsdk9jsd';
-            let testUser = {username: 'Admin', password: 'Admin', firstName: 'Jan', lastName: 'Kowalski'};
+            // let testUser = {username: 'Admin', password: 'Admin', firstName: 'Jan', lastName: 'Kowalski'};
+            let testUsers = [
+                {username: 'Admin', password: 'Admin', firstName: 'Jan', lastName: 'Kowalski'},
+                {username: 'RYKOW', password: 'Hasło123!@#', firstName: 'Jan', lastName: 'Kowalski'}
+            ];
 
             let clientsList = [
                 {
@@ -23,7 +27,7 @@ export let fakeBackendProvider = {
                     // postCode: '20-018',
                     pesel: '94111423160',
                     birthDate: '1994-02-14',
-                    policyNumber: 1
+                    policiesCount: 1
                 },
                 {
                     id: 1,
@@ -36,7 +40,7 @@ export let fakeBackendProvider = {
                     // postCode: '03-136',
                     pesel: '66111933943',
                     birthDate: '1983-01-19',
-                    policyNumber: 1
+                    policiesCount: 1
                     
                 },
                 {
@@ -50,7 +54,7 @@ export let fakeBackendProvider = {
                     // postCode: '43-603',
                     // pesel: '66122741513'
                     birthDate: '1939-11-14',
-                    policyNumber: 1
+                    policiesCount: 1
                 },
                 {
                     id: 3,
@@ -63,7 +67,7 @@ export let fakeBackendProvider = {
                     // postCode: '70-806',
                     pesel: '66052391084',
                     birthDate: '1978-02-16',
-                    policyNumber: 1
+                    policiesCount: 1
                 },
                 {
                     id: 4,
@@ -76,7 +80,7 @@ export let fakeBackendProvider = {
                     // postCode: '92-018',
                     pesel: '42081489824',
                     birthDate: '1945-11-01',
-                    policyNumber: 1
+                    policiesCount: 1
                 },
                 {
                     id: 5,
@@ -89,7 +93,7 @@ export let fakeBackendProvider = {
                     // postCode: '81-359',
                     pesel: '93111210552',
                     birthDate: '1969-12-23',
-                    policyNumber: 1
+                    policiesCount: 1
                 },
                 {
                     id: 6,
@@ -102,7 +106,7 @@ export let fakeBackendProvider = {
                     // postCode: '42-506',
                     pesel: '71061271674',
                     birthDate:'1956-06-01',
-                    policyNumber: 1
+                    policiesCount: 1
                 },
                 {
                     id: 7,
@@ -115,7 +119,7 @@ export let fakeBackendProvider = {
                     // postCode: '03-136',
                     pesel: '97022541060',
                     birthDate:'1999-08-29',
-                    policyNumber: 1
+                    policiesCount: 1
                 },
                 {
                     id: 8,
@@ -128,7 +132,7 @@ export let fakeBackendProvider = {
                     // postCode: '03-136',
                     pesel: '20010104499',
                     birthDate:'1920-01-01',
-                    policyNumber: 1
+                    policiesCount: 1
 
                 },
                                 {
@@ -142,7 +146,7 @@ export let fakeBackendProvider = {
                     // postCode: '03-136',
                     pesel: '20010204521',
                     birthDate:'1920-01-02',
-                    policyNumber: 2
+                    policiesCount: 2
                 },
 
             ];
@@ -203,7 +207,12 @@ export let fakeBackendProvider = {
                 // Login
                 if (connection.request.url.endsWith('/api/login') && connection.request.method === RequestMethod.Post) {
                     let params = JSON.parse(connection.request.getBody());
-                    if (params.username === testUser.username && params.password === testUser.password) {
+
+                    let userValid = testUsers.filter(user => {
+                        return params.username === user.username && params.password === user.password;
+                    }).length === 1;
+
+                    if (userValid) {
                         connection.mockRespond(new Response(
                             new ResponseOptions({status: 200, body: {token: sessionKey}})
                         ));
@@ -217,7 +226,7 @@ export let fakeBackendProvider = {
                 if (connection.request.url.match('/api/users') && connection.request.method === RequestMethod.Get) {
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: [testUser]})
+                            new ResponseOptions({status: 200, body: [testUsers]})
                         ));
                     } else {
                         connection.mockRespond(new Response(
@@ -228,9 +237,16 @@ export let fakeBackendProvider = {
 
                 // Get clients list
                 if (connection.request.url.endsWith('/api/clients') && connection.request.method === RequestMethod.Get) {
+                    let clients = JSON.parse(cookieService.get('clientsListCache'));
+                    let cachedPolicies = JSON.parse(cookieService.get('policiesListCache'));
+
+                    for (let client of clients) {
+                        client.policiesCount = cachedPolicies.filter(item => item.userId === client.id).length;
+                    }
+
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: JSON.parse(cookieService.get('clientsListCache'))})
+                            new ResponseOptions({status: 200, body: clients})
                         ));
                     } else {
                         connection.mockRespond(new Response(
@@ -245,6 +261,7 @@ export let fakeBackendProvider = {
                     let cachedList = JSON.parse(cookieService.get('clientsListCache'));
                     cachedList.splice(params.index, 1);
                     cookieService.putObject('clientsListCache', cachedList);
+
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(
                             new ResponseOptions({status: 200, body: cachedList})
@@ -273,7 +290,7 @@ export let fakeBackendProvider = {
                         // postCode: client.postCode,
                         pesel: client.pesel,
                         birthDate: client.birthDate,
-                        policyNumber: client.policyNumber
+                        policiesCount: client.policiesCount
                     });
                     cookieService.putObject('clientsListCache', cachedList);
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
@@ -292,6 +309,7 @@ export let fakeBackendProvider = {
                     let params = JSON.parse(connection.request.getBody());
                     let cachedList = JSON.parse(cookieService.get('clientsListCache'));
                     var currentClient = cachedList[params.index];
+
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(
                             new ResponseOptions({status: 200, body: currentClient})
@@ -327,7 +345,7 @@ export let fakeBackendProvider = {
                         // postCode: client.postCode,
                         pesel: client.pesel,
                         birthDate: client.birthDate,
-                        policyNumber: client.policyNumber
+                        policiesCount: client.policiesCount
                     };
                     cookieService.putObject('clientsListCache', cachedList);
                     var currentClient = cachedList[params.index];
@@ -370,6 +388,91 @@ export let fakeBackendProvider = {
                             new ResponseOptions({status: 401})
                         ));
                     }
+                }
+
+                // Show Policy
+                if (connection.request.url.match(/^\/api\/policies\/[0-9]+$/) && connection.request.method === RequestMethod.Get) {
+                    let params = JSON.parse(connection.request.getBody());
+                    var currentPolicy = getPolicy(params.id);
+
+                    if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 200, body: currentPolicy})
+                        ));
+                    } else {
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 401})
+                        ));
+                    }
+                }
+
+                // Delete Policy
+                if (connection.request.url.endsWith('/api/policies') && connection.request.method === RequestMethod.Delete) {
+                    let params = JSON.parse(connection.request.getBody());
+                    let cachedList = JSON.parse(cookieService.get('policiesListCache'));
+                    let policyIndex = getPolicyIndex(params.id);
+
+                    if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey && policyIndex !== null) {
+
+                        cachedList.splice(policyIndex, 1);
+                        cookieService.putObject('policiesListCache', cachedList);
+
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 200, body: cachedList})
+                        ));
+                    } else {
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 401})
+                        ));
+                    }
+                }
+
+                function getPolicy (id) {
+                    let policies = JSON.parse(cookieService.get('policiesListCache'));
+
+                    for (let policy of policies) {
+                        if (policy.id === id) {
+                            return policy;
+                        }
+                    }
+
+                    return null;
+                }
+
+                function getPolicyIndex (id) {
+                    let policies = JSON.parse(cookieService.get('policiesListCache'));
+
+                    for (let i=0; i < policies.length; i++) {
+                        if (policies[i].id === id) {
+                            return i;
+                        }
+                    }
+
+                    return null;
+                }
+
+                function getClient (id) {
+                    let clients = JSON.parse(cookieService.get('clientsListCache'));
+
+                    for (let client of clients) {
+                        if (client.id === id) {
+                            return client;
+                        }
+                    }
+
+                    return null;
+                }
+
+                function getClientIndex (id) {
+                    let clients = JSON.parse(cookieService.get('clientsListCache'));
+
+                    for (let i=0; i < clients.length; i++) {
+                        if (clients[i].id === id) {
+                            return i;
+                        }
+                    }
+
+                    return null;
                 }
 
             }, 500);

@@ -22,7 +22,7 @@ export class ClientService {
             .map((response: Response) => response.json());
     }
 
-     removeClient(index, clientsList): Observable<Client[]> {
+     removeClient(index): Observable<Client[]> {
         let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers, body:  { index: index} });
 

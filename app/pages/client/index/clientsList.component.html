@@ -46,7 +46,8 @@
                 <td>{{client.city}}</td>-->
                 <td>{{client.pesel}}</td>
                 <td>{{client.birthDate}}</td>
-                <td class="centered">{{client.policyNumber}}</td>
+                <td class="centered">{{client.policiesCount}}</td>
+                <!--<td class="centered"><i class="fa fa-trash" aria-hidden="true" (click)="removeClient(i)"></i></td>-->
                 <td class="centered"><i class="fa fa-eye" aria-hidden="true" [routerLink]="['/clients/' + i]"></i>
                 </td>
             </tr>

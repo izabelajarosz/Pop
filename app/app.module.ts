@@ -30,6 +30,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {OrderBy} from "./_directives/orderBy";
 import { FilterTablePipe } from  './_pipes/filterTable.pipe';
 import {PoliciesTableComponent} from "./partials/policy/policiesTable.component";
+import {ShowPolicyComponent} from "./pages/policy/show/showPolicy.component";
 
 @NgModule({
     imports: [
@@ -48,10 +49,11 @@ import {PoliciesTableComponent} from "./partials/policy/policiesTable.component"
         EditClientComponent,
         ClientsListComponent,
 
+        PoliciesListComponent,
+        ShowPolicyComponent,
+
         NavbarComponent,
         PoliciesTableComponent,
-
-        PoliciesListComponent,
         OrderBy,
         FilterTablePipe
     ],
