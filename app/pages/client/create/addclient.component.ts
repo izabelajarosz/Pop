@@ -26,7 +26,7 @@ export class AddClientComponent implements OnInit {
     private formBuilder: FormBuilder,
     ) { }
 
-    OnInit(){}
+    ngOnInit() {}
     resetForm(){
         this.model = {};
         this.loading = false;
