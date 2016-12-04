@@ -12,14 +12,22 @@
             <!--<li class="list-group-item"><strong>Ulica: </strong>{{client.street}} {{client.streetNumber}}</li>-->
             <!--<li class="list-group-item"><strong>Numer mieszkania: </strong>{{client.homeNumber}}</li>-->
             <!--<li class="list-group-item"><strong>Miasto: </strong> {{client.postCode}} {{client.city}}</li>-->
+            <!--<li class="list-group-item"><strong>Miasto: </strong> {{client.postCode}} {{client.city}}</li>-->
             <li class="list-group-item"><strong>Pesel: </strong>{{client.pesel}}</li>
             <li class="list-group-item"><strong>Data urodzenia: </strong> {{client.birthDate}}</li>
+            <li class="list-group-item"><strong>Stan konta: </strong> {{client.accountBalance}}</li>
         </ul>
     </div>
 
     <div *ngIf="error" class="alert alert-danger">{{error}}</div>
 
+    <h3>Mienie</h3>
+    <a [routerLink]="['/clients/' + id + '/properties/create']"><i class="fa fa-plus" aria-hidden="true"></i> Dodaj mienie</a>
+
+    <properties [properties]="properties"></properties>
+
     <h3>Polisy</h3>
+    <a [routerLink]="['/clients/' + id + '/policies/create']"><i class="fa fa-plus" aria-hidden="true"></i> Dodaj polisę</a>
 
     <policies [policies]="policies"></policies>
 </div>

@@ -1,9 +1,6 @@
-﻿import {Component, OnInit} from "@angular/core";
-import {Router} from "@angular/router";
+﻿import {Component} from "@angular/core";
 import {Client} from "../../../_models/client";
 import {ClientService} from "../../../_services/client.service";
-import {FormBuilder} from "@angular/forms";
-// import { ConvertDatePipe } from '../../../_pipes/convertDate.pipe';
 
 @Component({
     moduleId: module.id,
@@ -11,7 +8,7 @@ import {FormBuilder} from "@angular/forms";
     providers: [ClientService]
 })
 
-export class AddClientComponent implements OnInit {
+export class AddClientComponent {
     clients: Client[] = [];
     model: any = {};
     loading = false;
@@ -19,12 +16,7 @@ export class AddClientComponent implements OnInit {
     success = '';
     active = true;
 
-    constructor(private router: Router,
-                private clientService: ClientService,
-                private formBuilder: FormBuilder) {
-    }
-
-    ngOnInit() {
+    constructor(private clientService: ClientService) {
     }
 
     resetForm() {

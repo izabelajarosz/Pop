@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {Policy} from "../../_models/policy";
 
 @Component({
@@ -7,7 +7,7 @@ import {Policy} from "../../_models/policy";
     selector: 'policies'
 })
 
-export class PoliciesTableComponent  {
+export class PoliciesTableComponent {
 
     @Input() policies: Array<Policy>;
 

@@ -4,57 +4,57 @@ import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map'
 
 import { AuthenticationService } from './index';
-import { Policy } from '../_models/policy';
+import { Property } from '../_models/property';
 
 @Injectable()
-export class PolicyService {
+export class PropertyService {
     constructor(
         private http: Http,
         private authenticationService: AuthenticationService) {
     }
 
-    getPolicies(): Observable<Policy[]> {
+    getProperties(): Observable<Property[]> {
         let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.get('/api/policies', options)
+        return this.http.get('/api/properties', options)
             .map((response: Response) => response.json());
     }
 
-     removePolicy(id): Observable<Policy[]> {
+     removeProperty(id): Observable<Property[]> {
         let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers, body:  { id: id} });
 
-        return this.http.delete('/api/policies', options)
+        return this.http.delete('/api/properties', options)
              .map((response: Response) => response.json());
     }
 
-     addPolicy(Policy): Observable<boolean> {
+     addProperty(Property): Observable<boolean> {
          let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
-         let options = new RequestOptions({ headers: headers, body:  { policy: Policy} });
+         let options = new RequestOptions({ headers: headers, body:  { property: Property} });
 
-         return this.http.post('/api/policies', options, options)
+         return this.http.post('/api/properties', options, options)
             .map((response: Response) => {
                 return !!response.status;
             });
     }
 
-     editPolicy(Policy): Observable<boolean> {
-         let id = Policy.id;
+     editProperty(Property): Observable<boolean> {
+         let id = Property.id;
          let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
-         let options = new RequestOptions({ headers: headers, body:  { policy: Policy} });
+         let options = new RequestOptions({ headers: headers, body:  { property: Property} });
 
-         return this.http.patch('/api/policies/' + id, options, options)
+         return this.http.patch('/api/properties/' + id, options, options)
             .map((response: Response) => {
                 return !!response.status;
             });
     }
 
-    showPolicy(id):Observable<Policy>{
+    showProperty(id):Observable<Property>{
         let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers, body:  { id: id} });
 
-        return this.http.get('/api/policies/' + id, options)
+        return this.http.get('/api/properties/' + id, options)
              .map((response: Response) => response.json());
     }
 }

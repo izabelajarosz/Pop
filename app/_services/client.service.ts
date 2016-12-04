@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map'
 import { AuthenticationService } from './index';
 import { Client } from '../_models/client';
 import {Policy} from "../_models/policy";
+import {Property} from "../_models/property";
 
 @Injectable()
 export class ClientService {
@@ -32,40 +33,39 @@ export class ClientService {
 
      addClient(Client): Observable<boolean> {
          let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
-         let options = new RequestOptions({ headers: headers, body:  { client: Client} });
-         return this.http.post('/api/clients', options)
+         let options = new RequestOptions({ headers: headers, body: { client: Client} });
+
+         return this.http.post('/api/clients', options, options)
             .map((response: Response) => {
                 return !!response.status;
             });
     }
+
     clientExists(pesel): Observable<boolean>{
         let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
-         let options = new RequestOptions({ headers: headers, body:  JSON.stringify({ pesel: pesel}) });
+         let options = new RequestOptions({ headers: headers, body: { pesel: pesel} });
          return this.http.get('/api/clientExists', options)
             .map((response: Response) => {
-                if (response.status && !response.json().exists) {
-                    return false;
-                } else {
-                    return true;
-                }
+                return !(response.status && !response.json().exists);
             });
     }
+
      editClient(Client): Observable<boolean> {
          let id = Client.id;
          let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
          let options = new RequestOptions({ headers: headers, body:  { client: Client} });
 
-         return this.http.patch('/api/clients/' + id, options)
+         return this.http.patch('/api/clients/' + id, options, options)
             .map((response: Response) => {
                 return !!response.status;
             });
     }
 
-    showClient(index):Observable<Client>{
+    showClient(id):Observable<Client>{
         let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
-        let options = new RequestOptions({ headers: headers, body:  { index: index} });
+        let options = new RequestOptions({ headers: headers, body:  { id: id} });
 
-        return this.http.get('/api/clients/' + index, options)
+        return this.http.get('/api/clients/' + id, options)
              .map((response: Response) => response.json());
     }
 
@@ -74,6 +74,14 @@ export class ClientService {
         let options = new RequestOptions({ headers: headers, body:  { id: id} });
 
         return this.http.get('/api/clients/' + id + '/policies', options)
+            .map((response: Response) => response.json());
+    }
+
+    getProperties(id):Observable<Property[]>{
+        let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
+        let options = new RequestOptions({ headers: headers, body:  { id: id} });
+
+        return this.http.get('/api/clients/' + id + '/properties', options)
             .map((response: Response) => response.json());
     }
 }

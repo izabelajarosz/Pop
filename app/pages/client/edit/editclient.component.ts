@@ -1,8 +1,7 @@
 ﻿import {Component, OnInit} from "@angular/core";
-import {Router, ActivatedRoute} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {Client} from "../../../_models/client";
 import {ClientService} from "../../../_services/client.service";
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
     moduleId: module.id,
@@ -17,26 +16,24 @@ export class EditClientComponent implements OnInit {
     id: number;
     private sub: any;
     peselLengthValid = true;
-    success= '';
+    success = '';
 
-    constructor(private router: Router,
-                private route: ActivatedRoute,
-                private clientService: ClientService,
-                private formBuilder: FormBuilder) {
+    constructor(private route: ActivatedRoute, private clientService: ClientService) {
     }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
-            this.id = +params['id'];
+            this.id = parseInt(params['id']);
 
             this.fetchClient();
         });
     }
 
- resetForm(){
+    resetForm() {
         this.loading = false;
         this.error = '';
     }
+
     fetchClient(): void {
         this.clientService.showClient(this.id).subscribe(
             client => {
@@ -45,10 +42,10 @@ export class EditClientComponent implements OnInit {
     }
 
     editClient() {
-         if(this.client.pesel.substring(0,6) != this.client.birthDate.replace(/\D/g,'').substring(2,8)){
+        if (this.client.pesel.substring(0, 6) != this.client.birthDate.replace(/\D/g, '').substring(2, 8)) {
             this.error = "Pole Pesel nie zgadza się z podaną datą urodzenia. Użytkownik nie został zapisany.";
         }
-        else if(this.peselLengthValid){
+        else if (this.peselLengthValid) {
             this.loading = true;
 
             this.clientService.editClient(this.client)
@@ -66,9 +63,9 @@ export class EditClientComponent implements OnInit {
 
     }
 
-    peselLengthValidation(){
-        this.peselLengthValid =  this.client.pesel.length <= 11;
+    peselLengthValidation() {
+        this.peselLengthValid = this.client.pesel.length <= 11;
     }
-    
+
 
 }

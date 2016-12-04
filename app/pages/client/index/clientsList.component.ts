@@ -1,9 +1,8 @@
-import {Component, OnInit, DoCheck} from '@angular/core';
-
-import { User } from '../../../_models/user';
-import { Client } from '../../../_models/client';
-import { UserService } from '../../../_services/user.service';
-import { ClientService } from '../../../_services/client.service';
+import {Component, OnInit} from "@angular/core";
+import {User} from "../../../_models/user";
+import {Client} from "../../../_models/client";
+import {UserService} from "../../../_services/user.service";
+import {ClientService} from "../../../_services/client.service";
 
 @Component({
     moduleId: module.id,
@@ -22,10 +21,11 @@ export class ClientsListComponent implements OnInit {
         // {name: 'street', label: 'Ulica', state: true},
         {name: 'pesel', label: "Pesel", state: true}
     ];
-     filteredFields = ['firstName', 'lastName', 'pesel'];
-    
+    filteredFields = ['firstName', 'lastName', 'pesel'];
 
-    constructor(private userService: UserService, private clientService: ClientService) { }
+
+    constructor(private userService: UserService, private clientService: ClientService) {
+    }
 
     ngOnInit() {
         this.userService.getUsers()
