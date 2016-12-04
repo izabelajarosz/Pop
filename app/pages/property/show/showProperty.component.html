@@ -1,0 +1,10 @@
+<navbar></navbar>
+<div class="padding-top">
+    <!--<a [routerLink]="['/policies/' + id + '/edit']"><i class="fa fa-pencil" aria-hidden="true"></i> Edytuj</a>-->
+    <a (click)="removePolicy()"><i class="fa fa-trash" aria-hidden="true"></i> Usuń</a>
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Nazwa: </strong>{{property.name}}</li>
+        <li class="list-group-item"><strong>ID klienta: </strong><a [routerLink]="['/clients/' + property.clientId]">{{property.clientId}}</a></li>
+        <li class="list-group-item"><strong>Wartość: </strong>{{property.value}}</li>
+    </ul>
+</div>

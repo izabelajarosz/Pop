@@ -33,6 +33,10 @@ import { ConvertDateDirective } from "./_directives/convertDate.directive";
 import { FilterTablePipe } from  './_pipes/filterTable.pipe';
 import {PoliciesTableComponent} from "./partials/policy/policiesTable.component";
 import {ShowPolicyComponent} from "./pages/policy/show/showPolicy.component";
+import {PropertiesTableComponent} from "./partials/property/propertiesTable.component";
+import {PropertiesListComponent} from "./pages/property/index/propertiesList.component";
+import {ShowPropertyComponent} from "./pages/property/show/showProperty.component";
+import {AddPolicyComponent} from "./pages/policy/create/addPolicy.component";
 
 @NgModule({
     imports: [
@@ -54,12 +58,17 @@ import {ShowPolicyComponent} from "./pages/policy/show/showPolicy.component";
         ClientsListComponent,
 
         PoliciesListComponent,
+        AddPolicyComponent,
         ShowPolicyComponent,
+
+        PropertiesListComponent,
+        ShowPropertyComponent,
 
         NavbarComponent,
         FilterTablePipe,
         ConvertDateDirective,
-        PoliciesTableComponent
+        PoliciesTableComponent,
+        PropertiesTableComponent
     ],
     providers: [
         AuthGuard,

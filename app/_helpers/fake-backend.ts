@@ -17,19 +17,6 @@ export let fakeBackendProvider = {
 
             let clientsList = [
                 {
-                    id: 0,
-                    firstName: 'Jan',
-                    lastName: 'Nowak',
-                    // street: 'Rowerowa',
-                    // streetNumber: '120',
-                    // homeNumber: '',
-                    // city: 'Lublin',
-                    // postCode: '20-018',
-                    pesel: '94111423160',
-                    birthDate: '1994-02-14',
-                    policiesCount: 1
-                },
-                {
                     id: 1,
                     firstName: 'Barbara',
                     lastName: 'Kozłowska',
@@ -135,7 +122,7 @@ export let fakeBackendProvider = {
                     policiesCount: 1
 
                 },
-                                {
+                {
                     id: 7,
                     firstName: 'Jan',
                     lastName: 'Kowalski',
@@ -148,60 +135,201 @@ export let fakeBackendProvider = {
                     birthDate:'1920-01-02',
                     policiesCount: 2
                 },
-
+                {
+                    id: 10,
+                    firstName: 'Jan',
+                    lastName: 'Nowak',
+                    // street: 'Rowerowa',
+                    // streetNumber: '120',
+                    // homeNumber: '',
+                    // city: 'Lublin',
+                    // postCode: '20-018',
+                    pesel: '94111423160',
+                    birthDate: '1994-02-14',
+                    policiesCount: 1
+                }
             ];
 
             let policiesList = [
                 {
                     id: 1,
-                    userId: 1,
+                    clientId: 1,
+                    propertyId: 1,
                     name: 'Testowa polisa 1',
-                    time: 'Whatever it is..',
                     value: 20000,
-                    signDate: '2016.01.30 16:10',
-                    beginningDate: '2016.02.01 00:00',
-                    endingDate: '2017.02.01 23:59'
+                    monthlyCost: 430,
+                    signedAt: '2016.01.30 16:10',
+                    startedAt: '2016.02.01 00:00',
+                    endedAt: '2017.02.01 23:59',
+                    calculationType: 'Ręczny',
+                    additionalInformation: ''
                 },
                 {
                     id: 2,
-                    userId: 2,
+                    clientId: 2,
+                    propertyId: 2,
                     name: 'Polisa na psa',
-                    time: 'Whatever it is..',
                     value: 15000,
-                    signDate: '2015.01.30 16:10',
-                    beginningDate: '2015.02.01 00:00',
-                    endingDate: '2019.02.01 23:59'
+                    monthlyCost: 340,
+                    signedAt: '2015.01.30 16:10',
+                    startedAt: '2015.02.01 00:00',
+                    endedAt: '2019.02.01 23:59',
+                    calculationType: 'Ręczny',
+                    additionalInformation: ''
                 },
                 {
                     id: 3,
-                    userId: 1,
+                    clientId: 1,
+                    propertyId: 3,
                     name: 'Polisa na dom',
-                    time: 'Whatever it is..',
                     value: 52000,
-                    signDate: '2014.03.30 16:10',
-                    beginningDate: '2014.04.01 00:00',
-                    endingDate: '2027.07.01 23:59'
+                    monthlyCost: 600,
+                    signedAt: '2014.03.30 16:10',
+                    startedAt: '2014.04.01 00:00',
+                    endedAt: '2027.07.01 23:59',
+                    calculationType: 'Ręczny',
+                    additionalInformation: ''
                 },
                 {
                     id: 4,
-                    userId: 3,
+                    clientId: 3,
+                    propertyId: 4,
                     name: 'Polisa na życie',
-                    time: 'Whatever it is..',
                     value: 39999,
-                    signDate: '2016.09.30 16:10',
-                    beginningDate: '2016.10.01 00:00',
-                    endingDate: '2047.12.01 23:59'
+                    monthlyCost: 400,
+                    signedAt: '2016.09.30 16:10',
+                    startedAt: '2016.10.01 00:00',
+                    endedAt: '2047.12.01 23:59',
+                    calculationType: 'Ręczny',
+                    additionalInformation: ''
                 }
             ];
 
+            let propertyList = [
+                {
+                    id: 1,
+                    clientId: 2,
+                    name: 'Rower',
+                    value: 16999,
+                },
+                {
+                    id: 2,
+                    clientId: 1,
+                    name: 'Dom',
+                    value: 450000,
+                },
+                {
+                    id: 3,
+                    clientId: 1,
+                    name: 'iPhone',
+                    value: 3200,
+                },
+                {
+                    id: 4,
+                    clientId: 1,
+                    name: 'Laptop',
+                    value: 2600,
+                }
+            ];
+
+            function getPoliciesCache() {
+                console.log(cookieService.get('policiesListCache'));
+                return cookieService.get('policiesListCache');
+            }
+
+            function getPolicy (id) {
+                let policies = JSON.parse(getPoliciesCache());
+
+                for (let policy of policies) {
+                    if (policy.id === id) {
+                        return policy;
+                    }
+                }
+
+                return null;
+            }
+
+            function getPolicyIndex (id) {
+                let policies = JSON.parse(getPoliciesCache());
+
+                for (let i=0; i < policies.length; i++) {
+                    if (policies[i].id === id) {
+                        return i;
+                    }
+                }
+
+                return null;
+            }
+
+            function getProperty (id) {
+                let properties = JSON.parse(getPropertiesCache());
+
+                for (let property of properties) {
+                    if (property.id === id) {
+                        return property;
+                    }
+                }
+
+                return null;
+            }
+
+            function getPropertiesCache() {
+                return cookieService.get('propertiesListCache');
+            }
+
+            function getPropertyIndex (id) {
+                let properties = JSON.parse(getPropertiesCache());
+
+                for (let i=0; i < properties.length; i++) {
+                    if (properties[i].id === id) {
+                        return i;
+                    }
+                }
+
+                return null;
+            }
+
+            function getClientsCache() {
+                return cookieService.get('clientsListCache');
+            }
+
+            function getClient (id) {
+                let clients = JSON.parse(getClientsCache());
+
+                for (let client of clients) {
+                    if (client.id === id) {
+                        return client;
+                    }
+                }
+
+                return null;
+            }
+
+            function getClientIndex (id) {
+                let clients = JSON.parse(getClientsCache());
+
+                for (let i=0; i < clients.length; i++) {
+                    if (clients[i].id === id) {
+                        return i;
+                    }
+                }
+
+                return null;
+            }
+
             // cookieService.putObject('clientsListCache', clientsList);
-            if (cookieService.get('clientsListCache') == null) {
+            if (getClientsCache() == null) {
                 cookieService.putObject('clientsListCache', clientsList);
             }
 
             // cookieService.putObject('policiesListCache', policiesList);
-            if (cookieService.get('policiesListCache') == null) {
+            if (getPoliciesCache() == null) {
                 cookieService.putObject('policiesListCache', policiesList);
+            }
+
+            // cookieService.putObject('propertiesListCache', propertyList);
+            if (getPropertiesCache() == null) {
+                cookieService.putObject('propertiesListCache', propertyList);
             }
 
             setTimeout(() => {
@@ -209,7 +337,7 @@ export let fakeBackendProvider = {
                 if (connection.request.url.endsWith('/api/clientExists') && connection.request.method === RequestMethod.Get) {
                     let params = JSON.parse(connection.request.getBody());
                     let pesel = params.pesel;
-                    let cachedList = JSON.parse(cookieService.get('clientsListCache'));
+                    let cachedList = JSON.parse(getClientsCache());
                     let exists = false;
                     for(var i = 0; i < cachedList.length; i++){
                         if (cachedList[i].pesel == pesel){
@@ -255,11 +383,11 @@ export let fakeBackendProvider = {
 
                 // Get clients list
                 if (connection.request.url.endsWith('/api/clients') && connection.request.method === RequestMethod.Get) {
-                    let clients = JSON.parse(cookieService.get('clientsListCache'));
-                    let cachedPolicies = JSON.parse(cookieService.get('policiesListCache'));
+                    let clients = JSON.parse(getClientsCache());
+                    let cachedPolicies = JSON.parse(getPoliciesCache());
 
                     for (let client of clients) {
-                        client.policiesCount = cachedPolicies.filter(item => item.userId === client.id).length;
+                        client.policiesCount = cachedPolicies.filter(item => item.clientId === client.id).length;
                     }
 
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
@@ -276,8 +404,8 @@ export let fakeBackendProvider = {
                 // Delete client
                 if (connection.request.url.endsWith('/api/clients') && connection.request.method === RequestMethod.Delete) {
                     let params = JSON.parse(connection.request.getBody());
-                    let cachedList = JSON.parse(cookieService.get('clientsListCache'));
-                    let index = getClientIndex(params.id)
+                    let cachedList = JSON.parse(getClientsCache());
+                    let index = getClientIndex(params.id);
                     if(index != null)
                         cachedList.splice(index, 1);
                     cookieService.putObject('clientsListCache', cachedList);
@@ -296,11 +424,22 @@ export let fakeBackendProvider = {
                 // Create Client
                 if (connection.request.url.endsWith('/api/clients') && connection.request.method === RequestMethod.Post) {
                     let params = JSON.parse(connection.request.getBody());
-                    let cachedList = JSON.parse(cookieService.get('clientsListCache'));
+                    let cachedList = JSON.parse(getClientsCache());
                     let client = params.body.client;
+                    let newId = cachedList.sort((a,b) => {
+                        if (a.id > b.id) {
+                            return 1;
+                        }
+
+                        if (a.id < b.id) {
+                            return -1;
+                        }
+
+                        return 0;
+                    })[0].id + 1;
 
                     cachedList.push({
-                        id: cachedList.length,
+                        id: newId,
                         firstName: client.name,
                         lastName: client.lastname,
                         // street: client.street,
@@ -327,7 +466,7 @@ export let fakeBackendProvider = {
                 // Show Client
                 if (connection.request.url.match(/^\/api\/clients\/[0-9]+$/) && connection.request.method === RequestMethod.Get) {
                     let params = JSON.parse(connection.request.getBody());
-                    let cachedList = JSON.parse(cookieService.get('clientsListCache'));
+                    let cachedList = JSON.parse(getClientsCache());
                     var currentClient = cachedList[params.index];
 
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
@@ -344,7 +483,7 @@ export let fakeBackendProvider = {
                 // Update client
                 if (connection.request.url.match(/^\/api\/clients\/[0-9]+$/) && connection.request.method === RequestMethod.Patch) {
                     let params = JSON.parse(connection.request.getBody());
-                    let cachedList = JSON.parse(cookieService.get('clientsListCache'));
+                    let cachedList = JSON.parse(getClientsCache());
                     let client = params.body.client;
 
                     let i;
@@ -383,8 +522,8 @@ export let fakeBackendProvider = {
                 // Get Client's policies
                 if (connection.request.url.match(/^\/api\/clients\/[0-9]+\/policies$/) && connection.request.method === RequestMethod.Get) {
                     let params = JSON.parse(connection.request.getBody());
-                    let cachedList = JSON.parse(cookieService.get('policiesListCache'));
-                    var clientsPolicies = cachedList.filter(item => item.userId === params.id);
+                    let cachedList = JSON.parse(getPoliciesCache());
+                    var clientsPolicies = cachedList.filter(item => item.clientId === params.id);
 
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(
@@ -401,7 +540,53 @@ export let fakeBackendProvider = {
                 if (connection.request.url.endsWith('/api/policies') && connection.request.method === RequestMethod.Get) {
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: JSON.parse(cookieService.get('policiesListCache'))})
+                            new ResponseOptions({status: 200, body: JSON.parse(getPoliciesCache())})
+                        ));
+                    } else {
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 401})
+                        ));
+                    }
+                }
+
+                // Create Policy
+                if (connection.request.url.endsWith('/api/policies') && connection.request.method === RequestMethod.Post) {
+                    let params = JSON.parse(connection.request.getBody());
+                    let cachedList = JSON.parse(getPoliciesCache());
+                    let policyData = params.body.policy;
+                    let newId = cachedList.sort((a,b) => {
+                            if (a.id > b.id) {
+                                return 1;
+                            }
+
+                            if (a.id < b.id) {
+                                return -1;
+                            }
+
+                            return 0;
+                        })[0].id + 1;
+
+                    var policy = {
+                        id: newId,
+                        // clientId: policyData.clientId,
+                        // propertyId: policyData.propertyId,
+                        name: policyData.name,
+                        value: policyData.value,
+                        monthlyCost: policyData.monthlyCost,
+                        startedAt: policyData.startedAt,
+                        endedAt: policyData.endedAt,
+                        signedAt: policyData.signedAt,
+                        calculationType: policyData.calculationType,
+                        additionalInformation: policyData.additionalInformation
+                    };
+                    
+                    if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
+
+                        cachedList.push(policy);
+
+                        cookieService.putObject('policiesListCache', cachedList);
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 200})
                         ));
                     } else {
                         connection.mockRespond(new Response(
@@ -429,7 +614,7 @@ export let fakeBackendProvider = {
                 // Delete Policy
                 if (connection.request.url.endsWith('/api/policies') && connection.request.method === RequestMethod.Delete) {
                     let params = JSON.parse(connection.request.getBody());
-                    let cachedList = JSON.parse(cookieService.get('policiesListCache'));
+                    let cachedList = JSON.parse(getPoliciesCache());
                     let policyIndex = getPolicyIndex(params.id);
 
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey && policyIndex !== null) {
@@ -447,54 +632,74 @@ export let fakeBackendProvider = {
                     }
                 }
 
-                function getPolicy (id) {
-                    let policies = JSON.parse(cookieService.get('policiesListCache'));
+                // PROPERTIES
 
-                    for (let policy of policies) {
-                        if (policy.id === id) {
-                            return policy;
-                        }
+                // Get Client's properties
+                if (connection.request.url.match(/^\/api\/clients\/[0-9]+\/properties/) && connection.request.method === RequestMethod.Get) {
+                    let params = JSON.parse(connection.request.getBody());
+                    let cachedList = JSON.parse(getPropertiesCache());
+                    var clientProperties = cachedList.filter(item => item.clientId === params.id);
+
+                    if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 200, body: clientProperties})
+                        ));
+                    } else {
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 401})
+                        ));
                     }
-
-                    return null;
                 }
 
-                function getPolicyIndex (id) {
-                    let policies = JSON.parse(cookieService.get('policiesListCache'));
-
-                    for (let i=0; i < policies.length; i++) {
-                        if (policies[i].id === id) {
-                            return i;
-                        }
+                // Get properties list
+                if (connection.request.url.endsWith('/api/properties') && connection.request.method === RequestMethod.Get) {
+                    if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 200, body: JSON.parse(getPropertiesCache())})
+                        ));
+                    } else {
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 401})
+                        ));
                     }
-
-                    return null;
                 }
 
-                function getClient (id) {
-                    let clients = JSON.parse(cookieService.get('clientsListCache'));
+                // Show Property
+                if (connection.request.url.match(/^\/api\/properties\/[0-9]+$/) && connection.request.method === RequestMethod.Get) {
+                    let params = JSON.parse(connection.request.getBody());
+                    var property = getProperty(params.id);
 
-                    for (let client of clients) {
-                        if (client.id === id) {
-                            return client;
-                        }
+                    if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 200, body: property})
+                        ));
+                    } else {
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 401})
+                        ));
                     }
-
-                    return null;
                 }
 
-                function getClientIndex (id) {
-                    let clients = JSON.parse(cookieService.get('clientsListCache'));
+                // Delete Property
+                if (connection.request.url.endsWith('/api/properties') && connection.request.method === RequestMethod.Delete) {
+                    let params = JSON.parse(connection.request.getBody());
+                    let cachedList = JSON.parse(getPropertiesCache());
+                    let propertyId = getPropertyIndex(params.id);
 
-                    for (let i=0; i < clients.length; i++) {
-                        if (clients[i].id === id) {
-                            return i;
-                        }
+                    if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey && propertyId !== null) {
+
+                        cachedList.splice(propertyId, 1);
+                        cookieService.putObject('propertiesListCache', cachedList);
+
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 200, body: cachedList})
+                        ));
+                    } else {
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 401})
+                        ));
                     }
-
-                    return null;
                 }
-
             }, 500);
 
         });

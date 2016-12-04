@@ -1,0 +1,33 @@
+<div>
+    <div>
+        <input type="text" [(ngModel)]="filterValue">
+    </div>
+
+    <div>
+        <table class="table table-sm table-striped">
+            <thead>
+            <tr>
+                <th>#ID</th>
+                <th>Nazwa</th>
+                <th>ID klienta</th>
+                <th>Wartość</th>
+                <th colspan="1"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let property of properties | filter : filteredFields : filterValue">
+                <th scope="row">{{ property.id }}</th>
+                <td>{{property.name}}</td>
+                <td>
+                    <a [routerLink]="['/clients/' + property.clientId]">{{property.clientId}}</a>
+                </td>
+                <td>{{property.value}}</td>
+                <!--<td class="centered"><i class="fa fa-trash" aria-hidden="true" (click)="removeClient(property.id)"></i></td>-->
+                <td class="centered">
+                    <i class="fa fa-eye" aria-hidden="true" [routerLink]="['/properties/' + property.id]"></i>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

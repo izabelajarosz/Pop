@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Policy} from "../../../_models/policy";
 import {Overlay} from "angular2-modal";
 import {Modal} from "angular2-modal/plugins/bootstrap";
+import {Property} from "../../../_models/property";
 
 @Component({
     moduleId: module.id,
@@ -15,6 +16,7 @@ import {Modal} from "angular2-modal/plugins/bootstrap";
 export class ShowClientComponent implements OnInit {
     client: Client = new Client;
     policies: Policy[] = [];
+    properties: Property[] = [];
     id: number;
     private sub: any;
     success = '';
@@ -41,6 +43,10 @@ export class ShowClientComponent implements OnInit {
 
             this.clientService.getPolicies(this.id).subscribe(policies => {
                 this.policies = policies;
+            });
+
+            this.clientService.getProperties(this.id).subscribe(properties => {
+                this.properties = properties;
             });
         });
     }

@@ -2,6 +2,9 @@
 
 <div class="padding-top container ">
     <div class="col-sm-9">
+        <a class=" right btn btn-info" [routerLink]="['/policies/create']">
+            <i class="fa fa-plus" aria-hidden="true"></i> Dodaj
+        </a>
 
         <policies [policies]="policies"></policies>
     </div>

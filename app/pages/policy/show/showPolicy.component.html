@@ -7,8 +7,12 @@
         <li class="list-group-item"><strong>ID klienta: </strong><a [routerLink]="['/clients/' + policy.clientId]">{{policy.clientId}}</a></li>
         <li class="list-group-item"><strong>Czas: </strong>{{policy.time}}</li>
         <li class="list-group-item"><strong>Wartość: </strong>{{policy.value}}</li>
+        <li class="list-group-item"><strong>Miesięczna składka: </strong>{{policy.monthlyCost}}</li>
         <li class="list-group-item"><strong>Data podpisania: </strong> {{policy.signDate}}</li>
         <li class="list-group-item"><strong>Data rozpoczęcia: </strong>{{policy.beginningDate}}</li>
         <li class="list-group-item"><strong>Data zakończenia: </strong> {{policy.endingDate}}</li>
+        <li class="list-group-item"><strong>Typ kalkulacji: </strong> {{policy.calculationType}}</li>
+        <li class="list-group-item"><strong>Dodatkowe informacje: </strong> {{policy.additionalInformation}}</li>
+        <li class="list-group-item"><strong>Mienie: </strong> <a [routerLink]="['/properties/' + policy.propertyId]">{{policy.propertyId}}</a></li>
     </ul>
 </div>

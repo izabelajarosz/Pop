@@ -26,7 +26,6 @@ export class ShowPolicyComponent implements OnInit {
 
             this.policyService.showPolicy(this.id).subscribe(policy => {
                 this.policy = policy;
-                console.log(policy, this.policy);
             });
         });
     }
