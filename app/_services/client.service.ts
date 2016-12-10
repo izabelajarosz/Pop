@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map'
 import { AuthenticationService } from './index';
 import { Client } from '../_models/client';
 import {Policy} from "../_models/policy";
+import {Property} from "../_models/property";
 
 @Injectable()
 export class ClientService {
@@ -38,6 +39,7 @@ export class ClientService {
                 return !!response.status;
             });
     }
+
     clientExists(pesel): Observable<boolean>{
         let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
          let options = new RequestOptions({ headers: headers, body:  JSON.stringify({ pesel: pesel}) });
@@ -50,6 +52,7 @@ export class ClientService {
                 }
             });
     }
+
      editClient(Client): Observable<boolean> {
          let id = Client.id;
          let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
@@ -61,11 +64,11 @@ export class ClientService {
             });
     }
 
-    showClient(index):Observable<Client>{
+    showClient(id):Observable<Client>{
         let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
-        let options = new RequestOptions({ headers: headers, body:  { index: index} });
+        let options = new RequestOptions({ headers: headers, body:  { id: id} });
 
-        return this.http.get('/api/clients/' + index, options)
+        return this.http.get('/api/clients/' + id, options)
              .map((response: Response) => response.json());
     }
 
@@ -74,6 +77,14 @@ export class ClientService {
         let options = new RequestOptions({ headers: headers, body:  { id: id} });
 
         return this.http.get('/api/clients/' + id + '/policies', options)
+            .map((response: Response) => response.json());
+    }
+
+    getProperties(id):Observable<Property[]>{
+        let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
+        let options = new RequestOptions({ headers: headers, body:  { id: id} });
+
+        return this.http.get('/api/clients/' + id + '/properties', options)
             .map((response: Response) => response.json());
     }
 }

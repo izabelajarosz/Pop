@@ -1,10 +1,13 @@
 export class Policy {
     id: number;
+    clientId: number;
+    propertyId: number;
     name: string;
-    time: string;
     value: number;
-    beginningDate: any;
-    endingDate: any;
-    signDate: any;
-    userId: number;
+    monthlyCost: number;
+    startedAt: any;
+    endedAt: any;
+    signedAt: any;
+    calculationType: string;
+    additionalInformation: string;
 }
