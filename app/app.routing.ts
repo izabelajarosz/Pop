@@ -14,6 +14,8 @@ import { AuthGuard } from './_guards/index';
 import {PropertiesListComponent} from "./pages/property/index/propertiesList.component";
 import {ShowPropertyComponent} from "./pages/property/show/showProperty.component";
 import {AddPolicyComponent} from "./pages/policy/create/addPolicy.component";
+import {AddClientPolicyComponent} from "./pages/client/policy/addClientPolicy.component";
+import {AddClientPropertyComponent} from "./pages/client/property/addClientProperty.component";
 
 const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -23,6 +25,8 @@ const appRoutes: Routes = [
     { path: 'clients/create', component: AddClientComponent, canActivate: [AuthGuard]},
     { path: 'clients/:id', component: ShowClientComponent, canActivate: [AuthGuard]},
     { path: 'clients/:id/edit', component: EditClientComponent, canActivate: [AuthGuard]},
+    { path: 'clients/:id/policies/create', component: AddClientPolicyComponent, canActivate: [AuthGuard]},
+    { path: 'clients/:id/properties/create', component: AddClientPropertyComponent, canActivate: [AuthGuard]},
     // Policies
     { path: 'policies', component: PoliciesListComponent, canActivate: [AuthGuard] },
     { path: 'policies/create', component: AddPolicyComponent, canActivate: [AuthGuard] },

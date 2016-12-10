@@ -10,4 +10,5 @@ export class Client {
     pesel: string;
     birthDate: string;
     policiesCount: number;
+    accountBalance: number;
 }

@@ -27,7 +27,8 @@ export let fakeBackendProvider = {
                     // postCode: '03-136',
                     pesel: '66111933943',
                     birthDate: '1983-01-19',
-                    policiesCount: 1
+                    policiesCount: 0,
+                    accountBalance: -29.99
                     
                 },
                 {
@@ -41,7 +42,8 @@ export let fakeBackendProvider = {
                     // postCode: '43-603',
                     // pesel: '66122741513'
                     birthDate: '1939-11-14',
-                    policiesCount: 1
+                    policiesCount: 0,
+                    accountBalance: -29.99
                 },
                 {
                     id: 3,
@@ -54,7 +56,8 @@ export let fakeBackendProvider = {
                     // postCode: '70-806',
                     pesel: '66052391084',
                     birthDate: '1978-02-16',
-                    policiesCount: 1
+                    policiesCount: 0,
+                    accountBalance: -29.99
                 },
                 {
                     id: 4,
@@ -67,7 +70,8 @@ export let fakeBackendProvider = {
                     // postCode: '92-018',
                     pesel: '42081489824',
                     birthDate: '1945-11-01',
-                    policiesCount: 1
+                    policiesCount: 0,
+                    accountBalance: -29.99
                 },
                 {
                     id: 5,
@@ -80,7 +84,8 @@ export let fakeBackendProvider = {
                     // postCode: '81-359',
                     pesel: '93111210552',
                     birthDate: '1969-12-23',
-                    policiesCount: 1
+                    policiesCount: 0,
+                    accountBalance: -29.99
                 },
                 {
                     id: 6,
@@ -93,7 +98,8 @@ export let fakeBackendProvider = {
                     // postCode: '42-506',
                     pesel: '71061271674',
                     birthDate:'1956-06-01',
-                    policiesCount: 1
+                    policiesCount: 0,
+                    accountBalance: -29.99
                 },
                 {
                     id: 7,
@@ -106,7 +112,8 @@ export let fakeBackendProvider = {
                     // postCode: '03-136',
                     pesel: '97022541060',
                     birthDate:'1999-08-29',
-                    policiesCount: 1
+                    policiesCount: 0,
+                    accountBalance: -29.99
                 },
                 {
                     id: 8,
@@ -119,7 +126,8 @@ export let fakeBackendProvider = {
                     // postCode: '03-136',
                     pesel: '20010104499',
                     birthDate:'1920-01-01',
-                    policiesCount: 1
+                    policiesCount: 0,
+                    accountBalance: -29.99
 
                 },
                 {
@@ -133,7 +141,8 @@ export let fakeBackendProvider = {
                     // postCode: '03-136',
                     pesel: '20010204521',
                     birthDate:'1920-01-02',
-                    policiesCount: 2
+                    policiesCount: 0,
+                    accountBalance: -29.99
                 },
                 {
                     id: 10,
@@ -146,7 +155,8 @@ export let fakeBackendProvider = {
                     // postCode: '20-018',
                     pesel: '94111423160',
                     birthDate: '1994-02-14',
-                    policiesCount: 1
+                    policiesCount: 0,
+                    accountBalance: -29.99
                 }
             ];
 
@@ -233,7 +243,6 @@ export let fakeBackendProvider = {
             ];
 
             function getPoliciesCache() {
-                console.log(cookieService.get('policiesListCache'));
                 return cookieService.get('policiesListCache');
             }
 
@@ -351,7 +360,7 @@ export let fakeBackendProvider = {
                         ));
                 }
 
-                if (connection.request.url.endsWith('/api/authenticate') && connection.request.method === RequestMethod.Post) {
+                if (connection.request.url.endsWith('/api/login') && connection.request.method === RequestMethod.Post) {
                     let params = JSON.parse(connection.request.getBody());
 
                     let userValid = testUsers.filter(user => {
@@ -381,13 +390,18 @@ export let fakeBackendProvider = {
                     }
                 }
 
+                function getClientPoliciesCount (clientId) {
+                    let cachedPolicies = JSON.parse(getPoliciesCache());
+
+                    return cachedPolicies.filter(item => item.clientId === clientId).length;
+                }
+
                 // Get clients list
                 if (connection.request.url.endsWith('/api/clients') && connection.request.method === RequestMethod.Get) {
                     let clients = JSON.parse(getClientsCache());
-                    let cachedPolicies = JSON.parse(getPoliciesCache());
 
                     for (let client of clients) {
-                        client.policiesCount = cachedPolicies.filter(item => item.clientId === client.id).length;
+                        client.policiesCount = getClientPoliciesCount(client.id);
                     }
 
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
@@ -466,8 +480,7 @@ export let fakeBackendProvider = {
                 // Show Client
                 if (connection.request.url.match(/^\/api\/clients\/[0-9]+$/) && connection.request.method === RequestMethod.Get) {
                     let params = JSON.parse(connection.request.getBody());
-                    let cachedList = JSON.parse(getClientsCache());
-                    var currentClient = cachedList[params.index];
+                    var currentClient = getClient(params.id);
 
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(
@@ -566,10 +579,12 @@ export let fakeBackendProvider = {
                             return 0;
                         })[0].id + 1;
 
+                    policyData.signedAt = new Date(Date.now()).toLocaleString();
+
                     var policy = {
                         id: newId,
-                        // clientId: policyData.clientId,
-                        // propertyId: policyData.propertyId,
+                        clientId: policyData.clientId,
+                        propertyId: policyData.propertyId,
                         name: policyData.name,
                         value: policyData.value,
                         monthlyCost: policyData.monthlyCost,
@@ -579,12 +594,11 @@ export let fakeBackendProvider = {
                         calculationType: policyData.calculationType,
                         additionalInformation: policyData.additionalInformation
                     };
-                    
+
+                    cachedList.push(policy);
+                    cookieService.putObject('policiesListCache', cachedList);
+
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
-
-                        cachedList.push(policy);
-
-                        cookieService.putObject('policiesListCache', cachedList);
                         connection.mockRespond(new Response(
                             new ResponseOptions({status: 200})
                         ));
@@ -635,10 +649,10 @@ export let fakeBackendProvider = {
                 // PROPERTIES
 
                 // Get Client's properties
-                if (connection.request.url.match(/^\/api\/clients\/[0-9]+\/properties/) && connection.request.method === RequestMethod.Get) {
+                if (connection.request.url.match(/^\/api\/clients\/[0-9]+\/properties$/) && connection.request.method === RequestMethod.Get) {
                     let params = JSON.parse(connection.request.getBody());
                     let cachedList = JSON.parse(getPropertiesCache());
-                    var clientProperties = cachedList.filter(item => item.clientId === params.id);
+                    let clientProperties = cachedList.filter(item => item.clientId === params.id);
 
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(
@@ -664,10 +678,55 @@ export let fakeBackendProvider = {
                     }
                 }
 
+                // Create Property
+                if (connection.request.url.endsWith('/api/properties') && connection.request.method === RequestMethod.Post) {
+                    let params = JSON.parse(connection.request.getBody());
+                    let cachedList = JSON.parse(getPropertiesCache());
+                    let propertyData = params.body.property;
+                    let newId = cachedList.sort((a,b) => {
+                            if (a.id > b.id) {
+                                return -1;
+                            }
+
+                            if (a.id < b.id) {
+                                return 1;
+                            }
+
+                            return 0;
+                        })[0].id + 1;
+
+                    console.log(propertyData);
+                    console.log(newId);
+
+                    var property = {
+                        id: newId,
+                        clientId: propertyData.clientId,
+                        name: propertyData.name,
+                        value: propertyData.value,
+                    };
+
+                    console.log(property);
+
+                    cachedList.push(property);
+                    cookieService.putObject('propertiesListCache', cachedList);
+
+                    console.log(getPropertiesCache());
+
+                    if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 200})
+                        ));
+                    } else {
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 401})
+                        ));
+                    }
+                }
+
                 // Show Property
                 if (connection.request.url.match(/^\/api\/properties\/[0-9]+$/) && connection.request.method === RequestMethod.Get) {
                     let params = JSON.parse(connection.request.getBody());
-                    var property = getProperty(params.id);
+                    let property = getProperty(params.id);
 
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(

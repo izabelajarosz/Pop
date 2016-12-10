@@ -22,7 +22,7 @@ export class ShowPolicyComponent implements OnInit {
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
-            this.id = +params['id'];
+            this.id = parseInt(params['id']);
 
             this.policyService.showPolicy(this.id).subscribe(policy => {
                 this.policy = policy;

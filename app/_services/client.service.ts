@@ -64,11 +64,11 @@ export class ClientService {
             });
     }
 
-    showClient(index):Observable<Client>{
+    showClient(id):Observable<Client>{
         let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
-        let options = new RequestOptions({ headers: headers, body:  { index: index} });
+        let options = new RequestOptions({ headers: headers, body:  { id: id} });
 
-        return this.http.get('/api/clients/' + index, options)
+        return this.http.get('/api/clients/' + id, options)
              .map((response: Response) => response.json());
     }
 
