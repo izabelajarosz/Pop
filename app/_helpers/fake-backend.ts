@@ -126,7 +126,7 @@ export let fakeBackendProvider = {
                     // postCode: '03-136',
                     pesel: '20010104499',
                     birthDate:'1920-01-01',
-                    policiesCount: 0,
+                    policiesCount: 1,
                     accountBalance: -29.99
 
                 },
@@ -147,7 +147,7 @@ export let fakeBackendProvider = {
                 {
                     id: 10,
                     firstName: 'Jan',
-                    lastName: 'Nowak',
+                    lastName: 'Nowicki',
                     // street: 'Rowerowa',
                     // streetNumber: '120',
                     // homeNumber: '',
@@ -176,7 +176,7 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 2,
-                    clientId: 2,
+                    clientId: 8,
                     propertyId: 2,
                     name: 'Polisa na psa',
                     value: 15000,
@@ -239,6 +239,12 @@ export let fakeBackendProvider = {
                     clientId: 1,
                     name: 'Laptop',
                     value: 2600,
+                },
+                {
+                    id: 5,
+                    clientId: 8,
+                    name: 'Dom',
+                    value: 999999,
                 }
             ];
 
