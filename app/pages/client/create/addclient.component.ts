@@ -2,13 +2,14 @@
 import {Router} from "@angular/router";
 import {Client} from "../../../_models/client";
 import {ClientService} from "../../../_services/client.service";
+import {PeselValidationHelper} from "../../../_helpers/peselValidation.helper";
 import {FormBuilder} from "@angular/forms";
 // import { ConvertDatePipe } from '../../../_pipes/convertDate.pipe';
 
 @Component({
     moduleId: module.id,
     templateUrl: 'addclient.component.html',
-    providers: [ClientService]
+    providers: [ClientService, PeselValidationHelper]
 })
 
 export class AddClientComponent implements OnInit {
@@ -21,6 +22,7 @@ export class AddClientComponent implements OnInit {
 
     constructor(private router: Router,
                 private clientService: ClientService,
+                private peselHelper: PeselValidationHelper,
                 private formBuilder: FormBuilder) {
     }
 
@@ -37,6 +39,9 @@ export class AddClientComponent implements OnInit {
     addClient() {
         if (this.model.pesel.substring(0, 6) != this.model.birthDate.replace(/\D/g, '').substring(2, 8)) {
             this.error = "Pole Pesel nie zgadza się z podaną datą urodzenia. Użytkownik nie został zapisany.";
+        }
+        else if(!this.peselHelper.validate(this.model.pesel)){
+            this.error = "Nieprawidłowa suma kontrolna dla numeru Pesel.";
         }
         else {
             this.loading = true;
