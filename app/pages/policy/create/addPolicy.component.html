@@ -5,87 +5,8 @@
 
     <form *ngIf="active" name="form" class="form-horizontal" (ngSubmit)="f.form.valid && addPolicy()" #f="ngForm" novalidate>
 
-        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !name.valid }">
-            <label class="control-label col-sm-2" for="name">Nazwa</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" minlength="3" id="name" name="name" placeholder="Nazwa"
-                       [(ngModel)]="model.name" #name="ngModel" required pattern="[a-zA-Z łąćężźóń]*"
-                       (ngModelChange)="model.name.valid = true"/>
-                <div *ngIf="f.submitted && !name.valid && f.form.controls['name'].hasError('required')"
-                     class="help-block">Pole jest wymagane
-                </div>
-                <div *ngIf="f.submitted && !name.valid && !f.form.controls['name'].hasError('required')"
-                     class="help-block">Należy wprowadzić prawidłowe dane
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !clientId.valid }">
-            <label class="control-label col-sm-2" for="clientId">Klient</label>
-            <div class="col-sm-10">
-
-                <select [(ngModel)]="model.clientId" class="form-control" id="clientId" name="clientId" required>
-                    <option *ngFor="let client of clients" [value]="client.id">{{client.firstName}} {{ client.lastName }}</option>
-                </select>
-
-                <div *ngIf="f.submitted && !clientId.valid && f.form.controls['clientId'].hasError('required')"
-                     class="help-block">To pole jest wymagane
-                </div>
-                <div *ngIf="f.submitted && !clientId.valid && !f.form.controls['clientId'].hasError('required')"
-                     class="help-block">Należy wybrać klienta
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !value.valid }">
-            <label class="control-label col-sm-2" for="value">Wartość</label>
-            <div class="col-sm-10">
-                <input type="number" class="form-control" id="value" name="value" placeholder="Wartość"
-                       [(ngModel)]="model.value" #value="ngModel" required pattern="[0-9]*"
-                       minlength="3"
-                       (ngModelChange)="model.value.valid = true"/>
-                <div *ngIf="f.submitted && !value.valid && f.form.controls['value'].hasError('required')"
-                     class="help-block">To pole jest wymagane
-                </div>
-                <div *ngIf="f.submitted && !value.valid && !f.form.controls['value'].hasError('required')"
-                     class="help-block">Należy wprowadzić prawidłowe dane
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !monthlyCost.valid }">
-            <label class="control-label col-sm-2" for="monthlyCost">Składka miesięczna</label>
-            <div class="col-sm-10">
-                <input type="number" class="form-control" id="monthlyCost" name="monthlyCost" placeholder="Składka miesięczna"
-                       [(ngModel)]="model.monthlyCost" #monthlyCost="ngModel" required pattern="[0-9]*"
-                       minlength="3"
-                       (ngModelChange)="model.monthlyCost.valid = true"/>
-                <div *ngIf="f.submitted && !monthlyCost.valid && f.form.controls['monthlyCost'].hasError('required')"
-                     class="help-block">To pole jest wymagane
-                </div>
-                <div *ngIf="f.submitted && !monthlyCost.valid && !f.form.controls['monthlyCost'].hasError('required')"
-                     class="help-block">Należy wprowadzić prawidłowe dane
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !signedAt.valid }">
-            <label class="control-label col-sm-2" for="signedAt">Data podpisania</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="signedAt" placeholder="rrrr-mm-dd" name="signedAt"
-                       [(ngModel)]="model.signedAt" #signedAt="ngModel" required
-                       minlength="10" maxlength="10" (ngModelChange)="model.signedAt.valid = true" convertDate/>
-                <div *ngIf="f.submitted && !signedAt.valid && f.form.controls['signedAt'].hasError('required')"
-                     class="help-block">To pole jest wymagane
-                </div>
-                <div *ngIf="f.submitted && !signedAt.valid && !f.form.controls['signedAt'].hasError('required') "
-                     class="help-block">Należy wprowadzić datę w formacie rrrr-MM-dd
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !startedAt.valid }">
-            <label class="control-label col-sm-2" for="startedAt">Data rozpoczęcia</label>
+         <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !startedAt.valid }">
+            <label class="control-label col-sm-2" for="startedAt">Od</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="startedAt" placeholder="rrrr-mm-dd" name="startedAt"
                        [(ngModel)]="model.startedAt" #startedAt="ngModel" required
@@ -100,7 +21,7 @@
         </div>
 
         <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !endedAt.valid }">
-            <label class="control-label col-sm-2" for="endedAt">Data zakończenia</label>
+            <label class="control-label col-sm-2" for="endedAt">Do</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="endedAt" placeholder="rrrr-mm-dd" name="endedAt"
                        [(ngModel)]="model.endedAt" #endedAt="ngModel" required
@@ -114,6 +35,69 @@
             </div>
         </div>
 
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted &&  !clientId.valid }">
+            <label class="control-label col-sm-2" for="clientId">Klient</label>
+            <div class="col-sm-10">
+
+                <select [(ngModel)]="model.clientId" (ngModelChange)="onClientChange($event)" #clientId="ngModel" class="form-control" id="clientId" name="clientId" required>
+                    <option *ngFor="let client of clients" [ngValue]="client.id">{{client.firstName}} {{ client.lastName }}</option>
+                </select>
+
+                <div *ngIf="f.submitted && !clientId.valid && f.form.controls['clientId'].hasError('required')"
+                     class="help-block">To pole jest wymagane
+                </div>
+            </div>
+        </div>
+
+<!--zamienić na id-->
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !propertyName.valid }">
+            <label class="control-label col-sm-2" for="propertyName">Mienie</label>
+            <div class="col-sm-10">
+
+                <select [disabled]="properties.length < 1" [(ngModel)]="model.propertyName" (ngModelChange)="onPropertyChange(property.id)" class="form-control" id="propertyName" name="propertyName" #propertyName="ngModel" required>
+                    <option *ngFor="let property of properties" [value]="property.name">{{property.name}}</option>
+                </select>
+
+                <div *ngIf="f.submitted && !propertyName.valid"
+                     class="help-block">To pole jest wymagane
+                </div>
+            </div>
+        </div>  
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !value.valid }">
+            <label class="control-label col-sm-2" for="value">Wartość</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="value" name="value" placeholder="Wartość"
+                       [(ngModel)]="model.value" #value="ngModel" required pattern="[0-9]*"
+                       minlength="3"
+                       (ngModelChange)="model.value != null ? model.value.valid = true : true"/>
+                <div *ngIf="f.submitted && !value.valid && f.form.controls['value'].hasError('required')"
+                     class="help-block">To pole jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !value.valid && !f.form.controls['value'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !monthlyCost.valid }">
+            <label class="control-label col-sm-2" for="monthlyCost">Miesięczny koszt</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="monthlyCost" name="monthlyCost" placeholder="Składka miesięczna"
+                       [(ngModel)]="model.monthlyCost" #monthlyCost="ngModel" required
+                       minlength="3"
+                       (ngModelChange)="model.monthlyCost.valid = true"/>
+                <div *ngIf="f.submitted && !monthlyCost.valid && f.form.controls['monthlyCost'].hasError('required')"
+                     class="help-block">To pole jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !monthlyCost.valid && !f.form.controls['monthlyCost'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+            </div>
+        </div>
+
+       
         <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !calculationType.valid }">
             <label class="control-label col-sm-2" for="calculationType">Typ kalkulacji</label>
             <div class="col-sm-10">
@@ -153,4 +137,35 @@
 
         <div *ngIf="error" class="alert alert-danger">{{error}}</div>
     </form>
+
+    <div *ngIf="!active">
+        <span> Podsumowanie </span>
+        <ul class="list-group">
+            <li class="list-group-item"><strong>Od: </strong>{{model.startedAt}}</li>
+            <li class="list-group-item"><strong>Do: </strong> {{model.endedAt}}</li>
+            <li class="list-group-item"><strong>Nazwisko: </strong> {{selectedClient.lastName}}</li>
+            <li class="list-group-item"><strong>Imię: </strong> {{selectedClient.firstName}}</li>
+            <li class="list-group-item"><strong>Mienie: </strong> {{model.propertyName}}</li>
+            <li class="list-group-item"><strong>Wartość: </strong> {{model.value}}</li>
+            <li class="list-group-item"><strong>Miesięczna składka: </strong> {{model.monthlyCost}}</li>
+            <!--<li class="list-group-item"><strong>Dodatkowe informacje o mieniu: </strong> {{policy.propertyAdditionalInformation}}</li>-->
+            <li class="list-group-item"><strong>Typ kalkulacji: </strong> {{model.calculationType}}</li>
+            <li class="list-group-item"><strong>Dodatkowe informacje: </strong> {{model.additionalInformation}}</li>
+        </ul>
+
+        <div class="form-group" *ngIf="!success">
+            <button class="btn btn-default btn-lg pull-right" (click)="active = true">Powrót do edycji</button>
+            <button [disabled]="loading" class="btn btn-default btn-lg pull-right" (click)="submitForm()">
+                <div class="spinner-small spinner" *ngIf="loading">
+                    <div class="rect1"></div>
+                    <div class="rect2"></div>
+                    <div class="rect3"></div>
+                    <div class="rect4"></div>
+                    <div class="rect5"></div>
+                </div>
+                <span *ngIf="!loading">Zatwierdź</span>
+            </button>
+        </div>
+    </div>
+    
 </div>

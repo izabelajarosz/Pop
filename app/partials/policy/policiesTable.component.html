@@ -1,6 +1,8 @@
 <div>
     <div>
         <input type="text" [(ngModel)]="filterValue">
+        <span>Od</span><input type="text" [(ngModel)]="startedAtfilterValue" convertDate>
+        <span>Do</span><input type="text" [(ngModel)]="endedAtfilterValue" convertDate>
     </div>
 
     <div>
@@ -8,7 +10,13 @@
             <thead>
             <tr>
                 <th>#ID</th>
-                <th>Nazwa</th>
+                <th>Od</th>
+                <th>Do</th>
+                <th>Data Podpisania</th>
+                <th>Nazwisko</th>
+                <th>Imię</th>
+                <th>Mienie</th>
+                <!--<th>Nazwa</th>
                 <th>ID klienta</th>
                 <th>Wartość</th>
                 <th>Składka miesięczna</th>
@@ -16,14 +24,24 @@
                 <th>Data rozpoczęcia</th>
                 <th>Data zakończenia</th>
                 <th>Typ kalkulacji</th>
-                <th>Dodatkowe informacje</th>
+                <th>Dodatkowe informacje</th>-->
                 <th colspan="1"></th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let policy of policies | filter : filteredFields : filterValue">
+            <tr *ngFor="let policy of policies | filter : filteredFields : filterValue |filterDates: startedAtfilterValue : endedAtfilterValue">
                 <th scope="row">{{ policy.id }}</th>
-                <td>{{policy.name}}</td>
+                <td>{{policy.startedAt}}</td>
+                <td>{{policy.endedAt}}</td>
+                <td>{{policy.signedAt}}</td>
+                <td>
+                     <a [routerLink]="['/clients/' + policy.clientId]">{{policy.surname}}</a>
+                </td>
+                <td>
+                     <a [routerLink]="['/clients/' + policy.clientId]">{{policy.name}}</a>
+                </td>
+                <td>{{policy.property}}</td>
+                <!--<td>{{policy.name}}</td>
                 <td>
                     <a [routerLink]="['/clients/' + policy.clientId]">{{policy.clientId}}</a>
                 </td>
@@ -36,7 +54,7 @@
                 <td>{{policy.additionalInformation}}</td>
                 <!--<td class="centered"><i class="fa fa-trash" aria-hidden="true" (click)="removeClient(policy.id)"></i></td>-->
                 <td class="centered">
-                    <i class="fa fa-eye" aria-hidden="true" [routerLink]="['/policies/' + policy.id]"></i>
+                    <i class="fa fa-file" aria-hidden="true" [routerLink]="['/policies/' + policy.id]"></i>
                 </td>
             </tr>
             </tbody>

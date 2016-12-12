@@ -13,5 +13,7 @@ export class PoliciesTableComponent  {
 
     orderProperty = 'index';
     filterValue = '';
-    filteredFields = ['name', 'beginningDate', 'endingDate', 'signDate', 'value'];
+    startedAtfilterValue = '';
+    endedAtfilterValue = '';
+    filteredFields = ['name', 'value', 'surname'];
 }
