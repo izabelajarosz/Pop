@@ -59,7 +59,7 @@ export class AddClientPropertyComponent implements OnInit {
                     this.resetForm();
                     this.error = '';
                     this.success = 'Mienie zostało dodane.';
-                    this.router.navigate(['/clients/' + this.id]);
+                    // this.router.navigate(['/clients/' + this.id]);
                 } else {
                     this.error = 'Wystąpił nieoczekiwany błąd.';
                     this.loading = false;

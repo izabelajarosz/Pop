@@ -126,12 +126,12 @@ export let fakeBackendProvider = {
                     // postCode: '03-136',
                     pesel: '20010104499',
                     birthDate:'1920-01-01',
-                    policiesCount: 1,
+                    policiesCount: 0,
                     accountBalance: -29.99
 
                 },
                 {
-                    id: 7,
+                    id: 9,
                     firstName: 'Jan',
                     lastName: 'Kowalski',
                     // street: 'Podchorążych',
@@ -141,7 +141,7 @@ export let fakeBackendProvider = {
                     // postCode: '03-136',
                     pesel: '20010204521',
                     birthDate:'1920-01-02',
-                    policiesCount: 0,
+                    policiesCount: 1,
                     accountBalance: -29.99
                 },
                 {
@@ -157,95 +157,159 @@ export let fakeBackendProvider = {
                     birthDate: '1994-02-14',
                     policiesCount: 0,
                     accountBalance: -29.99
+                },
+                {
+                    id: 11,
+                    firstName: 'Stanisław',
+                    lastName: 'Nowak',
+                    // street: 'Rowerowa',
+                    // streetNumber: '120',
+                    // homeNumber: '',
+                    // city: 'Lublin',
+                    // postCode: '20-018',
+                    pesel: '94028394928',
+                    birthDate: '1994-02-14',
+                    policiesCount: 1,
+                    accountBalance: 20.99
                 }
             ];
 
             let policiesList = [
                 {
                     id: 1,
-                    clientId: 1,
+                    clientId: 9,
                     propertyId: 1,
-                    name: 'Testowa polisa 1',
-                    value: 20000,
-                    monthlyCost: 430,
-                    signedAt: '2016.01.30 16:10',
-                    startedAt: '2016.02.01 00:00',
-                    endedAt: '2017.02.01 23:59',
+                    // name: 'Polisa Jana Kowalskiego',
+                    value: 16999,
+                    monthlyCost: 29.99,
+                    signedAt: '2016-01-01',
+                    startedAt: '2016-01-01',
+                    endedAt: '2017-01-01',
                     calculationType: 'Ręczny',
-                    additionalInformation: ''
+                    additionalInformation: '',
+                    property: 'Rower',
+                    propertyAdditionalInformation: 'Rower marki Ukraina, w stanie dobrym',
+                    name: 'Jan',
+                    surname: 'Kowalski',
                 },
                 {
                     id: 2,
-                    clientId: 8,
+                    clientId: 11,
                     propertyId: 2,
-                    name: 'Polisa na psa',
-                    value: 15000,
-                    monthlyCost: 340,
-                    signedAt: '2015.01.30 16:10',
-                    startedAt: '2015.02.01 00:00',
-                    endedAt: '2019.02.01 23:59',
+                    // name: 'Polisa Nowaka',
+                    value: 9990000,
+                    monthlyCost: 1670,
+                    signedAt: '2016-02-02',
+                    startedAt: '2016-02-02',
+                    endedAt: '2017-02-02',
                     calculationType: 'Ręczny',
-                    additionalInformation: ''
-                },
-                {
-                    id: 3,
-                    clientId: 1,
-                    propertyId: 3,
-                    name: 'Polisa na dom',
-                    value: 52000,
-                    monthlyCost: 600,
-                    signedAt: '2014.03.30 16:10',
-                    startedAt: '2014.04.01 00:00',
-                    endedAt: '2027.07.01 23:59',
-                    calculationType: 'Ręczny',
-                    additionalInformation: ''
-                },
-                {
-                    id: 4,
-                    clientId: 3,
-                    propertyId: 4,
-                    name: 'Polisa na życie',
-                    value: 39999,
-                    monthlyCost: 400,
-                    signedAt: '2016.09.30 16:10',
-                    startedAt: '2016.10.01 00:00',
-                    endedAt: '2047.12.01 23:59',
-                    calculationType: 'Ręczny',
-                    additionalInformation: ''
+                    additionalInformation: '',
+                    property: 'Mieszkanie',
+                    propertyAdditionalInformation: '',
+                    name: 'Stanisław',
+                    surname: 'Nowak',
+                    
                 }
+                // {
+                //     id: 1,
+                //     clientId: 1,
+                //     propertyId: 1,
+                //     name: 'Testowa polisa 1',
+                //     value: 20000,
+                //     monthlyCost: 430,
+                //     signedAt: '2016.01.30 16:10',
+                //     startedAt: '2016.02.01 00:00',
+                //     endedAt: '2017.02.01 23:59',
+                //     calculationType: 'Ręczny',
+                //     additionalInformation: ''
+                // },
+                // {
+                //     id: 2,
+                //     clientId: 8,
+                //     propertyId: 2,
+                //     name: 'Polisa na psa',
+                //     value: 15000,
+                //     monthlyCost: 340,
+                //     signedAt: '2015.01.30 16:10',
+                //     startedAt: '2015.02.01 00:00',
+                //     endedAt: '2019.02.01 23:59',
+                //     calculationType: 'Ręczny',
+                //     additionalInformation: ''
+                // },
+                // {
+                //     id: 3,
+                //     clientId: 1,
+                //     propertyId: 3,
+                //     name: 'Polisa na dom',
+                //     value: 52000,
+                //     monthlyCost: 600,
+                //     signedAt: '2014.03.30 16:10',
+                //     startedAt: '2014.04.01 00:00',
+                //     endedAt: '2027.07.01 23:59',
+                //     calculationType: 'Ręczny',
+                //     additionalInformation: ''
+                // },
+                // {
+                //     id: 4,
+                //     clientId: 3,
+                //     propertyId: 4,
+                //     name: 'Polisa na życie',
+                //     value: 39999,
+                //     monthlyCost: 400,
+                //     signedAt: '2016.09.30 16:10',
+                //     startedAt: '2016.10.01 00:00',
+                //     endedAt: '2047.12.01 23:59',
+                //     calculationType: 'Ręczny',
+                //     additionalInformation: ''
+                // }
             ];
 
             let propertyList = [
                 {
                     id: 1,
-                    clientId: 2,
+                    clientId: 9,
                     name: 'Rower',
                     value: 16999,
+                    propertyAdditionalInformation: 'Rower marki Ukraina, w stanie dobrym'
                 },
                 {
                     id: 2,
-                    clientId: 1,
-                    name: 'Dom',
-                    value: 450000,
+                    clientId: 11,
+                    name: 'Mieszkanie',
+                    value: 9990000,
+                    propertyAdditionalInformation: ''
                 },
                 {
                     id: 3,
-                    clientId: 1,
-                    name: 'iPhone',
-                    value: 3200,
-                },
-                {
-                    id: 4,
-                    clientId: 1,
-                    name: 'Laptop',
-                    value: 2600,
-                },
-                {
-                    id: 5,
-                    clientId: 8,
+                    clientId: 9,
                     name: 'Dom',
-                    value: 999999,
+                    value: 16999,
+                    propertyAdditionalInformation: 'Dom w rejonie zalewowym.'
                 }
+                // {
+                //     id: 2,
+                //     clientId: 1,
+                //     name: 'Dom',
+                //     value: 450000,
+                // },
+                // {
+                //     id: 3,
+                //     clientId: 1,
+                //     name: 'iPhone',
+                //     value: 3200,
+                // },
+                // {
+                //     id: 4,
+                //     clientId: 1,
+                //     name: 'Laptop',
+                //     value: 2600,
+                // },
+                // {
+                //     id: 5,
+                //     clientId: 8,
+                //     name: 'Dom',
+                //     value: 999999,
+                // }
             ];
 
             function getPoliciesCache() {
@@ -446,17 +510,7 @@ export let fakeBackendProvider = {
                     let params = JSON.parse(connection.request.getBody());
                     let cachedList = JSON.parse(getClientsCache());
                     let client = params.body.client;
-                    let newId = cachedList.sort((a,b) => {
-                        if (a.id > b.id) {
-                            return 1;
-                        }
-
-                        if (a.id < b.id) {
-                            return -1;
-                        }
-
-                        return 0;
-                    })[0].id + 1;
+                    let newId = cachedList.length + 1;
 
                     cachedList.push({
                         id: newId,
@@ -573,32 +627,27 @@ export let fakeBackendProvider = {
                     let params = JSON.parse(connection.request.getBody());
                     let cachedList = JSON.parse(getPoliciesCache());
                     let policyData = params.body.policy;
-                    let newId = cachedList.sort((a,b) => {
-                            if (a.id > b.id) {
-                                return 1;
-                            }
+                    let clientData = params.body.client;
+                    let newId = cachedList.length + 1;
 
-                            if (a.id < b.id) {
-                                return -1;
-                            }
-
-                            return 0;
-                        })[0].id + 1;
-
-                    policyData.signedAt = new Date(Date.now()).toLocaleString();
+                    policyData.signedAt = new Date(Date.now()).toLocaleString().slice(0, 10).replace(/\./g,"-");
 
                     var policy = {
                         id: newId,
                         clientId: policyData.clientId,
                         propertyId: policyData.propertyId,
-                        name: policyData.name,
+                        // name: policyData.name,
                         value: policyData.value,
                         monthlyCost: policyData.monthlyCost,
                         startedAt: policyData.startedAt,
                         endedAt: policyData.endedAt,
                         signedAt: policyData.signedAt,
                         calculationType: policyData.calculationType,
-                        additionalInformation: policyData.additionalInformation
+                        additionalInformation: policyData.additionalInformation,
+                        property: policyData.propertyName,
+                        propertyAdditionalInformation: '',
+                        name: clientData.firstName,
+                        surname: clientData.lastName
                     };
 
                     cachedList.push(policy);
@@ -689,17 +738,7 @@ export let fakeBackendProvider = {
                     let params = JSON.parse(connection.request.getBody());
                     let cachedList = JSON.parse(getPropertiesCache());
                     let propertyData = params.body.property;
-                    let newId = cachedList.sort((a,b) => {
-                            if (a.id > b.id) {
-                                return -1;
-                            }
-
-                            if (a.id < b.id) {
-                                return 1;
-                            }
-
-                            return 0;
-                        })[0].id + 1;
+                    let newId = cachedList.length + 1;
 
                     console.log(propertyData);
                     console.log(newId);
@@ -709,6 +748,7 @@ export let fakeBackendProvider = {
                         clientId: propertyData.clientId,
                         name: propertyData.name,
                         value: propertyData.value,
+                        propertyAdditionalInformation: propertyData.propertyAdditionalInformation
                     };
 
                     console.log(property);
@@ -758,6 +798,31 @@ export let fakeBackendProvider = {
 
                         connection.mockRespond(new Response(
                             new ResponseOptions({status: 200, body: cachedList})
+                        ));
+                    } else {
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 401})
+                        ));
+                    }
+                }
+
+                if(connection.request.url.endsWith('/api/properties/haspolice') && connection.request.method === RequestMethod.Get){
+                    let params = JSON.parse(connection.request.getBody());
+                    let cachedList = JSON.parse(getPoliciesCache());
+                    let propertyId = params.id;
+
+                    if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey && propertyId !== null) {
+                        let result = false;
+                        for (let policy of cachedList) {
+                            if (policy.propertyId === propertyId) {
+                                result = true;
+                                break;
+                            }
+                        }
+                        
+
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({status: 200, body: result})
                         ));
                     } else {
                         connection.mockRespond(new Response(

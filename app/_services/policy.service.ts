@@ -29,9 +29,9 @@ export class PolicyService {
              .map((response: Response) => response.json());
     }
 
-     addPolicy(Policy): Observable<boolean> {
+     addPolicy(Policy,Client): Observable<boolean> {
          let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
-         let options = new RequestOptions({ headers: headers, body:  { policy: Policy} });
+         let options = new RequestOptions({ headers: headers, body:  { policy: Policy, client:Client} });
 
          return this.http.post('/api/policies', options)
             .map((response: Response) => {

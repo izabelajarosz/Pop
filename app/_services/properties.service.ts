@@ -57,4 +57,16 @@ export class PropertyService {
         return this.http.get('/api/properties/' + id, options)
              .map((response: Response) => response.json());
     }
+
+    propertyHasPolicy(id):Observable<boolean>{
+        let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
+        let options = new RequestOptions({ headers: headers, body:  { id: id} });
+
+        return this.http.get('/api/properties/haspolice', options)
+             .map((response: Response) => {
+             return response.json();
+
+            });
+      //  return false;
+    }
 }

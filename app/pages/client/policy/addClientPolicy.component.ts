@@ -5,11 +5,12 @@ import {FormBuilder} from "@angular/forms";
 import {ClientService} from "../../../_services/client.service";
 import {Client} from "../../../_models/client";
 import {Property} from "../../../_models/property";
+import {PropertyService} from "../../../_services/properties.service";
 
 @Component({
     moduleId: module.id,
     templateUrl: 'addClientPolicy.component.html',
-    providers: [PolicyService, ClientService]
+    providers: [PolicyService, ClientService, PropertyService]
 })
 
 export class AddClientPolicyComponent implements OnInit {
@@ -21,11 +22,13 @@ export class AddClientPolicyComponent implements OnInit {
     success = '';
     active = true;
     id: number;
+    
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
                 private policyService: PolicyService,
                 private clientService: ClientService,
+                private propertyService: PropertyService,
                 private formBuilder: FormBuilder) {
     }
 
@@ -36,8 +39,11 @@ export class AddClientPolicyComponent implements OnInit {
             this.fetchClient(id);
 
             this.clientService.getProperties(id).subscribe(properties => {
-                this.properties = properties;
-            });
+             this.properties = properties;
+             if(this.properties.length <= 0){
+                 this.error = "Wybrany klient nie posiada mienia. Dodaj mienie klienta w celu dodania polisy";
+             }
+        });
         });
     }
 
@@ -54,17 +60,18 @@ export class AddClientPolicyComponent implements OnInit {
         this.active = false;
     }
 
-    addPolicy() {
-        this.loading = true;
-        this.model.clientId = this.client.id;
+   addPolicy() {
+        this.active = false;
+    }
 
-        this.policyService.addPolicy(this.model)
+    submitForm(){
+        this.loading = true;
+        this.policyService.addPolicy(this.model, this.client)
             .subscribe(result => {
                 if (result === true) {
-                    this.resetForm();
                     this.error = '';
                     this.success = 'Polisa została dodana.';
-                    this.router.navigate(['/clients/' + this.model.clientId]);
+                   // this.router.navigate(['/policies']);
                 } else {
                     this.error = 'Wystąpił nieoczekiwany błąd.';
                     this.loading = false;

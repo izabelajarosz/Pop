@@ -1,4 +1,7 @@
 <div>
+        <div *ngIf="success" class="alert alert-success">{{success}}</div>  
+        <div *ngIf="error" class="alert alert-danger">{{error}}</div>  
+        
     <div>
         <input type="text" [(ngModel)]="filterValue">
     </div>
@@ -11,6 +14,8 @@
                 <th>Nazwa</th>
                 <th>ID klienta</th>
                 <th>Wartość</th>
+                <th>Dodatkowe informacje</th>
+                <th colspan="1"></th>
                 <th colspan="1"></th>
             </tr>
             </thead>
@@ -23,9 +28,12 @@
                 </td>
                 <td>{{property.value}}</td>
                 <!--<td class="centered"><i class="fa fa-trash" aria-hidden="true" (click)="removeClient(property.id)"></i></td>-->
+           <td>{{property.propertyAdditionalInformation}}</td>
                 <td class="centered">
                     <i class="fa fa-eye" aria-hidden="true" [routerLink]="['/properties/' + property.id]"></i>
                 </td>
+                <td class="centered" (click)="showModal(property.id)">X</td>
+                
             </tr>
             </tbody>
         </table>

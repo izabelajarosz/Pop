@@ -30,8 +30,9 @@ import { PoliciesListComponent } from './pages/policy/index/policiesList.compone
 
 import { NavbarComponent } from './partials/general/navbar.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ConvertDateDirective } from "./_directives/convertDate.directive";
-import { FilterTablePipe } from  './_pipes/filterTable.pipe';
+import {ConvertDateDirective} from "./_directives/convertDate.directive";
+import {FilterTablePipe} from  './_pipes/filterTable.pipe';
+import {FilterDatesPipe} from './_pipes/filterEndDate.pipe';
 import {PoliciesTableComponent} from "./partials/policy/policiesTable.component";
 import {ShowPolicyComponent} from "./pages/policy/show/showPolicy.component";
 import {PropertiesTableComponent} from "./partials/property/propertiesTable.component";
@@ -72,6 +73,7 @@ import {AddClientPropertyComponent} from "./pages/client/property/addClientPrope
 
         NavbarComponent,
         FilterTablePipe,
+        FilterDatesPipe,
         ConvertDateDirective,
         PoliciesTableComponent,
         PropertiesTableComponent
