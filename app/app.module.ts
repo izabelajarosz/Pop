@@ -16,6 +16,7 @@ import { routing } from './app.routing';
 
 import { AuthGuard } from './_guards/index';
 import { AuthenticationService, UserService } from './_services/index';
+import { PeselValidationHelper } from './_helpers/peselValidation.helper';
 
 import { LoginComponent } from './pages/auth/login/index';
 import { HomeComponent } from './pages/home/home.component';
@@ -80,6 +81,7 @@ import {AddClientPropertyComponent} from "./pages/client/property/addClientPrope
         AuthenticationService,
         UserService,
         CookieService,
+        PeselValidationHelper,
         fakeBackendProvider,
         MockBackend,
         BaseRequestOptions
