@@ -57,10 +57,6 @@ export class AddPolicyComponent implements OnInit {
        })
     }
 
-    onPropertyChange(id){
-        this.model.propertyId = id;
-    }
-
     resetForm() {
         this.model = {};
         this.loading = false;
