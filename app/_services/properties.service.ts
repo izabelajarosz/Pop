@@ -62,7 +62,7 @@ export class PropertyService {
         let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers, body:  { id: id} });
 
-        return this.http.get('/api/properties/haspolice', options)
+        return this.http.get('/api/properties/haspolicy', options)
              .map((response: Response) => {
              return response.json();
 
