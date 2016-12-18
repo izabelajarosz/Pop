@@ -175,11 +175,11 @@ export let fakeBackendProvider = {
             ];
 
             function getPoliciesCache() {
-                return cookieService.get('policiesListCache');
+                return JSON.parse(cookieService.get('policiesListCache'));
             }
 
             function getPolicy(id) {
-                let policies = JSON.parse(getPoliciesCache());
+                let policies = getPoliciesCache();
 
                 for (let policy of policies) {
                     if (policy.id === id) {
@@ -191,7 +191,7 @@ export let fakeBackendProvider = {
             }
 
             function getPolicyIndex(id) {
-                let policies = JSON.parse(getPoliciesCache());
+                let policies = getPoliciesCache();
 
                 for (let i = 0; i < policies.length; i++) {
                     if (policies[i].id === id) {
@@ -203,7 +203,7 @@ export let fakeBackendProvider = {
             }
 
             function getProperty(id) {
-                let properties = JSON.parse(getPropertiesCache());
+                let properties = getPropertiesCache();
 
                 for (let property of properties) {
                     if (property.id === id) {
@@ -215,11 +215,11 @@ export let fakeBackendProvider = {
             }
 
             function getPropertiesCache() {
-                return cookieService.get('propertiesListCache');
+                return JSON.parse(cookieService.get('propertiesListCache'));
             }
 
             function getPropertyIndex(id) {
-                let properties = JSON.parse(getPropertiesCache());
+                let properties = getPropertiesCache();
 
                 for (let i = 0; i < properties.length; i++) {
                     if (properties[i].id === id) {
@@ -231,11 +231,11 @@ export let fakeBackendProvider = {
             }
 
             function getClientsCache() {
-                return cookieService.get('clientsListCache');
+                return JSON.parse(cookieService.get('clientsListCache'));
             }
 
             function getClient(id) {
-                let clients = JSON.parse(getClientsCache());
+                let clients = getClientsCache();
 
                 for (let client of clients) {
                     if (client.id === id) {
@@ -247,7 +247,7 @@ export let fakeBackendProvider = {
             }
 
             function getClientIndex(id) {
-                let clients = JSON.parse(getClientsCache());
+                let clients = getClientsCache();
 
                 for (let i = 0; i < clients.length; i++) {
                     if (clients[i].id === id) {
@@ -283,7 +283,7 @@ export let fakeBackendProvider = {
                 ));
             };
 
-            function compareId(a,b) {
+            function compareId(a, b) {
                 if (a.id < b.id) {
                     return -1;
                 }
@@ -306,37 +306,45 @@ export let fakeBackendProvider = {
             };
 
             let getClientPolicies = function (clientId) {
-                let cachedPolicies = JSON.parse(getPoliciesCache());
+                let cachedPolicies = getPoliciesCache();
 
                 return cachedPolicies.filter(item => item.clientId === clientId);
             };
 
-            let getClientPoliciesCount = function(clientId) {
+            let getClientPoliciesCount = function (clientId) {
                 return getClientPolicies(clientId).length;
             };
 
+            let getResponseParams = function () {
+                return JSON.parse(connection.request.getBody());
+            };
+            let peselExists = function (pesel) {
+                let cachedList = getClientsCache();
+                let exists = false;
+                for (let i = 0; i < cachedList.length; i++) {
+                    if (cachedList[i].pesel == pesel) {
+                        exists = true;
+                        break;
+                    }
+
+                }
+                return exists;
+            };
             setTimeout(() => {
 
                 let currentClient;
                 if (connection.request.url.endsWith('/api/clientExists') && connection.request.method === RequestMethod.Get) {
-                    let params = JSON.parse(connection.request.getBody());
+                    let params = getResponseParams();
                     let pesel = params.pesel;
-                    let cachedList = JSON.parse(getClientsCache());
-                    let exists = false;
-                    for (let i = 0; i < cachedList.length; i++) {
-                        if (cachedList[i].pesel == pesel) {
-                            exists = true;
-                            break;
-                        }
+                    let exists = peselExists(pesel);
 
-                    }
                     connection.mockRespond(new Response(
                         new ResponseOptions({status: 200, body: {exists: exists}})
                     ));
                 }
 
                 if (connection.request.url.endsWith('/api/login') && connection.request.method === RequestMethod.Post) {
-                    let params = JSON.parse(connection.request.getBody());
+                    let params = getResponseParams();
 
                     let userValid = testUsers.filter(user => {
                             return params.username === user.username && params.password === user.password;
@@ -365,7 +373,7 @@ export let fakeBackendProvider = {
 
                 // Get clients list
                 if (connection.request.url.endsWith('/api/clients') && connection.request.method === RequestMethod.Get) {
-                    let clients = JSON.parse(getClientsCache());
+                    let clients = getClientsCache();
 
                     for (let client of clients) {
                         client.policiesCount = getClientPoliciesCount(client.id);
@@ -382,8 +390,8 @@ export let fakeBackendProvider = {
 
                 // Delete client
                 if (connection.request.url.endsWith('/api/clients') && connection.request.method === RequestMethod.Delete) {
-                    let params = JSON.parse(connection.request.getBody());
-                    let cachedList = JSON.parse(getClientsCache());
+                    let params = getResponseParams();
+                    let cachedList = getClientsCache();
                     let index = getClientIndex(params.id);
                     let exists = false;
 
@@ -405,8 +413,8 @@ export let fakeBackendProvider = {
 
                 // Create Client
                 if (connection.request.url.endsWith('/api/clients') && connection.request.method === RequestMethod.Post) {
-                    let params = JSON.parse(connection.request.getBody());
-                    let cachedList = JSON.parse(getClientsCache());
+                    let params = getResponseParams();
+                    let cachedList = getClientsCache();
                     let client = params.body.client;
                     let newId = generateNewId(cachedList);
 
@@ -431,7 +439,7 @@ export let fakeBackendProvider = {
 
                 // Show Client
                 if (connection.request.url.match(/^\/api\/clients\/[0-9]+$/) && connection.request.method === RequestMethod.Get) {
-                    let params = JSON.parse(connection.request.getBody());
+                    let params = getResponseParams();
                     let currentClient = getClient(params.id);
 
                     if (isAuthorized()) {
@@ -445,8 +453,8 @@ export let fakeBackendProvider = {
 
                 // Update client
                 if (connection.request.url.match(/^\/api\/clients\/[0-9]+$/) && connection.request.method === RequestMethod.Patch) {
-                    let params = JSON.parse(connection.request.getBody());
-                    let cachedList = JSON.parse(getClientsCache());
+                    let params = getResponseParams();
+                    let cachedList = getClientsCache();
                     let client = params.body.client;
 
                     let i;
@@ -456,14 +464,12 @@ export let fakeBackendProvider = {
                         }
                     }
 
-                    cachedList[i] = {
-                        id: cachedList[i].id,
-                        firstName: client.firstName,
-                        lastName: client.lastName,
-                        pesel: client.pesel,
-                        birthDate: client.birthDate,
-                        policiesCount: client.policiesCount
-                    };
+                    if (client.hasOwnProperty('id')) {
+                        delete client.id;
+                    }
+
+                    cachedList[i] = Object.assign(cachedList[i], client);
+
                     cookieService.putObject('clientsListCache', cachedList);
                     currentClient = cachedList[params.index];
                     if (isAuthorized()) {
@@ -477,7 +483,7 @@ export let fakeBackendProvider = {
 
                 // Get Client's policies
                 if (connection.request.url.match(/^\/api\/clients\/[0-9]+\/policies$/) && connection.request.method === RequestMethod.Get) {
-                    let params = JSON.parse(connection.request.getBody());
+                    let params = getResponseParams();
                     let clientId = params.id;
                     let clientsPolicies = getClientPolicies(clientId);
 
@@ -494,7 +500,7 @@ export let fakeBackendProvider = {
                 if (connection.request.url.endsWith('/api/policies') && connection.request.method === RequestMethod.Get) {
                     if (isAuthorized()) {
                         connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: JSON.parse(getPoliciesCache())})
+                            new ResponseOptions({status: 200, body: getPoliciesCache()})
                         ));
                     } else {
                         responseFailure();
@@ -503,8 +509,8 @@ export let fakeBackendProvider = {
 
                 // Create Policy
                 if (connection.request.url.endsWith('/api/policies') && connection.request.method === RequestMethod.Post) {
-                    let params = JSON.parse(connection.request.getBody());
-                    let cachedList = JSON.parse(getPoliciesCache());
+                    let params = getResponseParams();
+                    let cachedList = getPoliciesCache();
                     let policyData = params.body.policy;
                     let clientData = params.body.client;
                     let newId = generateNewId(cachedList);
@@ -542,7 +548,7 @@ export let fakeBackendProvider = {
 
                 // Show Policy
                 if (connection.request.url.match(/^\/api\/policies\/[0-9]+$/) && connection.request.method === RequestMethod.Get) {
-                    let params = JSON.parse(connection.request.getBody());
+                    let params = getResponseParams();
                     let currentPolicy = getPolicy(params.id);
 
                     if (isAuthorized()) {
@@ -556,8 +562,8 @@ export let fakeBackendProvider = {
 
                 // Delete Policy
                 if (connection.request.url.endsWith('/api/policies') && connection.request.method === RequestMethod.Delete) {
-                    let params = JSON.parse(connection.request.getBody());
-                    let cachedList = JSON.parse(getPoliciesCache());
+                    let params = getResponseParams();
+                    let cachedList = getPoliciesCache();
                     let policyIndex = getPolicyIndex(params.id);
 
                     if (isAuthorized() && policyIndex !== null) {
@@ -577,8 +583,8 @@ export let fakeBackendProvider = {
 
                 // Get Client's properties
                 if (connection.request.url.match(/^\/api\/clients\/[0-9]+\/properties$/) && connection.request.method === RequestMethod.Get) {
-                    let params = JSON.parse(connection.request.getBody());
-                    let cachedList = JSON.parse(getPropertiesCache());
+                    let params = getResponseParams();
+                    let cachedList = getPropertiesCache();
                     let clientProperties = cachedList.filter(item => item.clientId === params.id);
 
                     if (isAuthorized()) {
@@ -594,7 +600,7 @@ export let fakeBackendProvider = {
                 if (connection.request.url.endsWith('/api/properties') && connection.request.method === RequestMethod.Get) {
                     if (isAuthorized()) {
                         connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: JSON.parse(getPropertiesCache())})
+                            new ResponseOptions({status: 200, body: getPropertiesCache()})
                         ));
                     } else {
                         responseFailure();
@@ -603,8 +609,8 @@ export let fakeBackendProvider = {
 
                 // Create Property
                 if (connection.request.url.endsWith('/api/properties') && connection.request.method === RequestMethod.Post) {
-                    let params = JSON.parse(connection.request.getBody());
-                    let cachedList = JSON.parse(getPropertiesCache());
+                    let params = getResponseParams();
+                    let cachedList = getPropertiesCache();
                     let propertyData = params.body.property;
                     let newId = generateNewId(cachedList);
 
@@ -630,7 +636,7 @@ export let fakeBackendProvider = {
 
                 // Show Property
                 if (connection.request.url.match(/^\/api\/properties\/[0-9]+$/) && connection.request.method === RequestMethod.Get) {
-                    let params = JSON.parse(connection.request.getBody());
+                    let params = getResponseParams();
                     let property = getProperty(params.id);
 
                     if (isAuthorized()) {
@@ -644,8 +650,8 @@ export let fakeBackendProvider = {
 
                 // Delete Property
                 if (connection.request.url.endsWith('/api/properties') && connection.request.method === RequestMethod.Delete) {
-                    let params = JSON.parse(connection.request.getBody());
-                    let cachedList = JSON.parse(getPropertiesCache());
+                    let params = getResponseParams();
+                    let cachedList = getPropertiesCache();
                     let propertyId = getPropertyIndex(params.id);
 
                     if (isAuthorized() && propertyId !== null) {
@@ -661,8 +667,8 @@ export let fakeBackendProvider = {
                 }
 
                 if (connection.request.url.endsWith('/api/properties/haspolicy') && connection.request.method === RequestMethod.Get) {
-                    let params = JSON.parse(connection.request.getBody());
-                    let cachedList = JSON.parse(getPoliciesCache());
+                    let params = getResponseParams();
+                    let cachedList = getPoliciesCache();
                     let propertyId = params.id;
 
                     if (isAuthorized() && propertyId !== null) {
