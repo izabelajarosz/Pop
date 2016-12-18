@@ -16,15 +16,6 @@
                 <th>Nazwisko</th>
                 <th>Imię</th>
                 <th>Mienie</th>
-                <!--<th>Nazwa</th>
-                <th>ID klienta</th>
-                <th>Wartość</th>
-                <th>Składka miesięczna</th>
-                <th>Data podpisania</th>
-                <th>Data rozpoczęcia</th>
-                <th>Data zakończenia</th>
-                <th>Typ kalkulacji</th>
-                <th>Dodatkowe informacje</th>-->
                 <th colspan="1"></th>
             </tr>
             </thead>
@@ -35,24 +26,12 @@
                 <td>{{policy.endedAt}}</td>
                 <td>{{policy.signedAt}}</td>
                 <td>
-                     <a [routerLink]="['/clients/' + policy.clientId]">{{policy.surname}}</a>
+                    <a [routerLink]="['/clients/' + policy.clientId]">{{policy.surname}}</a>
                 </td>
                 <td>
-                     <a [routerLink]="['/clients/' + policy.clientId]">{{policy.name}}</a>
+                    <a [routerLink]="['/clients/' + policy.clientId]">{{policy.name}}</a>
                 </td>
                 <td>{{policy.property}}</td>
-                <!--<td>{{policy.name}}</td>
-                <td>
-                    <a [routerLink]="['/clients/' + policy.clientId]">{{policy.clientId}}</a>
-                </td>
-                <td>{{policy.value}}</td>
-                <td>{{policy.monthlyCost}}</td>
-                <td>{{policy.signedAt}}</td>
-                <td>{{policy.startedAt}}</td>
-                <td>{{policy.endedAt}}</td>
-                <td>{{policy.calculationType}}</td>
-                <td>{{policy.additionalInformation}}</td>
-                <!--<td class="centered"><i class="fa fa-trash" aria-hidden="true" (click)="removeClient(policy.id)"></i></td>-->
                 <td class="centered">
                     <i class="fa fa-file" aria-hidden="true" [routerLink]="['/policies/' + policy.id]"></i>
                 </td>

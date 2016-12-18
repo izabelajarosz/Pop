@@ -1,16 +1,9 @@
-﻿import { Component } from '@angular/core';
-
-import { UserService } from '../../_services/user.service';
-import { ClientService } from '../../_services/client.service';
-import { ClientsListComponent } from '../client/index/clientsList.component';
+﻿import {Component} from "@angular/core";
 
 @Component({
     moduleId: module.id,
-    templateUrl: 'home.component.html',
-    providers: [UserService, ClientService]
-
+    templateUrl: 'home.component.html'
 })
 
 export class HomeComponent {
-    orderProperty = 'index';
 }

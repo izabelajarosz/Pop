@@ -56,7 +56,9 @@ export class EditClientComponent implements OnInit {
                     if (result === true) {
                         this.resetForm();
                         this.success = 'Użytkownik został zapisany.';
-                        //this.router.navigate(['/']);
+                        setTimeout(() => {
+                            this.router.navigate(['/clients/' + this.id]);
+                        }, 2000);
                     } else {
                         this.error = 'Wystąpił nieoczekiwany błąd.';
                         this.loading = false;

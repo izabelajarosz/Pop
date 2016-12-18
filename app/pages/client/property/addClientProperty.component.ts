@@ -4,7 +4,6 @@ import {PropertyService} from "../../../_services/properties.service";
 import {FormBuilder} from "@angular/forms";
 import {ClientService} from "../../../_services/client.service";
 import {Client} from "../../../_models/client";
-import {Property} from "../../../_models/property";
 
 @Component({
     moduleId: module.id,
@@ -59,7 +58,10 @@ export class AddClientPropertyComponent implements OnInit {
                     this.resetForm();
                     this.error = '';
                     this.success = 'Mienie zostało dodane.';
-                    // this.router.navigate(['/clients/' + this.id]);
+
+                    setTimeout(() => {
+                        this.router.navigate(['/clients/' + this.id]);
+                    }, 2000);
                 } else {
                     this.error = 'Wystąpił nieoczekiwany błąd.';
                     this.loading = false;

@@ -2,7 +2,6 @@ import {Component, OnInit} from "@angular/core";
 import {PropertyService} from "../../../_services/index";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Property} from "../../../_models/property";
-import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 @Component({
     moduleId: module.id,

@@ -1,9 +1,7 @@
-import {Component, OnInit, ViewContainerRef} from '@angular/core';
-
-import { PropertyService } from '../../../_services/index';
+import {Component, OnInit, ViewContainerRef} from "@angular/core";
+import {PropertyService} from "../../../_services/index";
 import {Property} from "../../../_models/property";
 import {Overlay} from "angular2-modal";
-import {Modal} from "angular2-modal/plugins/bootstrap";
 
 @Component({
     moduleId: module.id,
@@ -13,14 +11,13 @@ import {Modal} from "angular2-modal/plugins/bootstrap";
 
 export class PropertiesListComponent implements OnInit {
     properties: Property[] = [];
-    success= '';
+    success = '';
 
     constructor(private propertyService: PropertyService,
                 overlay: Overlay,
-                vcRef: ViewContainerRef,
-                public  modal: Modal) { 
-                    overlay.defaultViewContainer = vcRef;
-                }
+                vcRef: ViewContainerRef) {
+        overlay.defaultViewContainer = vcRef;
+    }
 
     ngOnInit() {
 

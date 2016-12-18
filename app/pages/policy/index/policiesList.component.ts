@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-
-import { Policy } from '../../../_models/policy';
-import { PolicyService } from '../../../_services/index';
+import {Component, OnInit} from "@angular/core";
+import {Policy} from "../../../_models/policy";
+import {PolicyService} from "../../../_services/index";
 
 @Component({
     moduleId: module.id,
@@ -12,7 +11,8 @@ import { PolicyService } from '../../../_services/index';
 export class PoliciesListComponent implements OnInit {
     policies: Policy[] = [];
 
-    constructor(private policyService: PolicyService) { }
+    constructor(private policyService: PolicyService) {
+    }
 
     ngOnInit() {
 
@@ -22,7 +22,7 @@ export class PoliciesListComponent implements OnInit {
             });
     }
 
-    removePolicy(id){
+    removePolicy(id) {
         this.policyService.removePolicy(id)
             .subscribe(policies => {
                 this.policies = policies;

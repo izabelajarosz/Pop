@@ -2,7 +2,6 @@ import {Component, OnInit} from "@angular/core";
 import {PolicyService} from "../../../_services/policy.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Policy} from "../../../_models/policy";
-import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 @Component({
     moduleId: module.id,

@@ -22,8 +22,7 @@ export class AddClientComponent implements OnInit {
 
     constructor(private router: Router,
                 private clientService: ClientService,
-                private peselHelper: PeselValidationHelper,
-                private formBuilder: FormBuilder) {
+                private peselHelper: PeselValidationHelper) {
     }
 
     ngOnInit() {
@@ -53,7 +52,9 @@ export class AddClientComponent implements OnInit {
                                 this.resetForm();
                                 this.error = '';
                                 this.success = 'Użytkownik został dodany.';
-                                // this.router.navigate(['/']);
+                                setTimeout(() => {
+                                    this.router.navigate(['/clients']);
+                                }, 2000);
                             } else {
                                 this.error = 'Wystąpił nieoczekiwany błąd.';
                                 this.loading = false;

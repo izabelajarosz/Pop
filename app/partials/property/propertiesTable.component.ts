@@ -2,7 +2,7 @@ import {Component, Input, ViewContainerRef} from "@angular/core";
 import {Property} from "../../_models/property";
 import {Overlay} from "angular2-modal";
 import {Modal} from "angular2-modal/plugins/bootstrap";
-import { PropertyService } from '../../_services/index';
+import {PropertyService} from "../../_services/index";
 
 
 @Component({
@@ -12,24 +12,25 @@ import { PropertyService } from '../../_services/index';
     providers: [PropertyService]
 })
 
-export class PropertiesTableComponent  {
-        constructor(private propertyService: PropertyService,
+export class PropertiesTableComponent {
+    constructor(private propertyService: PropertyService,
                 overlay: Overlay,
                 vcRef: ViewContainerRef,
-                public  modal: Modal) { 
-                    overlay.defaultViewContainer = vcRef;
-                }
+                public  modal: Modal) {
+        overlay.defaultViewContainer = vcRef;
+    }
+
     @Input() properties: Array<Property>;
 
     orderProperty = 'index';
     filterValue = '';
     filteredFields = ['name', 'value'];
-    success= '';
+    success = '';
     error = '';
 
- showModal(id) {
-     this.error = '';
-     this.success = '';
+    showModal(id) {
+        this.error = '';
+        this.success = '';
         let dialog = this.modal.confirm()
             .title('')
             .body('Czy chcesz usunąć mienie?')
@@ -46,31 +47,31 @@ export class PropertiesTableComponent  {
             });
     }
 
-    removeProperty(id){
+    removeProperty(id) {
         this.propertyService.propertyHasPolicy(id)
-        .subscribe(result => {
+            .subscribe(result => {
                 if (result === true) {
-                    this.success= '';
+                    this.success = '';
                     this.error = "Nie można usunąć mienia gdyż jest ono objęte aktywną polisą";
-                }else{
+                } else {
                     this.propertyService.removeProperty(id)
-                    .subscribe(properties => {
-                        let index = null;
-                        for (let i = 0; i < properties.length; i++) {
-                            if (properties[i].id === id) {
-                                index = id;
-                                break;
+                        .subscribe(properties => {
+                            let index = null;
+
+                            for (let i = 0; i < properties.length; i++) {
+                                if (properties[i].id === id) {
+                                    index = id;
+                                    break;
+                                }
                             }
-                        }
 
-                        this.properties = this.properties.slice(index, 1);
-
-                        this.error='';
-                        this.success = 'Mienie zostało usunięte';
-                    });
+                            this.properties = this.properties.slice(index, 1);
+                            this.error = '';
+                            this.success = 'Mienie zostało usunięte';
+                        });
                 }
-        });
-        
-       
+            });
+
+
     }
 }

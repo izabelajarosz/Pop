@@ -1,6 +1,5 @@
 <navbar></navbar>
 <div class="padding-top">
-    <!--<a [routerLink]="['/policies/' + id + '/edit']"><i class="fa fa-pencil" aria-hidden="true"></i> Edytuj</a>-->
     <a (click)="removePolicy()"><i class="fa fa-trash" aria-hidden="true"></i> Usuń</a>
     <ul class="list-group">
         <li class="list-group-item"><strong>Od: </strong>{{policy.startedAt}}</li>
@@ -15,18 +14,5 @@
         <li class="list-group-item"><strong>Miesięczna składka: </strong> {{policy.monthlyCost}}</li>
         <li class="list-group-item"><strong>Typ kalkulacji: </strong> {{policy.calculationType}}</li>
         <li class="list-group-item"><strong>Dodatkowe informacje: </strong> {{policy.additionalInformation}}</li>
-        
-        
-<!--
-        <li class="list-group-item"><strong>Nazwa: </strong>{{policy.name}}</li>
-        <li class="list-group-item"><strong>ID klienta: </strong><a [routerLink]="['/clients/' + policy.clientId]">{{policy.clientId}}</a></li>
-        <li class="list-group-item"><strong>Czas: </strong>{{policy.time}}</li>
-        <li class="list-group-item"><strong>Wartość: </strong>{{policy.value}}</li>
-        <li class="list-group-item"><strong>Miesięczna składka: </strong>{{policy.monthlyCost}}</li>
-
-
-        <li class="list-group-item"><strong>Typ kalkulacji: </strong> {{policy.calculationType}}</li>
-        <li class="list-group-item"><strong>Dodatkowe informacje: </strong> {{policy.additionalInformation}}</li>
-        <li class="list-group-item"><strong>Mienie: </strong> <a [routerLink]="['/properties/' + policy.propertyId]">{{policy.propertyId}}</a></li>-->
     </ul>
 </div>
