@@ -55,7 +55,16 @@ export class PropertiesTableComponent  {
                 }else{
                     this.propertyService.removeProperty(id)
                     .subscribe(properties => {
-                        this.properties = properties;
+                        let index = null;
+                        for (let i = 0; i < properties.length; i++) {
+                            if (properties[i].id === id) {
+                                index = id;
+                                break;
+                            }
+                        }
+
+                        this.properties = this.properties.slice(index, 1);
+
                         this.error='';
                         this.success = 'Mienie zostało usunięte';
                     });
