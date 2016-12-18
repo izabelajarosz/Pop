@@ -19,8 +19,6 @@ export class FilterDatesPipe implements PipeTransform {
     private filterObject(startValue: any, element: any, endValue: any) {
         let exists = false;
 
-            let valFound = 0;
-
             let endedAt = element["endedAt"].replace(/\D/g,'');
             let startedAt = element["startedAt"].replace(/\D/g,'');
             startValue = startValue.replace(/\D/g,'');
@@ -37,8 +35,7 @@ export class FilterDatesPipe implements PipeTransform {
             }
             else if(startedAt.substring(0,startValue.length) >= startValue && endValue >= endedAt.substring(0,endValue.length)){
                 exists = true;
-            };
-
+            }
 
         return exists;
     }

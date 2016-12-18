@@ -1,7 +1,6 @@
 ﻿import {Http, BaseRequestOptions, Response, ResponseOptions, RequestMethod} from "@angular/http";
 import {MockBackend, MockConnection} from "@angular/http/testing";
 import {CookieService} from "angular2-cookie/core";
-import {cache} from "rxjs/operator/cache";
 
 export let fakeBackendProvider = {
     provide: Http,
@@ -9,7 +8,6 @@ export let fakeBackendProvider = {
         let cookieService = cookie;
         backend.connections.subscribe((connection: MockConnection) => {
             let sessionKey = '8348sdkj983jsdk9jsd';
-            // let testUser = {username: 'Admin', password: 'Admin', firstName: 'Jan', lastName: 'Kowalski'};
             let testUsers = [
                 {username: 'Admin', password: 'Admin', firstName: 'Jan', lastName: 'Kowalski'},
                 {username: 'RYKOW', password: 'Hasło123!@#', firstName: 'Jan', lastName: 'Kowalski'}
@@ -20,27 +18,16 @@ export let fakeBackendProvider = {
                     id: 1,
                     firstName: 'Barbara',
                     lastName: 'Kozłowska',
-                    // street: 'Dyliżansowa',
-                    // streetNumber: '133',
-                    // homeNumber: '4',
-                    // city: 'Warszawa',
-                    // postCode: '03-136',
                     pesel: '66111933943',
                     birthDate: '1983-01-19',
                     policiesCount: 0,
                     accountBalance: -29.99
-                    
+
                 },
                 {
                     id: 2,
                     firstName: 'Lucjan',
                     lastName: 'Adamski',
-                    // street: 'Darwina Karola',
-                    // streetNumber: '12',
-                    // homeNumber: '',
-                    // city: 'Jaworzno',
-                    // postCode: '43-603',
-                    // pesel: '66122741513'
                     birthDate: '1939-11-14',
                     policiesCount: 0,
                     accountBalance: -29.99
@@ -49,11 +36,6 @@ export let fakeBackendProvider = {
                     id: 3,
                     firstName: 'Marcelina',
                     lastName: 'Kwiatkowska',
-                    // street: 'Gryfińska',
-                    // streetNumber: '24',
-                    // homeNumber: '3',
-                    // city: 'Szczecin',
-                    // postCode: '70-806',
                     pesel: '66052391084',
                     birthDate: '1978-02-16',
                     policiesCount: 0,
@@ -63,11 +45,6 @@ export let fakeBackendProvider = {
                     id: 4,
                     firstName: 'Wacława',
                     lastName: 'Król',
-                    // street: 'Wodospadowa',
-                    // streetNumber: '46',
-                    // homeNumber: '13',
-                    // city: 'Łódź',
-                    // postCode: '92-018',
                     pesel: '42081489824',
                     birthDate: '1945-11-01',
                     policiesCount: 0,
@@ -77,11 +54,6 @@ export let fakeBackendProvider = {
                     id: 5,
                     firstName: 'Ryszard',
                     lastName: 'Grabowski',
-                    // street: 'Zygmunta Augusta',
-                    // streetNumber: '140',
-                    // homeNumber: '153',
-                    // city: 'Gdynia',
-                    // postCode: '81-359',
                     pesel: '93111210552',
                     birthDate: '1969-12-23',
                     policiesCount: 0,
@@ -91,13 +63,8 @@ export let fakeBackendProvider = {
                     id: 6,
                     firstName: 'Teofil',
                     lastName: 'Wysocki',
-                    // street: 'Willowa',
-                    // streetNumber: '79',
-                    // homeNumber: '15',
-                    // city: 'Będzin',
-                    // postCode: '42-506',
                     pesel: '71061271674',
-                    birthDate:'1956-06-01',
+                    birthDate: '1956-06-01',
                     policiesCount: 0,
                     accountBalance: -29.99
                 },
@@ -105,13 +72,8 @@ export let fakeBackendProvider = {
                     id: 7,
                     firstName: 'Ewa',
                     lastName: 'Wysocka',
-                    // street: 'Podchorążych',
-                    // streetNumber: '17',
-                    // homeNumber: '23',
-                    // city: 'Warszawa',
-                    // postCode: '03-136',
                     pesel: '97022541060',
-                    birthDate:'1999-08-29',
+                    birthDate: '1999-08-29',
                     policiesCount: 0,
                     accountBalance: -29.99
                 },
@@ -119,13 +81,8 @@ export let fakeBackendProvider = {
                     id: 8,
                     firstName: 'Ryszard',
                     lastName: 'Kowalski',
-                    // street: 'Podchorążych',
-                    // streetNumber: '17',
-                    // homeNumber: '23',
-                    // city: 'Warszawa',
-                    // postCode: '03-136',
                     pesel: '20010104499',
-                    birthDate:'1920-01-01',
+                    birthDate: '1920-01-01',
                     policiesCount: 0,
                     accountBalance: -29.99
 
@@ -134,13 +91,8 @@ export let fakeBackendProvider = {
                     id: 9,
                     firstName: 'Jan',
                     lastName: 'Kowalski',
-                    // street: 'Podchorążych',
-                    // streetNumber: '17',
-                    // homeNumber: '23',
-                    // city: 'Warszawa',
-                    // postCode: '03-136',
                     pesel: '20010204521',
-                    birthDate:'1920-01-02',
+                    birthDate: '1920-01-02',
                     policiesCount: 1,
                     accountBalance: -29.99
                 },
@@ -148,11 +100,6 @@ export let fakeBackendProvider = {
                     id: 10,
                     firstName: 'Jan',
                     lastName: 'Nowicki',
-                    // street: 'Rowerowa',
-                    // streetNumber: '120',
-                    // homeNumber: '',
-                    // city: 'Lublin',
-                    // postCode: '20-018',
                     pesel: '94111423160',
                     birthDate: '1994-02-14',
                     policiesCount: 0,
@@ -162,11 +109,6 @@ export let fakeBackendProvider = {
                     id: 11,
                     firstName: 'Stanisław',
                     lastName: 'Nowak',
-                    // street: 'Rowerowa',
-                    // streetNumber: '120',
-                    // homeNumber: '',
-                    // city: 'Lublin',
-                    // postCode: '20-018',
                     pesel: '94028394928',
                     birthDate: '1994-02-14',
                     policiesCount: 1,
@@ -208,60 +150,8 @@ export let fakeBackendProvider = {
                     propertyAdditionalInformation: '',
                     name: 'Stanisław',
                     surname: 'Nowak',
-                    
+
                 }
-                // {
-                //     id: 1,
-                //     clientId: 1,
-                //     propertyId: 1,
-                //     name: 'Testowa polisa 1',
-                //     value: 20000,
-                //     monthlyCost: 430,
-                //     signedAt: '2016.01.30 16:10',
-                //     startedAt: '2016.02.01 00:00',
-                //     endedAt: '2017.02.01 23:59',
-                //     calculationType: 'Ręczny',
-                //     additionalInformation: ''
-                // },
-                // {
-                //     id: 2,
-                //     clientId: 8,
-                //     propertyId: 2,
-                //     name: 'Polisa na psa',
-                //     value: 15000,
-                //     monthlyCost: 340,
-                //     signedAt: '2015.01.30 16:10',
-                //     startedAt: '2015.02.01 00:00',
-                //     endedAt: '2019.02.01 23:59',
-                //     calculationType: 'Ręczny',
-                //     additionalInformation: ''
-                // },
-                // {
-                //     id: 3,
-                //     clientId: 1,
-                //     propertyId: 3,
-                //     name: 'Polisa na dom',
-                //     value: 52000,
-                //     monthlyCost: 600,
-                //     signedAt: '2014.03.30 16:10',
-                //     startedAt: '2014.04.01 00:00',
-                //     endedAt: '2027.07.01 23:59',
-                //     calculationType: 'Ręczny',
-                //     additionalInformation: ''
-                // },
-                // {
-                //     id: 4,
-                //     clientId: 3,
-                //     propertyId: 4,
-                //     name: 'Polisa na życie',
-                //     value: 39999,
-                //     monthlyCost: 400,
-                //     signedAt: '2016.09.30 16:10',
-                //     startedAt: '2016.10.01 00:00',
-                //     endedAt: '2047.12.01 23:59',
-                //     calculationType: 'Ręczny',
-                //     additionalInformation: ''
-                // }
             ];
 
             let propertyList = [
@@ -286,37 +176,13 @@ export let fakeBackendProvider = {
                     value: 16999,
                     propertyAdditionalInformation: 'Dom w rejonie zalewowym.'
                 }
-                // {
-                //     id: 2,
-                //     clientId: 1,
-                //     name: 'Dom',
-                //     value: 450000,
-                // },
-                // {
-                //     id: 3,
-                //     clientId: 1,
-                //     name: 'iPhone',
-                //     value: 3200,
-                // },
-                // {
-                //     id: 4,
-                //     clientId: 1,
-                //     name: 'Laptop',
-                //     value: 2600,
-                // },
-                // {
-                //     id: 5,
-                //     clientId: 8,
-                //     name: 'Dom',
-                //     value: 999999,
-                // }
             ];
 
             function getPoliciesCache() {
                 return cookieService.get('policiesListCache');
             }
 
-            function getPolicy (id) {
+            function getPolicy(id) {
                 let policies = JSON.parse(getPoliciesCache());
 
                 for (let policy of policies) {
@@ -328,10 +194,10 @@ export let fakeBackendProvider = {
                 return null;
             }
 
-            function getPolicyIndex (id) {
+            function getPolicyIndex(id) {
                 let policies = JSON.parse(getPoliciesCache());
 
-                for (let i=0; i < policies.length; i++) {
+                for (let i = 0; i < policies.length; i++) {
                     if (policies[i].id === id) {
                         return i;
                     }
@@ -340,7 +206,7 @@ export let fakeBackendProvider = {
                 return null;
             }
 
-            function getProperty (id) {
+            function getProperty(id) {
                 let properties = JSON.parse(getPropertiesCache());
 
                 for (let property of properties) {
@@ -356,10 +222,10 @@ export let fakeBackendProvider = {
                 return cookieService.get('propertiesListCache');
             }
 
-            function getPropertyIndex (id) {
+            function getPropertyIndex(id) {
                 let properties = JSON.parse(getPropertiesCache());
 
-                for (let i=0; i < properties.length; i++) {
+                for (let i = 0; i < properties.length; i++) {
                     if (properties[i].id === id) {
                         return i;
                     }
@@ -372,7 +238,7 @@ export let fakeBackendProvider = {
                 return cookieService.get('clientsListCache');
             }
 
-            function getClient (id) {
+            function getClient(id) {
                 let clients = JSON.parse(getClientsCache());
 
                 for (let client of clients) {
@@ -384,10 +250,10 @@ export let fakeBackendProvider = {
                 return null;
             }
 
-            function getClientIndex (id) {
+            function getClientIndex(id) {
                 let clients = JSON.parse(getClientsCache());
 
-                for (let i=0; i < clients.length; i++) {
+                for (let i = 0; i < clients.length; i++) {
                     if (clients[i].id === id) {
                         return i;
                     }
@@ -413,29 +279,30 @@ export let fakeBackendProvider = {
 
             setTimeout(() => {
 
+                let currentClient;
                 if (connection.request.url.endsWith('/api/clientExists') && connection.request.method === RequestMethod.Get) {
                     let params = JSON.parse(connection.request.getBody());
                     let pesel = params.pesel;
                     let cachedList = JSON.parse(getClientsCache());
                     let exists = false;
-                    for(var i = 0; i < cachedList.length; i++){
-                        if (cachedList[i].pesel == pesel){
+                    for (let i = 0; i < cachedList.length; i++) {
+                        if (cachedList[i].pesel == pesel) {
                             exists = true;
                             break;
                         }
 
                     }
                     connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: {exists: exists}})
-                        ));
+                        new ResponseOptions({status: 200, body: {exists: exists}})
+                    ));
                 }
 
                 if (connection.request.url.endsWith('/api/login') && connection.request.method === RequestMethod.Post) {
                     let params = JSON.parse(connection.request.getBody());
 
                     let userValid = testUsers.filter(user => {
-                        return params.username === user.username && params.password === user.password;
-                    }).length === 1;
+                            return params.username === user.username && params.password === user.password;
+                        }).length === 1;
 
                     if (userValid) {
                         connection.mockRespond(new Response(
@@ -460,7 +327,7 @@ export let fakeBackendProvider = {
                     }
                 }
 
-                function getClientPoliciesCount (clientId) {
+                function getClientPoliciesCount(clientId) {
                     let cachedPolicies = JSON.parse(getPoliciesCache());
 
                     return cachedPolicies.filter(item => item.clientId === clientId).length;
@@ -490,7 +357,7 @@ export let fakeBackendProvider = {
                     let params = JSON.parse(connection.request.getBody());
                     let cachedList = JSON.parse(getClientsCache());
                     let index = getClientIndex(params.id);
-                    if(index != null)
+                    if (index != null)
                         cachedList.splice(index, 1);
                     cookieService.putObject('clientsListCache', cachedList);
 
@@ -540,7 +407,7 @@ export let fakeBackendProvider = {
                 // Show Client
                 if (connection.request.url.match(/^\/api\/clients\/[0-9]+$/) && connection.request.method === RequestMethod.Get) {
                     let params = JSON.parse(connection.request.getBody());
-                    var currentClient = getClient(params.id);
+                    let currentClient = getClient(params.id);
 
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(
@@ -560,8 +427,8 @@ export let fakeBackendProvider = {
                     let client = params.body.client;
 
                     let i;
-                    for (i=0; i < cachedList.length; i++) {
-                        if ( cachedList[i].id == client.id) {
+                    for (i = 0; i < cachedList.length; i++) {
+                        if (cachedList[i].id == client.id) {
                             break;
                         }
                     }
@@ -570,17 +437,12 @@ export let fakeBackendProvider = {
                         id: cachedList[i].id,
                         firstName: client.firstName,
                         lastName: client.lastName,
-                        // street: client.street,
-                        // streetNumber: client.streetNumber,
-                        // homeNumber: client.homeNumber,
-                        // city: client.city,
-                        // postCode: client.postCode,
                         pesel: client.pesel,
                         birthDate: client.birthDate,
                         policiesCount: client.policiesCount
                     };
                     cookieService.putObject('clientsListCache', cachedList);
-                    var currentClient = cachedList[params.index];
+                    currentClient = cachedList[params.index];
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(
                             new ResponseOptions({status: 200, body: currentClient})
@@ -596,7 +458,7 @@ export let fakeBackendProvider = {
                 if (connection.request.url.match(/^\/api\/clients\/[0-9]+\/policies$/) && connection.request.method === RequestMethod.Get) {
                     let params = JSON.parse(connection.request.getBody());
                     let cachedList = JSON.parse(getPoliciesCache());
-                    var clientsPolicies = cachedList.filter(item => item.clientId === params.id);
+                    let clientsPolicies = cachedList.filter(item => item.clientId === params.id);
 
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(
@@ -630,13 +492,12 @@ export let fakeBackendProvider = {
                     let clientData = params.body.client;
                     let newId = cachedList.length + 1;
 
-                    policyData.signedAt = new Date(Date.now()).toLocaleString().slice(0, 10).replace(/\./g,"-");
+                    policyData.signedAt = new Date(Date.now()).toLocaleString().slice(0, 10).replace(/\./g, "-");
 
-                    var policy = {
+                    let policy = {
                         id: newId,
                         clientId: policyData.clientId,
                         propertyId: policyData.propertyId,
-                        // name: policyData.name,
                         value: policyData.value,
                         monthlyCost: policyData.monthlyCost,
                         startedAt: policyData.startedAt,
@@ -667,7 +528,7 @@ export let fakeBackendProvider = {
                 // Show Policy
                 if (connection.request.url.match(/^\/api\/policies\/[0-9]+$/) && connection.request.method === RequestMethod.Get) {
                     let params = JSON.parse(connection.request.getBody());
-                    var currentPolicy = getPolicy(params.id);
+                    let currentPolicy = getPolicy(params.id);
 
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(
@@ -740,10 +601,7 @@ export let fakeBackendProvider = {
                     let propertyData = params.body.property;
                     let newId = cachedList.length + 1;
 
-                    console.log(propertyData);
-                    console.log(newId);
-
-                    var property = {
+                    let property = {
                         id: newId,
                         clientId: propertyData.clientId,
                         name: propertyData.name,
@@ -751,12 +609,8 @@ export let fakeBackendProvider = {
                         propertyAdditionalInformation: propertyData.propertyAdditionalInformation
                     };
 
-                    console.log(property);
-
                     cachedList.push(property);
                     cookieService.putObject('propertiesListCache', cachedList);
-
-                    console.log(getPropertiesCache());
 
                     if (sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey) {
                         connection.mockRespond(new Response(
@@ -806,7 +660,7 @@ export let fakeBackendProvider = {
                     }
                 }
 
-                if(connection.request.url.endsWith('/api/properties/haspolice') && connection.request.method === RequestMethod.Get){
+                if (connection.request.url.endsWith('/api/properties/haspolice') && connection.request.method === RequestMethod.Get) {
                     let params = JSON.parse(connection.request.getBody());
                     let cachedList = JSON.parse(getPoliciesCache());
                     let propertyId = params.id;
@@ -819,7 +673,7 @@ export let fakeBackendProvider = {
                                 break;
                             }
                         }
-                        
+
 
                         connection.mockRespond(new Response(
                             new ResponseOptions({status: 200, body: result})
