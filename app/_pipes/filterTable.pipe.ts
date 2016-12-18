@@ -25,7 +25,7 @@ export class FilterTablePipe implements PipeTransform {
             let valFound = 0;
             for (let value of values) {
                 for (let field of fields) {
-                    var item = element[field];
+                    let item = element[field];
 
                     if (typeof item === 'number') {
                         item = item.toString();
