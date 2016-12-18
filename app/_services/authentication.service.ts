@@ -1,28 +1,48 @@
-﻿import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs';
-import 'rxjs/add/operator/map'
+﻿import {Injectable, isDevMode} from "@angular/core";
+import {Http, Response, URLSearchParams, RequestOptions} from "@angular/http";
+import "rxjs/add/operator/map";
 
 @Injectable()
 export class AuthenticationService {
     public token: string;
+    private baseUrl: string = '';
 
     constructor(private http: Http) {
-        var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        this.token = currentUser && currentUser.token;
+        if (isDevMode() === false) {
+            this.baseUrl = 'http://ptinsurencesystem.azurewebsites.net'
+        }
+
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.token = currentUser && currentUser.access_token;
     }
 
-    login(username, password): Observable<boolean> {
-        return this.http.post('/api/login', { username: username, password: password })
+    login(username: string, password: string) {
+        let body = null;
+
+        if (isDevMode()) {
+            body = {username: username, password: password};
+        } else {
+            body = new URLSearchParams();
+            body.set('username', username);
+            body.set('password', password);
+            body.set('grant_type', 'password');
+        }
+
+        let options = new RequestOptions();
+
+        return this.http.post(this.baseUrl + '/api/login', body, options)
             .map((response: Response) => {
-                let token = response.json() && response.json().token;
-                if (token) {
-                    this.token = token;
-                    localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
+                let responseBody = response.json();
+
+                if (responseBody && responseBody.hasOwnProperty('access_token')) {
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    localStorage.setItem('currentUser', JSON.stringify(responseBody));
+                    this.token = responseBody.access_token;
+
                     return true;
-                } else {
-                    return false;
                 }
+
+                return false;
             });
     }
 

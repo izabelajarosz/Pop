@@ -9,15 +9,15 @@ export let fakeBackendProvider = {
         backend.connections.subscribe((connection: MockConnection) => {
             let sessionKey = '8348sdkj983jsdk9jsd';
             let testUsers = [
-                {username: 'Admin', password: 'Admin', firstName: 'Jan', lastName: 'Kowalski'},
-                {username: 'RYKOW', password: 'Hasło123!@#', firstName: 'Jan', lastName: 'Kowalski'}
+                {username: 'Admin', password: 'Admin', name: 'Jan', surname: 'Kowalski'},
+                {username: 'RYKOW', password: 'Hasło123!@#', name: 'Jan', surname: 'Kowalski'}
             ];
 
             let clientsList = [
                 {
                     id: 1,
-                    firstName: 'Barbara',
-                    lastName: 'Kozłowska',
+                    name: 'Barbara',
+                    surname: 'Kozłowska',
                     pesel: '66111933943',
                     birthDate: '1983-01-19',
                     policiesCount: 0,
@@ -25,16 +25,16 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 2,
-                    firstName: 'Lucjan',
-                    lastName: 'Adamski',
+                    name: 'Lucjan',
+                    surname: 'Adamski',
                     birthDate: '1939-11-14',
                     policiesCount: 0,
                     accountBalance: -29.99
                 },
                 {
                     id: 3,
-                    firstName: 'Marcelina',
-                    lastName: 'Kwiatkowska',
+                    name: 'Marcelina',
+                    surname: 'Kwiatkowska',
                     pesel: '66052391084',
                     birthDate: '1978-02-16',
                     policiesCount: 0,
@@ -42,8 +42,8 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 4,
-                    firstName: 'Wacława',
-                    lastName: 'Król',
+                    name: 'Wacława',
+                    surname: 'Król',
                     pesel: '42081489824',
                     birthDate: '1945-11-01',
                     policiesCount: 0,
@@ -51,8 +51,8 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 5,
-                    firstName: 'Ryszard',
-                    lastName: 'Grabowski',
+                    name: 'Ryszard',
+                    surname: 'Grabowski',
                     pesel: '93111210552',
                     birthDate: '1969-12-23',
                     policiesCount: 0,
@@ -60,8 +60,8 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 6,
-                    firstName: 'Teofil',
-                    lastName: 'Wysocki',
+                    name: 'Teofil',
+                    surname: 'Wysocki',
                     pesel: '71061271674',
                     birthDate: '1956-06-01',
                     policiesCount: 0,
@@ -69,8 +69,8 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 7,
-                    firstName: 'Ewa',
-                    lastName: 'Wysocka',
+                    name: 'Ewa',
+                    surname: 'Wysocka',
                     pesel: '97022541060',
                     birthDate: '1999-08-29',
                     policiesCount: 0,
@@ -78,8 +78,8 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 8,
-                    firstName: 'Ryszard',
-                    lastName: 'Kowalski',
+                    name: 'Ryszard',
+                    surname: 'Kowalski',
                     pesel: '20010104499',
                     birthDate: '1920-01-01',
                     policiesCount: 0,
@@ -88,8 +88,8 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 9,
-                    firstName: 'Jan',
-                    lastName: 'Kowalski',
+                    name: 'Jan',
+                    surname: 'Kowalski',
                     pesel: '20010204521',
                     birthDate: '1920-01-02',
                     policiesCount: 1,
@@ -97,8 +97,8 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 10,
-                    firstName: 'Jan',
-                    lastName: 'Nowicki',
+                    name: 'Jan',
+                    surname: 'Nowicki',
                     pesel: '94111423160',
                     birthDate: '1994-02-14',
                     policiesCount: 0,
@@ -106,8 +106,8 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 11,
-                    firstName: 'Stanisław',
-                    lastName: 'Nowak',
+                    name: 'Stanisław',
+                    surname: 'Nowak',
                     pesel: '94028394928',
                     birthDate: '1994-02-14',
                     policiesCount: 1,
@@ -274,7 +274,7 @@ export let fakeBackendProvider = {
             }
 
             let isAuthorized = function () {
-                return sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey;
+                return sessionKey != null && connection.request.headers.get('Authorization') === 'Bearer ' + sessionKey;
             };
 
             let responseFailure = function () {
@@ -350,9 +350,9 @@ export let fakeBackendProvider = {
                             return params.username === user.username && params.password === user.password;
                         }).length === 1;
 
-                    if (userValid) {
+                    if (userValid === true) {
                         connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: {token: sessionKey}})
+                            new ResponseOptions({status: 200, body: {access_token: sessionKey}})
                         ));
                     } else {
                         connection.mockRespond(new Response(
@@ -420,8 +420,8 @@ export let fakeBackendProvider = {
 
                     cachedList.push({
                         id: newId,
-                        firstName: client.name,
-                        lastName: client.lastname,
+                        name: client.name,
+                        surname: client.surname,
                         pesel: client.pesel,
                         birthDate: client.birthDate,
                         policiesCount: client.policiesCount
@@ -530,8 +530,8 @@ export let fakeBackendProvider = {
                         additionalInformation: policyData.additionalInformation,
                         property: policyData.propertyName,
                         propertyAdditionalInformation: '',
-                        name: clientData.firstName,
-                        surname: clientData.lastName
+                        name: clientData.name,
+                        surname: clientData.surname
                     };
 
                     cachedList.push(policy);

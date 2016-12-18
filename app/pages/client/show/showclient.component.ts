@@ -54,7 +54,7 @@ export class ShowClientComponent implements OnInit {
     showModal() {
         let dialog = this.modal.confirm()
             .title('')
-            .body('Czy chcesz usunąć klienta: ' + this.client.firstName + ' ' + this.client.lastName + ' ?')
+            .body('Czy chcesz usunąć klienta: ' + this.client.name + ' ' + this.client.surname + ' ?')
             .cancelBtn('Anuluj')
             .okBtn('Usuń')
             .isBlocking(true)

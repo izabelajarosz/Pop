@@ -44,8 +44,8 @@ export class AddClientComponent implements OnInit {
         }
         else {
             this.loading = true;
-            this.clientService.clientExists(this.model.pesel).subscribe(exists => {
-                if (!exists) {
+            // this.clientService.clientExists(this.model.pesel).subscribe(exists => {
+            //     if (!exists) {
                     this.clientService.addClient(this.model)
                         .subscribe(result => {
                             if (result === true) {
@@ -60,11 +60,11 @@ export class AddClientComponent implements OnInit {
                                 this.loading = false;
                             }
                         });
-                } else {
-                    this.error = 'Użytkownik o podanym numerze pesel już istnieje.';
-                    this.loading = false;
-                }
-            });
+                // } else {
+                //     this.error = 'Użytkownik o podanym numerze pesel już istnieje.';
+                //     this.loading = false;
+                // }
+            // });
         }
     }
 

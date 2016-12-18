@@ -13,11 +13,11 @@
             <ul class="nav navbar-nav">
                 <li class=""><a [routerLink]="['/clients']">Klienci</a></li>
                 <li class=""><a [routerLink]="['/policies']">Polisy</a></li>
-                <li class=""><a [routerLink]="['/properties']">Lista mienia</a></li>
+                <!--<li class=""><a [routerLink]="['/properties']">Lista mienia</a></li>-->
             </ul>
             <div class="nav navbar-nav navbar-right">
                 <ul class="nav navbar-nav">
-                    <li><a *ngFor="let user of users">{{user.firstName}} {{user.lastName}}</a></li>
+                    <li><a *ngFor="let user of users">{{user.name}} {{user.surname}}</a></li>
                     <li class="active"><a [routerLink]="['/login']">Wyloguj</a></li>
                 </ul>
             </div>

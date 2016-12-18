@@ -41,7 +41,7 @@
             <div class="col-sm-10">
 
                 <select [(ngModel)]="model.clientId" (ngModelChange)="onClientChange($event)" #clientId="ngModel" class="form-control" id="clientId" name="clientId" required>
-                    <option *ngFor="let client of clients" [ngValue]="client.id">{{client.firstName}} {{ client.lastName }}</option>
+                    <option *ngFor="let client of clients" [ngValue]="client.id">{{client.name}} {{ client.surname }}</option>
                 </select>
 
                 <div *ngIf="f.submitted && !clientId.valid && f.form.controls['clientId'].hasError('required')"
@@ -142,8 +142,8 @@
         <ul class="list-group">
             <li class="list-group-item"><strong>Od: </strong>{{model.startedAt}}</li>
             <li class="list-group-item"><strong>Do: </strong> {{model.endedAt}}</li>
-            <li class="list-group-item"><strong>Nazwisko: </strong> {{selectedClient.lastName}}</li>
-            <li class="list-group-item"><strong>Imię: </strong> {{selectedClient.firstName}}</li>
+            <li class="list-group-item"><strong>Nazwisko: </strong> {{selectedClient.surname}}</li>
+            <li class="list-group-item"><strong>Imię: </strong> {{selectedClient.name}}</li>
             <li class="list-group-item"><strong>Mienie: </strong> {{model.propertyName}}</li>
             <li class="list-group-item"><strong>Wartość: </strong> {{model.value}}</li>
             <li class="list-group-item"><strong>Miesięczna składka: </strong> {{model.monthlyCost}}</li>
