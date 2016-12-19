@@ -283,6 +283,12 @@ export let fakeBackendProvider = {
                 ));
             };
 
+            let responseSuccess = function (body) {
+                connection.mockRespond(new Response(
+                    new ResponseOptions({status: 200, body: body})
+                ));
+            };
+
             function compareId(a, b) {
                 if (a.id < b.id) {
                     return -1;
@@ -338,9 +344,7 @@ export let fakeBackendProvider = {
                     let pesel = params.pesel;
                     let exists = peselExists(pesel);
 
-                    connection.mockRespond(new Response(
-                        new ResponseOptions({status: 200, body: {exists: exists}})
-                    ));
+                    responseSuccess({exists: exists});
                 }
 
                 if (connection.request.url.endsWith('/api/login') && connection.request.method === RequestMethod.Post) {
@@ -351,21 +355,15 @@ export let fakeBackendProvider = {
                         }).length === 1;
 
                     if (userValid === true) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: {access_token: sessionKey}})
-                        ));
+                        responseSuccess({access_token: sessionKey});
                     } else {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200})
-                        ));
+                        responseFailure();
                     }
                 }
 
                 if (connection.request.url.match('/api/users') && connection.request.method === RequestMethod.Get) {
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: [testUsers]})
-                        ));
+                        responseSuccess([testUsers]);
                     } else {
                         responseFailure();
                     }
@@ -380,9 +378,7 @@ export let fakeBackendProvider = {
                     }
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: clients})
-                        ));
+                        responseSuccess(clients);
                     } else {
                         responseFailure();
                     }
@@ -403,9 +399,7 @@ export let fakeBackendProvider = {
                     cookieService.putObject('clientsListCache', cachedList);
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: {exists: exists}})
-                        ));
+                        responseSuccess({exists: exists});
                     } else {
                         responseFailure();
                     }
@@ -429,9 +423,7 @@ export let fakeBackendProvider = {
                     cookieService.putObject('clientsListCache', cachedList);
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200})
-                        ));
+                        responseSuccess({});
                     } else {
                         responseFailure();
                     }
@@ -443,9 +435,7 @@ export let fakeBackendProvider = {
                     let currentClient = getClient(params.id);
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: currentClient})
-                        ));
+                        responseSuccess(currentClient);
                     } else {
                         responseFailure();
                     }
@@ -473,9 +463,7 @@ export let fakeBackendProvider = {
                     cookieService.putObject('clientsListCache', cachedList);
                     currentClient = cachedList[params.index];
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: currentClient})
-                        ));
+                        responseSuccess(currentClient);
                     } else {
                         responseFailure();
                     }
@@ -488,9 +476,7 @@ export let fakeBackendProvider = {
                     let clientsPolicies = getClientPolicies(clientId);
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: clientsPolicies})
-                        ));
+                        responseSuccess(clientsPolicies);
                     } else {
                         responseFailure();
                     }
@@ -499,9 +485,7 @@ export let fakeBackendProvider = {
                 // Get policies list
                 if (connection.request.url.endsWith('/api/policies') && connection.request.method === RequestMethod.Get) {
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: getPoliciesCache()})
-                        ));
+                        responseSuccess(getPoliciesCache());
                     } else {
                         responseFailure();
                     }
@@ -538,9 +522,7 @@ export let fakeBackendProvider = {
                     cookieService.putObject('policiesListCache', cachedList);
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200})
-                        ));
+                        responseSuccess({});
                     } else {
                         responseFailure();
                     }
@@ -552,9 +534,7 @@ export let fakeBackendProvider = {
                     let currentPolicy = getPolicy(params.id);
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: currentPolicy})
-                        ));
+                        responseSuccess(currentPolicy);
                     } else {
                         responseFailure();
                     }
@@ -571,9 +551,7 @@ export let fakeBackendProvider = {
                         cachedList.splice(policyIndex, 1);
                         cookieService.putObject('policiesListCache', cachedList);
 
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: cachedList})
-                        ));
+                        responseSuccess(cachedList);
                     } else {
                         responseFailure();
                     }
@@ -588,9 +566,7 @@ export let fakeBackendProvider = {
                     let clientProperties = cachedList.filter(item => item.clientId === params.id);
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: clientProperties})
-                        ));
+                        responseSuccess(clientProperties);
                     } else {
                         responseFailure();
                     }
@@ -626,9 +602,7 @@ export let fakeBackendProvider = {
                     cookieService.putObject('propertiesListCache', cachedList);
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200})
-                        ));
+                        responseSuccess({});
                     } else {
                         responseFailure();
                     }
@@ -640,9 +614,7 @@ export let fakeBackendProvider = {
                     let property = getProperty(params.id);
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: property})
-                        ));
+                        responseSuccess(property);
                     } else {
                         responseFailure();
                     }
@@ -658,9 +630,7 @@ export let fakeBackendProvider = {
                         cachedList.splice(propertyId, 1);
                         cookieService.putObject('propertiesListCache', cachedList);
 
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: cachedList})
-                        ));
+                        responseSuccess(cachedList);
                     } else {
                         responseFailure();
                     }
@@ -680,9 +650,7 @@ export let fakeBackendProvider = {
                             }
                         }
 
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: result})
-                        ));
+                        responseSuccess(result);
                     } else {
                         responseFailure();
                     }
