@@ -1,4 +1,4 @@
-﻿import {NgModule} from "@angular/core";
+﻿import {NgModule, isDevMode} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpModule, BaseRequestOptions} from "@angular/http";
@@ -32,6 +32,25 @@ import {ShowPropertyComponent} from "./pages/property/show/showProperty.componen
 import {AddPolicyComponent} from "./pages/policy/create/addPolicy.component";
 import {AddClientPolicyComponent} from "./pages/client/policy/addClientPolicy.component";
 import {AddClientPropertyComponent} from "./pages/client/property/addClientProperty.component";
+
+let devProviders = [
+    AuthGuard,
+    AuthenticationService,
+    UserService,
+    PeselValidationHelper,
+    BaseRequestOptions,
+    CookieService,
+    fakeBackendProvider,
+    MockBackend
+];
+
+let prodProviders = [
+    AuthGuard,
+    AuthenticationService,
+    UserService,
+    PeselValidationHelper,
+    BaseRequestOptions,
+];
 
 @NgModule({
     imports: [
@@ -69,16 +88,7 @@ import {AddClientPropertyComponent} from "./pages/client/property/addClientPrope
         PoliciesTableComponent,
         PropertiesTableComponent
     ],
-    providers: [
-        AuthGuard,
-        AuthenticationService,
-        UserService,
-        CookieService,
-        PeselValidationHelper,
-        fakeBackendProvider,
-        MockBackend,
-        BaseRequestOptions
-    ],
+    providers: isDevMode() ? devProviders : prodProviders,
     bootstrap: [AppComponent]
 })
 

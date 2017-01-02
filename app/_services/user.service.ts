@@ -1,23 +1,23 @@
-﻿import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import { Observable } from 'rxjs';
-import 'rxjs/add/operator/map'
-
-import { AuthenticationService } from './index';
-import { User } from '../_models/user';
+﻿import {Injectable} from "@angular/core";
+import {Http, RequestOptions, Response} from "@angular/http";
+import {Observable} from "rxjs";
+import "rxjs/add/operator/map";
+import {AuthenticationService} from "./index";
+import {User} from "../_models/user";
+import {AbstractService} from "./abstractService";
 
 @Injectable()
-export class UserService {
-    constructor(
-        private http: Http,
-        private authenticationService: AuthenticationService) {
+export class UserService extends AbstractService {
+
+    constructor(private http: Http,
+                protected authenticationService: AuthenticationService) {
+        super(authenticationService);
     }
 
     getUsers(): Observable<User[]> {
-        let headers = new Headers({ 'Authorization': 'Authorization ' + this.authenticationService.token });
-        let options = new RequestOptions({ headers: headers });
+        let options = new RequestOptions({headers: this.headers});
 
-        return this.http.get('/api/users', options)
+        return this.http.get(this.baseUrl + '/api/users', options)
             .map((response: Response) => response.json());
     }
 }

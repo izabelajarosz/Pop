@@ -37,8 +37,8 @@
             <tbody>
             <tr *ngFor="let client of clients | filter : filteredFields : filterValue; let i = index">
                 <th scope="row">{{i + 1}}</th>
-                <td>{{client.firstName}}</td>
-                <td>{{client.lastName}}</td>
+                <td>{{client.name}}</td>
+                <td>{{client.surname}}</td>
                 <!--<td>{{client.street}}</td>
                 <td class="centered">{{client.streetNumber}}</td>
                 <td class="centered">{{client.homeNumber}}</td>

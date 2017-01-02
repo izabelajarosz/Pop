@@ -9,15 +9,15 @@ export let fakeBackendProvider = {
         backend.connections.subscribe((connection: MockConnection) => {
             let sessionKey = '8348sdkj983jsdk9jsd';
             let testUsers = [
-                {username: 'Admin', password: 'Admin', firstName: 'Jan', lastName: 'Kowalski'},
-                {username: 'RYKOW', password: 'Hasło123!@#', firstName: 'Jan', lastName: 'Kowalski'}
+                {username: 'Admin', password: 'Admin', name: 'Jan', surname: 'Kowalski'},
+                {username: 'RYKOW', password: 'Hasło123!@#', name: 'Jan', surname: 'Kowalski'}
             ];
 
             let clientsList = [
                 {
                     id: 1,
-                    firstName: 'Barbara',
-                    lastName: 'Kozłowska',
+                    name: 'Barbara',
+                    surname: 'Kozłowska',
                     pesel: '66111933943',
                     birthDate: '1983-01-19',
                     policiesCount: 0,
@@ -25,16 +25,16 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 2,
-                    firstName: 'Lucjan',
-                    lastName: 'Adamski',
+                    name: 'Lucjan',
+                    surname: 'Adamski',
                     birthDate: '1939-11-14',
                     policiesCount: 0,
                     accountBalance: -29.99
                 },
                 {
                     id: 3,
-                    firstName: 'Marcelina',
-                    lastName: 'Kwiatkowska',
+                    name: 'Marcelina',
+                    surname: 'Kwiatkowska',
                     pesel: '66052391084',
                     birthDate: '1978-02-16',
                     policiesCount: 0,
@@ -42,8 +42,8 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 4,
-                    firstName: 'Wacława',
-                    lastName: 'Król',
+                    name: 'Wacława',
+                    surname: 'Król',
                     pesel: '42081489824',
                     birthDate: '1945-11-01',
                     policiesCount: 0,
@@ -51,8 +51,8 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 5,
-                    firstName: 'Ryszard',
-                    lastName: 'Grabowski',
+                    name: 'Ryszard',
+                    surname: 'Grabowski',
                     pesel: '93111210552',
                     birthDate: '1969-12-23',
                     policiesCount: 0,
@@ -60,8 +60,8 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 6,
-                    firstName: 'Teofil',
-                    lastName: 'Wysocki',
+                    name: 'Teofil',
+                    surname: 'Wysocki',
                     pesel: '71061271674',
                     birthDate: '1956-06-01',
                     policiesCount: 0,
@@ -69,8 +69,8 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 7,
-                    firstName: 'Ewa',
-                    lastName: 'Wysocka',
+                    name: 'Ewa',
+                    surname: 'Wysocka',
                     pesel: '97022541060',
                     birthDate: '1999-08-29',
                     policiesCount: 0,
@@ -78,8 +78,8 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 8,
-                    firstName: 'Ryszard',
-                    lastName: 'Kowalski',
+                    name: 'Ryszard',
+                    surname: 'Kowalski',
                     pesel: '20010104499',
                     birthDate: '1920-01-01',
                     policiesCount: 0,
@@ -88,8 +88,8 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 9,
-                    firstName: 'Jan',
-                    lastName: 'Kowalski',
+                    name: 'Jan',
+                    surname: 'Kowalski',
                     pesel: '20010204521',
                     birthDate: '1920-01-02',
                     policiesCount: 1,
@@ -97,8 +97,8 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 10,
-                    firstName: 'Jan',
-                    lastName: 'Nowicki',
+                    name: 'Jan',
+                    surname: 'Nowicki',
                     pesel: '94111423160',
                     birthDate: '1994-02-14',
                     policiesCount: 0,
@@ -106,8 +106,8 @@ export let fakeBackendProvider = {
                 },
                 {
                     id: 11,
-                    firstName: 'Stanisław',
-                    lastName: 'Nowak',
+                    name: 'Stanisław',
+                    surname: 'Nowak',
                     pesel: '94028394928',
                     birthDate: '1994-02-14',
                     policiesCount: 1,
@@ -274,12 +274,18 @@ export let fakeBackendProvider = {
             }
 
             let isAuthorized = function () {
-                return sessionKey != null && connection.request.headers.get('Authorization') === 'Authorization ' + sessionKey;
+                return sessionKey != null && connection.request.headers.get('Authorization') === 'Bearer ' + sessionKey;
             };
 
             let responseFailure = function () {
                 connection.mockRespond(new Response(
                     new ResponseOptions({status: 401})
+                ));
+            };
+
+            let responseSuccess = function (body) {
+                connection.mockRespond(new Response(
+                    new ResponseOptions({status: 200, body: body})
                 ));
             };
 
@@ -338,9 +344,7 @@ export let fakeBackendProvider = {
                     let pesel = params.pesel;
                     let exists = peselExists(pesel);
 
-                    connection.mockRespond(new Response(
-                        new ResponseOptions({status: 200, body: {exists: exists}})
-                    ));
+                    responseSuccess({exists: exists});
                 }
 
                 if (connection.request.url.endsWith('/api/login') && connection.request.method === RequestMethod.Post) {
@@ -350,22 +354,16 @@ export let fakeBackendProvider = {
                             return params.username === user.username && params.password === user.password;
                         }).length === 1;
 
-                    if (userValid) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: {token: sessionKey}})
-                        ));
+                    if (userValid === true) {
+                        responseSuccess({access_token: sessionKey});
                     } else {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200})
-                        ));
+                        responseFailure();
                     }
                 }
 
                 if (connection.request.url.match('/api/users') && connection.request.method === RequestMethod.Get) {
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: [testUsers]})
-                        ));
+                        responseSuccess([testUsers]);
                     } else {
                         responseFailure();
                     }
@@ -380,9 +378,7 @@ export let fakeBackendProvider = {
                     }
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: clients})
-                        ));
+                        responseSuccess(clients);
                     } else {
                         responseFailure();
                     }
@@ -403,9 +399,7 @@ export let fakeBackendProvider = {
                     cookieService.putObject('clientsListCache', cachedList);
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: {exists: exists}})
-                        ));
+                        responseSuccess({exists: exists});
                     } else {
                         responseFailure();
                     }
@@ -420,8 +414,8 @@ export let fakeBackendProvider = {
 
                     cachedList.push({
                         id: newId,
-                        firstName: client.name,
-                        lastName: client.lastname,
+                        name: client.name,
+                        surname: client.surname,
                         pesel: client.pesel,
                         birthDate: client.birthDate,
                         policiesCount: client.policiesCount
@@ -429,9 +423,7 @@ export let fakeBackendProvider = {
                     cookieService.putObject('clientsListCache', cachedList);
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200})
-                        ));
+                        responseSuccess({});
                     } else {
                         responseFailure();
                     }
@@ -443,9 +435,7 @@ export let fakeBackendProvider = {
                     let currentClient = getClient(params.id);
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: currentClient})
-                        ));
+                        responseSuccess(currentClient);
                     } else {
                         responseFailure();
                     }
@@ -473,9 +463,7 @@ export let fakeBackendProvider = {
                     cookieService.putObject('clientsListCache', cachedList);
                     currentClient = cachedList[params.index];
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: currentClient})
-                        ));
+                        responseSuccess(currentClient);
                     } else {
                         responseFailure();
                     }
@@ -488,9 +476,7 @@ export let fakeBackendProvider = {
                     let clientsPolicies = getClientPolicies(clientId);
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: clientsPolicies})
-                        ));
+                        responseSuccess(clientsPolicies);
                     } else {
                         responseFailure();
                     }
@@ -499,9 +485,7 @@ export let fakeBackendProvider = {
                 // Get policies list
                 if (connection.request.url.endsWith('/api/policies') && connection.request.method === RequestMethod.Get) {
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: getPoliciesCache()})
-                        ));
+                        responseSuccess(getPoliciesCache());
                     } else {
                         responseFailure();
                     }
@@ -530,17 +514,15 @@ export let fakeBackendProvider = {
                         additionalInformation: policyData.additionalInformation,
                         property: policyData.propertyName,
                         propertyAdditionalInformation: '',
-                        name: clientData.firstName,
-                        surname: clientData.lastName
+                        name: clientData.name,
+                        surname: clientData.surname
                     };
 
                     cachedList.push(policy);
                     cookieService.putObject('policiesListCache', cachedList);
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200})
-                        ));
+                        responseSuccess({});
                     } else {
                         responseFailure();
                     }
@@ -552,9 +534,7 @@ export let fakeBackendProvider = {
                     let currentPolicy = getPolicy(params.id);
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: currentPolicy})
-                        ));
+                        responseSuccess(currentPolicy);
                     } else {
                         responseFailure();
                     }
@@ -571,9 +551,7 @@ export let fakeBackendProvider = {
                         cachedList.splice(policyIndex, 1);
                         cookieService.putObject('policiesListCache', cachedList);
 
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: cachedList})
-                        ));
+                        responseSuccess(cachedList);
                     } else {
                         responseFailure();
                     }
@@ -588,9 +566,7 @@ export let fakeBackendProvider = {
                     let clientProperties = cachedList.filter(item => item.clientId === params.id);
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: clientProperties})
-                        ));
+                        responseSuccess(clientProperties);
                     } else {
                         responseFailure();
                     }
@@ -626,9 +602,7 @@ export let fakeBackendProvider = {
                     cookieService.putObject('propertiesListCache', cachedList);
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200})
-                        ));
+                        responseSuccess({});
                     } else {
                         responseFailure();
                     }
@@ -640,9 +614,7 @@ export let fakeBackendProvider = {
                     let property = getProperty(params.id);
 
                     if (isAuthorized()) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: property})
-                        ));
+                        responseSuccess(property);
                     } else {
                         responseFailure();
                     }
@@ -658,9 +630,7 @@ export let fakeBackendProvider = {
                         cachedList.splice(propertyId, 1);
                         cookieService.putObject('propertiesListCache', cachedList);
 
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: cachedList})
-                        ));
+                        responseSuccess(cachedList);
                     } else {
                         responseFailure();
                     }
@@ -680,9 +650,7 @@ export let fakeBackendProvider = {
                             }
                         }
 
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({status: 200, body: result})
-                        ));
+                        responseSuccess(result);
                     } else {
                         responseFailure();
                     }

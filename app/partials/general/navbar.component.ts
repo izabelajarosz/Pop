@@ -1,26 +1,10 @@
-import {Component, OnInit} from "@angular/core";
-import {User} from "../../_models/user";
-import {UserService} from "../../_services/user.service";
+import {Component} from "@angular/core";
 
 @Component({
     moduleId: module.id,
     templateUrl: 'navbar.component.html',
-    providers: [UserService],
     selector: 'navbar'
 })
 
-export class NavbarComponent implements OnInit {
-    users: User[] = [];
-
-    constructor(private userService: UserService) {
-    }
-
-    ngOnInit() {
-
-        this.userService.getUsers()
-            .subscribe(users => {
-                this.users = users;
-            });
-    }
-
+export class NavbarComponent {
 }

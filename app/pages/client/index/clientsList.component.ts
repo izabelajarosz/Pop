@@ -1,47 +1,27 @@
-import {Component, OnInit, DoCheck} from '@angular/core';
-
-import { User } from '../../../_models/user';
-import { Client } from '../../../_models/client';
-import { UserService } from '../../../_services/user.service';
-import { ClientService } from '../../../_services/client.service';
+import {Component, OnInit} from "@angular/core";
+import {Client} from "../../../_models/client";
+import {ClientService} from "../../../_services/client.service";
 
 @Component({
     moduleId: module.id,
     templateUrl: 'clientsList.component.html',
-    providers: [UserService, ClientService],
+    providers: [ClientService],
 })
 
 export class ClientsListComponent implements OnInit {
-    users: User[] = [];
     clients: Client[] = [];
     orderProperty = 'index';
     filterValue = '';
-    availableFilters = [
-        {name: 'firstName', label: 'Imię', state: true},
-        {name: 'lastName', label: 'Nazwisko', state: true},
-        {name: 'pesel', label: "Pesel", state: true}
-    ];
-     filteredFields = ['firstName', 'lastName', 'pesel'];
-    
+    filteredFields = ['name', 'surname', 'pesel'];
 
-    constructor(private userService: UserService, private clientService: ClientService) { }
+
+    constructor(private clientService: ClientService) {
+    }
 
     ngOnInit() {
-        this.userService.getUsers()
-            .subscribe(users => {
-                this.users = users;
-            });
-
         this.clientService.getClients()
             .subscribe(clients => {
                 this.clients = clients;
             });
     }
-
-    changeFilteredFields() {
-        let fields = this.availableFilters.filter(item => item.state);
-
-        this.filteredFields = fields.map(field => field.name);
-    }
-
 }
