@@ -1,7 +1,6 @@
 ﻿import {Component, OnInit} from "@angular/core";
-import {Router, ActivatedRoute} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {PropertyService} from "../../../_services/properties.service";
-import {FormBuilder} from "@angular/forms";
 import {ClientService} from "../../../_services/client.service";
 import {Client} from "../../../_models/client";
 
@@ -13,18 +12,10 @@ import {Client} from "../../../_models/client";
 
 export class AddClientPropertyComponent implements OnInit {
     client: Client = new Client;
-    model: any = {};
-    loading = false;
-    error = '';
-    success = '';
-    active = true;
     id: number;
 
-    constructor(private router: Router,
-                private route: ActivatedRoute,
-                private propertyService: PropertyService,
-                private clientService: ClientService,
-                private formBuilder: FormBuilder) {
+    constructor(private route: ActivatedRoute,
+                private clientService: ClientService) {
     }
 
     ngOnInit() {
@@ -40,33 +31,6 @@ export class AddClientPropertyComponent implements OnInit {
             client => {
                 this.client = client;
             })
-    }
-
-    resetForm() {
-        this.model = {};
-        this.loading = false;
-        this.active = false;
-    }
-
-    addProperty() {
-        this.loading = true;
-        this.model.clientId = this.id;
-
-        this.propertyService.addProperty(this.model)
-            .subscribe(result => {
-                if (result === true) {
-                    this.resetForm();
-                    this.error = '';
-                    this.success = 'Mienie zostało dodane.';
-
-                    setTimeout(() => {
-                        this.router.navigate(['/clients/' + this.id]);
-                    }, 2000);
-                } else {
-                    this.error = 'Wystąpił nieoczekiwany błąd.';
-                    this.loading = false;
-                }
-            });
     }
 
 }

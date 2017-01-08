@@ -1,0 +1,174 @@
+<div>
+
+    <div *ngIf="success" class="alert alert-success">{{success}}</div>
+
+    <form *ngIf="active" name="form" class="form-horizontal" (ngSubmit)="f.form.valid && addProperty()" #f="ngForm" novalidate>
+
+        <div class="form-group" >
+            <label class="control-label col-sm-2" for="name">Imię klienta</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" disabled [value]="client.name"/>
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label class="control-label col-sm-2" for="name">Nazwisko klienta</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" disabled [value]="client.surname"/>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !name.valid }">
+            <label class="control-label col-sm-2" for="name">Nazwa</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" minlength="3" id="name" name="name" placeholder="Nazwa"
+                       [(ngModel)]="model.name" #name="ngModel" required pattern="[a-zA-Z łąćężźóń]*"
+                       (ngModelChange)="model.name.valid = true"/>
+                <div *ngIf="f.submitted && !name.valid && f.form.controls['name'].hasError('required')"
+                     class="help-block">Pole jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !name.valid && !f.form.controls['name'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !value.valid }">
+            <label class="control-label col-sm-2" for="value">Wartość</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="value" name="value" placeholder="Wartość"
+                       [(ngModel)]="model.value" #value="ngModel" required (ngModelChange)="model.value && model.value.valid = true"/>
+
+                <div *ngIf="f.submitted && !value.valid && f.form.controls['value'].hasError('required')"
+                     class="help-block">To pole jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !value.valid && !f.form.controls['value'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !city.valid }">
+            <label class="control-label col-sm-2" for="city">Miejscowość</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="city" name="city" placeholder="Miejscowość"
+                       [(ngModel)]="model.city" #city="ngModel" required pattern="[a-zA-Z łąćężźóń]*"
+                       minlength="3"
+                       (ngModelChange)="model.city.valid = true"/>
+                <div *ngIf="f.submitted && !city.valid && f.form.controls['city'].hasError('required')"
+                     class="help-block">Pole jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !city.valid && !f.form.controls['city'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !postCode.valid }">
+            <label class="control-label col-sm-2" for="postCode">Kod pocztowy</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="postCode" name="postCode" placeholder="Kod pocztowy"
+                       [(ngModel)]="model.postCode" #postCode="ngModel" required pattern="[0-9]{2}-[0-9]{3}"
+                       minlength="6" maxlength="6"
+                       (ngModelChange)="model.postCode.valid = true"/>
+                <div *ngIf="f.submitted && !postCode.valid && f.form.controls['postCode'].hasError('required')"
+                     class="help-block">Pole Nazwisko jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !postCode.valid && !f.form.controls['postCode'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !street.valid }">
+            <label class="control-label col-sm-2" for="street">Ulica</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="street" name="street" placeholder="Ulica"
+                       [(ngModel)]="model.street" #street="ngModel" required pattern="[a-zA-Z łąćężźóń]*"
+                       minlength="3"
+                       (ngModelChange)="model.street.valid = true"/>
+                <div *ngIf="f.submitted && !street.valid && f.form.controls['street'].hasError('required')"
+                     class="help-block">Pole jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !street.valid && !f.form.controls['street'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !houseNumber.valid }">
+            <label class="control-label col-sm-2" for="houseNumber">Numer domu</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="houseNumber" name="houseNumber" placeholder="Numer domu"
+                       [(ngModel)]="model.houseNumber" #houseNumber="ngModel" required (ngModelChange)="model.houseNumber.valid = true"/>
+                <div *ngIf="f.submitted && !houseNumber.valid && f.form.controls['houseNumber'].hasError('required')"
+                     class="help-block">Pole jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !houseNumber.valid && !f.form.controls['houseNumber'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="apartmentNumber">Numer lokalu</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="apartmentNumber" name="apartmentNumber" placeholder="Numer lokalu"
+                       [(ngModel)]="model.apartmentNumber" #apartmentNumber="ngModel"/>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !area.valid }">
+            <label class="control-label col-sm-2" for="area">Powierzchnia</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="area" name="area" placeholder="Powierzchnia"
+                       [(ngModel)]="model.area" #area="ngModel" required (ngModelChange)="model.area && model.area.valid = true"/>
+
+                <div *ngIf="f.submitted && !area.valid && f.form.controls['area'].hasError('required')"
+                     class="help-block">Pole jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !area.valid && !f.form.controls['area'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !builtAt.valid }">
+            <label class="control-label col-sm-2" for="builtAt">Data wybudowania</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="builtAt" placeholder="rrrr-mm-dd" name="builtAt"
+                       [(ngModel)]="model.builtAt" #builtAt="ngModel" required
+                       minlength="10" maxlength="10" (ngModelChange)="model.builtAt.valid = true" convertDate/>
+                <div *ngIf="f.submitted && !builtAt.valid && f.form.controls['builtAt'].hasError('required')"
+                     class="help-block">Pole Data Urodzenia jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !builtAt.valid && !f.form.controls['builtAt'].hasError('required') "
+                     class="help-block">Należy wprowadzić datę w formacie rrrr-MM-dd
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="propertyAdditionalInformation">Dodatkowe informacje</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="propertyAdditionalInformation" name="propertyAdditionalInformation" placeholder="Dodatkowe informacje"
+                       [(ngModel)]="model.propertyAdditionalInformation" #propertyAdditionalInformation="ngModel" minlength="3"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button [disabled]="loading" class="btn btn-default btn-lg pull-right">
+                <div class="spinner-small spinner" *ngIf="loading">
+                    <div class="rect1"></div>
+                    <div class="rect2"></div>
+                    <div class="rect3"></div>
+                    <div class="rect4"></div>
+                    <div class="rect5"></div>
+                </div>
+                <span *ngIf="!loading">Dodaj nieruchomość</span>
+            </button>
+        </div>
+
+        <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+    </form>
+</div>

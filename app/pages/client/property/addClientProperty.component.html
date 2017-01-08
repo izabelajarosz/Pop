@@ -1,76 +1,19 @@
 ﻿<navbar></navbar>
 
 <div class="padding-top">
-    <div *ngIf="success" class="alert alert-success">{{success}}</div>
 
-    <form *ngIf="active" name="form" class="form-horizontal" (ngSubmit)="f.form.valid && addProperty()" #f="ngForm" novalidate>
+    <tabs>
+        <tab tabTitle="Nieruchomość">
+            <h2>Nieruchomość</h2>
 
-        <div class="form-group" >
-            <label class="control-label col-sm-2" for="name">Imię klienta</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" disabled [value]="client.name"/>
-            </div>
-        </div>
+            <property-form [client]="client"></property-form>
+        </tab>
+        <tab tabTitle="Pojazd">
+            <h2>Pojazd</h2>
 
-        <div class="form-group" >
-            <label class="control-label col-sm-2" for="name">Nazwisko klienta</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" disabled [value]="client.surname"/>
-            </div>
-        </div>
+            <vehicle-form [client]="client"></vehicle-form>
+        </tab>
+    </tabs>
 
-        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !name.valid }">
-            <label class="control-label col-sm-2" for="name">Nazwa</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" minlength="3" id="name" name="name" placeholder="Nazwa"
-                       [(ngModel)]="model.name" #name="ngModel" required pattern="[a-zA-Z łąćężźóń]*"
-                       (ngModelChange)="model.name.valid = true"/>
-                <div *ngIf="f.submitted && !name.valid && f.form.controls['name'].hasError('required')"
-                     class="help-block">Pole jest wymagane
-                </div>
-                <div *ngIf="f.submitted && !name.valid && !f.form.controls['name'].hasError('required')"
-                     class="help-block">Należy wprowadzić prawidłowe dane
-                </div>
-            </div>
-        </div>
 
-        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !value.valid }">
-            <label class="control-label col-sm-2" for="value">Wartość</label>
-            <div class="col-sm-10">
-                <input type="number" class="form-control" id="value" name="value" placeholder="Wartość"
-                       [(ngModel)]="model.value" #value="ngModel" required pattern="[0-9]*"
-                       minlength="3"
-                       (ngModelChange)="model.value.valid = true"/>
-                <div *ngIf="f.submitted && !value.valid && f.form.controls['value'].hasError('required')"
-                     class="help-block">To pole jest wymagane
-                </div>
-                <div *ngIf="f.submitted && !value.valid && !f.form.controls['value'].hasError('required')"
-                     class="help-block">Należy wprowadzić prawidłowe dane
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="propertyAdditionalInformation">Dodatkowe informacje</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="propertyAdditionalInformation" name="propertyAdditionalInformation" placeholder="Dodatkowe informacje"
-                       [(ngModel)]="model.propertyAdditionalInformation" #propertyAdditionalInformation="ngModel" minlength="3"/>
-            </div>
-        </div>
-        
-
-        <div class="form-group">
-            <button [disabled]="loading" class="btn btn-default btn-lg pull-right">
-                <div class="spinner-small spinner" *ngIf="loading">
-                    <div class="rect1"></div>
-                    <div class="rect2"></div>
-                    <div class="rect3"></div>
-                    <div class="rect4"></div>
-                    <div class="rect5"></div>
-                </div>
-                <span *ngIf="!loading">Dodaj mienie</span>
-            </button>
-        </div>
-
-        <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-    </form>
 </div>

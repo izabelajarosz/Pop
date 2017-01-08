@@ -175,7 +175,15 @@ export let fakeBackendProvider = {
             ];
 
             function getPoliciesCache() {
-                return JSON.parse(cookieService.get('policiesListCache'));
+                let policiesListCache = cookieService.get('policiesListCache');
+
+                if (policiesListCache) {
+                    return JSON.parse(policiesListCache);
+                }
+
+                cookieService.putObject('policiesListCache', policiesList);
+
+                return policiesList;
             }
 
             function getPolicy(id) {
@@ -215,7 +223,15 @@ export let fakeBackendProvider = {
             }
 
             function getPropertiesCache() {
-                return JSON.parse(cookieService.get('propertiesListCache'));
+                let propertiesListCache = cookieService.get('propertiesListCache');
+
+                if (propertiesListCache) {
+                    return JSON.parse(propertiesListCache);
+                }
+
+                cookieService.putObject('propertiesListCache', propertyList);
+
+                return propertyList;
             }
 
             function getPropertyIndex(id) {
@@ -231,7 +247,15 @@ export let fakeBackendProvider = {
             }
 
             function getClientsCache() {
-                return JSON.parse(cookieService.get('clientsListCache'));
+                let clientsListCache = cookieService.get('clientsListCache');
+
+                if (clientsListCache) {
+                    return JSON.parse(clientsListCache);
+                }
+
+                cookieService.putObject('clientsListCache', clientsList);
+
+                return clientsList;
             }
 
             function getClient(id) {
@@ -256,21 +280,6 @@ export let fakeBackendProvider = {
                 }
 
                 return null;
-            }
-
-            // cookieService.putObject('clientsListCache', clientsList);
-            if (getClientsCache() == null) {
-                cookieService.putObject('clientsListCache', clientsList);
-            }
-
-            // cookieService.putObject('policiesListCache', policiesList);
-            if (getPoliciesCache() == null) {
-                cookieService.putObject('policiesListCache', policiesList);
-            }
-
-            // cookieService.putObject('propertiesListCache', propertyList);
-            if (getPropertiesCache() == null) {
-                cookieService.putObject('propertiesListCache', propertyList);
             }
 
             let isAuthorized = function () {
@@ -587,16 +596,8 @@ export let fakeBackendProvider = {
                 if (connection.request.url.endsWith('/api/properties') && connection.request.method === RequestMethod.Post) {
                     let params = getResponseParams();
                     let cachedList = getPropertiesCache();
-                    let propertyData = params.body.property;
-                    let newId = generateNewId(cachedList);
-
-                    let property = {
-                        id: newId,
-                        clientId: propertyData.clientId,
-                        name: propertyData.name,
-                        value: propertyData.value,
-                        propertyAdditionalInformation: propertyData.propertyAdditionalInformation
-                    };
+                    let property = params.body.property;
+                    property.id = generateNewId(cachedList);
 
                     cachedList.push(property);
                     cookieService.putObject('propertiesListCache', cachedList);
