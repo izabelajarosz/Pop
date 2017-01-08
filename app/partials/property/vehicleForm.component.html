@@ -1,0 +1,208 @@
+<div>
+
+    <div *ngIf="success" class="alert alert-success">{{success}}</div>
+
+    <form *ngIf="active" name="form" class="form-horizontal" (ngSubmit)="f.form.valid && addProperty()" #f="ngForm" novalidate>
+
+        <div class="form-group" >
+            <label class="control-label col-sm-2" for="name">Imię klienta</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" disabled [value]="client.name"/>
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label class="control-label col-sm-2" for="name">Nazwisko klienta</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" disabled [value]="client.surname"/>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !name.valid }">
+            <label class="control-label col-sm-2" for="name">Nazwa</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" minlength="3" id="name" name="name" placeholder="Nazwa"
+                       [(ngModel)]="model.name" #name="ngModel" required pattern="[a-zA-Z łąćężźóń]*"
+                       (ngModelChange)="model.name.valid = true"/>
+                <div *ngIf="f.submitted && !name.valid && f.form.controls['name'].hasError('required')"
+                     class="help-block">Pole jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !name.valid && !f.form.controls['name'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !value.valid }">
+            <label class="control-label col-sm-2" for="value">Wartość</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="value" name="value" placeholder="Wartość"
+                       [(ngModel)]="model.value" #value="ngModel" required (ngModelChange)="model.value && model.value.valid = true"/>
+
+                <div *ngIf="f.submitted && !value.valid && f.form.controls['value'].hasError('required')"
+                     class="help-block">To pole jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !value.valid && !f.form.controls['value'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+            </div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !vehicleType.valid }">
+            <label class="control-label col-sm-2" for="vehicleType">Typ pojazdu</label>
+            <div class="col-sm-10">
+
+                <select class="form-control" id="vehicleType" name="vehicleType" placeholder="Typ pojazdu"
+                        [(ngModel)]="model.vehicleType" #vehicleType="ngModel" required
+                        (ngModelChange)="model.vehicleType.valid = true">
+                    <option value="" disabled>Wybierz typ pojazdu</option>
+
+                    <option *ngFor="let vType of vehicleTypes" [value]="vType.value">
+                        {{vType.name}}
+                    </option>
+                </select>
+
+                <div *ngIf="f.submitted && !vehicleType.valid && f.form.controls['vehicleType'].hasError('required')"
+                     class="help-block">Pole jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !vehicleType.valid && !f.form.controls['vehicleType'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !antiTheftCount.valid }">
+            <label class="control-label col-sm-2" for="antiTheftCount">Liczba zabezpieczeń antykradzieżowych</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="antiTheftCount" name="antiTheftCount" placeholder="Liczba zabezpieczeń antykradzieżowych"
+                       [(ngModel)]="model.antiTheftCount" #antiTheftCount="ngModel" required (ngModelChange)="model.antiTheftCount && model.antiTheftCount.valid = true"/>
+                <div *ngIf="f.submitted && !antiTheftCount.valid && f.form.controls['antiTheftCount'].hasError('required')"
+                     class="help-block">Pole jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !antiTheftCount.valid && !f.form.controls['antiTheftCount'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !keysCount.valid }">
+            <label class="control-label col-sm-2" for="keysCount">Ilość kompletów kluczyków</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="keysCount" name="keysCount" placeholder="Ilość kompletów kluczyków"
+                       [(ngModel)]="model.keysCount" #keysCount="ngModel" required
+                       (ngModelChange)="model.keysCount && model.keysCount.valid = true"/>
+                <div *ngIf="f.submitted && !keysCount.valid && f.form.controls['keysCount'].hasError('required')"
+                     class="help-block">Pole jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !keysCount.valid && !f.form.controls['keysCount'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !parkingAtNight.valid }">
+            <label class="control-label col-sm-2" for="parkingAtNight">Miejsce parkowania w nocy</label>
+            <div class="col-sm-10">
+
+                <select id="parkingAtNight" class="form-control" name="parkingAtNight" placeholder="Miejsce parkowania w nocy" [(ngModel)]="model.parkingAtNight" #parkingAtNight="ngModel" required (ngModelChange)="model.parkingAtNight.valid = true">
+                    <option value="" disabled>Wybierz miejsce parkowania w nocy</option>
+                    <option *ngFor="let parkingAtNightType of parkingAtNightTypes" [value]="parkingAtNightType.value">
+                        {{parkingAtNightType.name}}
+                    </option>
+                </select>
+
+                <div *ngIf="f.submitted && !parkingAtNight.valid && f.form.controls['parkingAtNight'].hasError('required')"
+                     class="help-block">Pole jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !parkingAtNight.valid && !f.form.controls['parkingAtNight'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !usedForMoney.valid }">
+            <label class="control-label col-sm-2">Pojazd służy do celów zarobkowych</label>
+            <div class="col-sm-10">
+                <label>
+                    <input type="radio" name="usedForMoney" [(ngModel)]="model.usedForMoney" #usedForMoney="ngModel" value="tak" (ngModelChange)="model.usedForMoney.valid = true"> Tak
+                </label>
+
+                <label>
+                    <input type="radio" name="usedForMoney" [(ngModel)]="model.usedForMoney" #usedForMoney="ngModel" value="nie" (ngModelChange)="model.usedForMoney.valid = true"> Nie
+                </label>
+                <div *ngIf="f.submitted && !usedForMoney.valid && f.form.controls['usedForMoney'].hasError('required')"
+                     class="help-block">Pole jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !usedForMoney.valid && !f.form.controls['usedForMoney'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !fromAbroad.valid }">
+            <label class="control-label col-sm-2">Czy pojazd został sprowadzony z zagranicy</label>
+            <div class="col-sm-10">
+
+                <label>
+                    <input type="radio" name="fromAbroad" [(ngModel)]="model.fromAbroad" #fromAbroad="ngModel" value="tak" (ngModelChange)="model.fromAbroad.valid = true"> Tak
+                </label>
+
+                <label>
+                    <input type="radio" name="fromAbroad" [(ngModel)]="model.fromAbroad" #fromAbroad="ngModel" value="nie" (ngModelChange)="model.fromAbroad.valid = true"> Nie
+                </label>
+
+                <div *ngIf="f.submitted && !fromAbroad.valid && f.form.controls['fromAbroad'].hasError('required')"
+                     class="help-block">Pole jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !fromAbroad.valid && !f.form.controls['fromAbroad'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error':f.submitted && !drivenByYoungsters.valid }">
+            <label class="control-label col-sm-2">czy pojazd jest prowadzony przez osoby poniżej 26 roku życia</label>
+            <div class="col-sm-10">
+
+                <label>
+                    <input type="radio" name="drivenByYoungsters" [(ngModel)]="model.drivenByYoungsters" #drivenByYoungsters="ngModel" value="tak" (ngModelChange)="model.drivenByYoungsters.valid = true"> Tak
+                </label>
+
+                <label>
+                    <input type="radio" name="drivenByYoungsters" [(ngModel)]="model.drivenByYoungsters" #drivenByYoungsters="ngModel" value="nie" (ngModelChange)="model.drivenByYoungsters.valid = true"> Nie
+                </label>
+
+                <div *ngIf="f.submitted && !drivenByYoungsters.valid && f.form.controls['drivenByYoungsters'].hasError('required')"
+                     class="help-block">Pole jest wymagane
+                </div>
+                <div *ngIf="f.submitted && !drivenByYoungsters.valid && !f.form.controls['drivenByYoungsters'].hasError('required')"
+                     class="help-block">Należy wprowadzić prawidłowe dane
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="propertyAdditionalInformation">Dodatkowe informacje</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="propertyAdditionalInformation" name="propertyAdditionalInformation" placeholder="Dodatkowe informacje"
+                       [(ngModel)]="model.propertyAdditionalInformation" #propertyAdditionalInformation="ngModel" minlength="3"/>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <button [disabled]="loading" class="btn btn-default btn-lg pull-right">
+                <div class="spinner-small spinner" *ngIf="loading">
+                    <div class="rect1"></div>
+                    <div class="rect2"></div>
+                    <div class="rect3"></div>
+                    <div class="rect4"></div>
+                    <div class="rect5"></div>
+                </div>
+                <span *ngIf="!loading">Dodaj pojazd</span>
+            </button>
+        </div>
+
+        <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+    </form>
+</div>

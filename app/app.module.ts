@@ -32,6 +32,10 @@ import {ShowPropertyComponent} from "./pages/property/show/showProperty.componen
 import {AddPolicyComponent} from "./pages/policy/create/addPolicy.component";
 import {AddClientPolicyComponent} from "./pages/client/policy/addClientPolicy.component";
 import {AddClientPropertyComponent} from "./pages/client/property/addClientProperty.component";
+import {VehicleFormComponent} from "./partials/property/vehicleForm.component";
+import {Tab} from "./partials/general/tab";
+import {Tabs} from "./partials/general/tabs";
+import {PropertyFormComponent} from "./partials/property/propertyForm.component";
 
 let devProviders = [
     AuthGuard,
@@ -80,7 +84,11 @@ let prodProviders = [
 
         PropertiesListComponent,
         ShowPropertyComponent,
+        VehicleFormComponent,
+        PropertyFormComponent,
 
+        Tab,
+        Tabs,
         NavbarComponent,
         FilterTablePipe,
         FilterDatesPipe,
